@@ -1,0 +1,12 @@
+.navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar .nav-link {
+    transition: color 0.3s ease;
+  }
+  
+  .navbar .nav-link:hover {
+    color: #007bff; /* Changez la couleur selon vos besoins */
+  }
+  

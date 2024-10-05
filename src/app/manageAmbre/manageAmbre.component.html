@@ -1,0 +1,74 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4 mt-5">
+            <div class="card border-0 shadow p-3">
+                <div class="form-floating mb-3 text-center">
+                    <h5 class="text-center text-warning">Add Ambre</h5>
+                </div>
+
+                <!-- Name Input -->
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="Name" name="name" [(ngModel)]="name">
+                    <label for="Name">Name</label>
+                </div>
+
+                <!-- Price Input -->
+                <div class="form-floating mb-3">
+                    <input type="number" class="form-control" id="Price" name="price" [(ngModel)]="price">
+                    <label for="Price">Price</label>
+                </div>
+
+                <!-- Description Input -->
+                <div class="form-floating mb-3">
+                    <textarea type="text" class="form-control" id="Description" name="description" [(ngModel)]="description"></textarea>
+                    <label for="Description">Description</label>
+                </div>
+
+                <!-- Image Upload -->
+                <div class="form-floating mb-3">
+                    <input type="file" class="form-control" (change)="onImageSelected($event)" id="Image" accept="image/*">
+                    <label for="Image">Image</label>
+                </div>
+
+                <!-- Image Preview -->
+                <div *ngIf="imagePreview" class="text-center mb-3">
+                    <img [src]="imagePreview" alt="Preview Image" class="img-fluid img-thumbnail" style="max-width: 200px;">
+                </div>
+
+                <button type="button" class="btn btn-outline-success" (click)="addAmbre()">Add Ambre</button>
+            </div>
+        </div>
+
+        <div class="col-md-8 mt-2">
+            <h5 class="text-danger">Ambre List</h5>
+            <div class="card p-3 shadow">
+                <div class="card-body">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Image</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let amb of ambreList">
+                                <td>{{amb.name}}</td>
+                                <td>{{amb.price}}</td>
+                                <td>{{amb.description}}</td>
+                                <td>
+                                    <img *ngIf="amb.imageUrl" [src]="amb.imageUrl" alt="Ambre Image" class="img-fluid img-thumbnail" style="max-width: 100px;">
+                                </td>
+                                <td>
+                                    <button class="btn btn-outline-danger" (click)="deleteAmbre(amb)">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
