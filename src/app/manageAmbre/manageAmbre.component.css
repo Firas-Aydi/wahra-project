@@ -1,0 +1,58 @@
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif; /* Change to your preferred font */
+    background-color: #f8f9fa; /* Light background for better contrast */
+}
+
+.card {
+    border-radius: 15px; /* Rounded corners for cards */
+}
+
+.card-body {
+    padding: 1.5rem; /* Increased padding for better spacing */
+}
+
+/* Button Styles */
+.btn {
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions for hover effects */
+}
+
+.btn:hover {
+    color: white; /* Ensure text is readable */
+    transform: translateY(-2px); /* Slight lift effect */
+}
+
+/* Image Styles */
+.img-thumbnail {
+    border-radius: 10px; /* Rounded corners for images */
+}
+
+/* Table Styles */
+.table {
+    background-color: #ffffff; /* White background for tables */
+    border-radius: 10px; /* Rounded corners */
+}
+
+.table th {
+    background-color: #007bff; /* Header background color */
+    color: white; /* Header text color */
+}
+
+.table tr:hover {
+    background-color: #e9ecef; /* Light grey background on row hover */
+}
+
+/* Input Styles */
+.form-control {
+    border-radius: 10px; /* Rounded corners for inputs */
+    border: 1px solid #ced4da; /* Border color */
+}
+
+/* Error Styles */
+.invalid-feedback {
+    display: none; /* Hide error messages initially */
+}
+
+input:invalid ~ .invalid-feedback {
+    display: block; /* Show error messages if invalid */
+}

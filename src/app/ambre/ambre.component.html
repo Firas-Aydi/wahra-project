@@ -1,1 +1,92 @@
-<p>ambre works!</p>
+<div class="container my-5">
+    <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active" *ngFor="let group of groupAmbreList(); let i = index"
+                [ngClass]="{'active': i === 0}">
+                <div class="row justify-content-center">
+                    <div class="col-md-4 mb-4" *ngFor="let ambre of group">
+                        <div class="card h-100 shadow-sm position-relative">
+                            <span class="badge position-absolute p-2 text-light stock-badge" [ngClass]="{
+                      'bg-success': ambre?.stock! > 0,
+                      'bg-danger': ambre?.stock! === 0
+                    }" style="left: 10px; top: 10px;">
+                                {{ ambre?.stock! > 0 ? 'In Stock' : 'Out of Stock' }}
+                            </span>
+                            <img [src]="ambre.imageUrl" class="card-img-top" [alt]="ambre.name">
+                            <div class="card-body d-flex flex-column ">
+                                <h5 class="card-title">{{ ambre.name }}</h5>
+                                <p class="card-text">
+                                    <strong>Price:</strong> {{ ambre.price | currency:'TND':'symbol' }}
+                                </p>
+                                <div class="mt-auto">
+
+                                    <div class="d-flex justify-content-between ">
+                                        <button class="btn btn-outline-primary" title="Add to Wishlist">
+                                            <i class="fa-solid fa-heart"></i>
+                                        </button>
+                                        <button [disabled]="ambre?.stock! === 0" class="btn btn-primary"
+                                            title="Add to Cart">
+                                            <i class="fa-solid fa-cart-shopping"></i>
+                                        </button>
+                                        <button (click)="openProductDetailsModal(ambre)"
+                                            class="btn btn-outline-primary">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+
+<!-- Bootstrap Modal for Product Details -->
+<div class="modal fade" id="productDetailsModal" tabindex="-1" aria-labelledby="productDetailsModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productDetailsModalLabel">{{ selectedAmbre?.name }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="card">
+                    <img [src]="selectedAmbre?.imageUrl" class="card-img-top" [alt]="selectedAmbre?.name">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ selectedAmbre?.name }}</h5>
+                        <p class="card-text">
+                            <strong>Price:</strong> {{ selectedAmbre?.price | currency:'TND':'symbol' }}
+                        </p>
+                        <p class="card-text">
+                            <strong>Description:</strong> {{ selectedAmbre?.description }}
+                        </p>
+                        <p class="card-text">
+                            <strong>Stock:</strong>
+                            <span [ngClass]="{
+                      'text-success': selectedAmbre?.stock! > 0,
+                      'text-danger': selectedAmbre?.stock! === 0
+                    }">
+                                {{ selectedAmbre?.stock! > 0 ? 'In Stock' : 'Out of Stock' }}
+                            </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

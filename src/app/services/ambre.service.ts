@@ -21,8 +21,26 @@ export class AmbreService {
     return this.afs.doc('/Ambre/' + amb.id).delete();
   }
 
-  updateAmbre(amb: Ambre) {
-    this.deleteAmbre(amb);
-    this.addAmbre(amb);
+  // updateAmbre(amb: Ambre) {
+  //   this.deleteAmbre(amb);
+  //   this.addAmbre(amb);
+  // }
+  updateAmbre(id: string, updatedData: Partial<Ambre>) {
+    return this.afs.collection('/Ambre').doc(id).update(updatedData);
   }
+
+  // updateAmbre(ambre: Ambre): Promise<void> {
+  //   const documentId = ambre.id; // Get the document ID from the object
+  //   return this.afs.collection('/Ambre').doc(documentId).update({
+  //     name: ambre.name,
+  //     price: ambre.price,
+  //     description: ambre.description,
+  //     imageUrl: ambre.imageUrl,
+  //     stock: ambre.stock,
+  //     createdAt: ambre.createdAt,
+  //     updatedAt: new Date(), // Update the timestamp
+  //     discount: ambre.discount,
+  //   });
+  // }
+  
 }
