@@ -64,7 +64,7 @@ export class AmbreComponent {
       this.cartService.addToCart(ambre, quantity);
 
       // Optionally show a success message or notification
-      alert(`${quantity} ${ambre.name}(s) added to the cart!`);
+      // alert(`${quantity} ${ambre.name}(s) added to the cart!`);
     } else if (quantity <= 0) {
       // Handle case where the quantity is invalid (e.g., less than 1)
       alert('Please enter a valid quantity greater than 0.');

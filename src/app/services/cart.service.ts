@@ -5,24 +5,40 @@ import { Ambre } from '../model/ambre';
   providedIn: 'root'
 })
 export class CartService {
-  private cart: { ambre: Ambre, quantity: number }[] = [];
+  private cartItems: { product: Ambre, quantity: number }[] = [];
 
-  addToCart(ambre: Ambre, quantity: number) {
-    const existingItem = this.cart.find(item => item.ambre.id === ambre.id);
+  constructor() {}
+
+  // Add a product to the cart
+  addToCart(product: Ambre, quantity: number) {
+    const existingItem = this.cartItems.find(item => item.product.id === product.id);
     if (existingItem) {
-      // Update quantity if the item is already in the cart
       existingItem.quantity += quantity;
     } else {
-      // Add new item to the cart
-      this.cart.push({ ambre, quantity });
+      this.cartItems.push({ product, quantity });
     }
   }
 
+  // Get all cart items
   getCartItems() {
-    return this.cart;
+    return this.cartItems;
   }
 
+  // Update quantity of a specific product
+  updateCartItem(productId: string, quantity: number) {
+    const item = this.cartItems.find(item => item.product.id === productId);
+    if (item) {
+      item.quantity = quantity;
+    }
+  }
+
+  // Remove a product from the cart
+  removeCartItem(productId: string) {
+    this.cartItems = this.cartItems.filter(item => item.product.id !== productId);
+  }
+
+  // Clear the cart after checkout
   clearCart() {
-    this.cart = [];
+    this.cartItems = [];
   }
 }

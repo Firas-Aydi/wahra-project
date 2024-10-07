@@ -15,7 +15,7 @@
                             <img [src]="ambre.imageUrl" class="card-img-top" [alt]="ambre.name">
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">{{ ambre.name }}</h5>
-                                <p class="card-text"><strong>Price:</strong> {{ ambre.price | currency:'TND':'symbol' }}
+                                <p class="card-text"><strong>Price:</strong> {{ ambre.price | currency:'DT':'symbol' }}
                                 </p>
                                 <div class="mt-auto">
                                     <div class="d-flex justify-content-between">
@@ -64,7 +64,7 @@
                 </div>
                 <div class="w-50 ps-3"> <!-- Details section with padding on the left -->
                     <h5 class="card-title">{{ selectedAmbre?.name }}</h5>
-                    <p class="card-text"><strong>Price:</strong> {{ selectedAmbre?.price | currency:'TND':'symbol' }}
+                    <p class="card-text"><strong>Price:</strong> {{ selectedAmbre?.price | currency:'DT':'symbol' }}
                     </p>
                     <p class="card-text"><strong>Description:</strong> {{ selectedAmbre?.description }}</p>
                     <p class="card-text"><strong>Stock:</strong>
