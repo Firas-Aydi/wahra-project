@@ -12,6 +12,7 @@ import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { manageAmbreComponent } from './manageAmbre/manageAmbre.component';
 import { AmbreComponent } from './ambre/ambre.component';
+import { CartComponent } from './cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { AmbreComponent } from './ambre/ambre.component';
     HomeComponent,
     NavbarComponent,
     manageAmbreComponent,
-    AmbreComponent
+    AmbreComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,

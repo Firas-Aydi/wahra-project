@@ -1,21 +1,23 @@
 import { Component } from '@angular/core';
 import { AmbreService } from '../services/ambre.service';
 import { Ambre } from '../model/ambre';
+import { CartService } from '../services/cart.service';
+
 declare var bootstrap: any;
 
 @Component({
   selector: 'app-ambre',
   templateUrl: './ambre.component.html',
-  styleUrls: ['./ambre.component.css']
+  styleUrls: ['./ambre.component.css'],
 })
 export class AmbreComponent {
   ambreList: Ambre[] = [];
   modalDescription: string = '';
   selectedAmbre: Ambre | null = null;
-  quantity: number = 1;  // Default quantity
+  quantity: number = 1; // Default quantity
   quantityError: string | null = null;
 
-  constructor(private amb: AmbreService) {}
+  constructor(private amb: AmbreService, private cartService: CartService) {}
 
   ngOnInit(): void {
     this.getAllAmbre();
@@ -38,8 +40,10 @@ export class AmbreComponent {
   }
 
   openProductDetailsModal(ambre: Ambre) {
-    this.selectedAmbre = ambre; 
-    const productDetailsModal = new bootstrap.Modal(document.getElementById('productDetailsModal'));
+    this.selectedAmbre = ambre;
+    const productDetailsModal = new bootstrap.Modal(
+      document.getElementById('productDetailsModal')
+    );
     productDetailsModal.show();
   }
 
@@ -51,21 +55,41 @@ export class AmbreComponent {
     return groups;
   }
   addToCart(ambre: Ambre, quantity: number) {
-    if (ambre && quantity > 0) {
-        // Implement your logic to add the item to the cart
-        console.log(`Added ${quantity} of ${ambre.name} to the cart.`);
-        // Example: this.cartService.addToCart(ambre, quantity);
-    }
-}
-validateQuantity() {
-  this.quantityError = null;  // Reset error message
+    // Check if the product and quantity are valid
+    if (ambre && quantity > 0 && quantity <= ambre.stock) {
+      // Logic to add the item to the cart
+      console.log(`Added ${quantity} of ${ambre.name} to the cart.`);
 
-  if (this.quantity < 1) {
-    this.quantityError = 'Quantity must be at least 1.';
-  } else if (this.quantity > (this.selectedAmbre?.stock || 0)) {
-    this.quantityError = `Quantity cannot exceed stock limit of ${this.selectedAmbre?.stock}.`;
-  } else if (this.quantity === null || this.quantity === undefined || this.quantity === 0) {
-    this.quantityError = 'Quantity cannot be empty.';
+      // Assuming you have a CartService to manage the cart:
+      this.cartService.addToCart(ambre, quantity);
+
+      // Optionally show a success message or notification
+      alert(`${quantity} ${ambre.name}(s) added to the cart!`);
+    } else if (quantity <= 0) {
+      // Handle case where the quantity is invalid (e.g., less than 1)
+      alert('Please enter a valid quantity greater than 0.');
+    } else if (quantity > ambre.stock) {
+      // Handle case where the quantity exceeds the stock
+      alert('The quantity entered exceeds the available stock.');
+    } else {
+      // Handle other invalid cases, like if the ambre object is null
+      alert('An error occurred. Please try again.');
+    }
   }
-}
+
+  validateQuantity() {
+    this.quantityError = null; // Reset error message
+
+    if (this.quantity < 1) {
+      this.quantityError = 'Quantity must be at least 1.';
+    } else if (this.quantity > (this.selectedAmbre?.stock || 0)) {
+      this.quantityError = `Quantity cannot exceed stock limit of ${this.selectedAmbre?.stock}.`;
+    } else if (
+      this.quantity === null ||
+      this.quantity === undefined ||
+      this.quantity === 0
+    ) {
+      this.quantityError = 'Quantity cannot be empty.';
+    }
+  }
 }
