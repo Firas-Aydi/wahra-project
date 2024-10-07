@@ -1,36 +1,43 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
-    <div class="container-fluid">
-      <a class="navbar-brand" routerLink="">
-        <img src="assets/Smart Ways I.png" alt="Image" style="width: 50px; margin-right: 10px;" />
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item" *ngIf="isUser && userType === 'admin'">
-            <a class="nav-link active" aria-current="page" routerLink="manageAmbre">Manage Ambre</a>
-          </li>
-          <li class="nav-item" *ngIf="isUser && userType === 'admin'">
-            <a class="nav-link active" aria-current="page" routerLink="managePierre">Manage Pierre</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" routerLink="ambre">Ambre</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" routerLink="pierre">Pierre</a>
-          </li>
-        </ul>
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li class="nav-item" *ngIf="isUser">
-            <a class="btn btn-danger shadow" (click)="logout()" routerLink="login">Logout</a>
-          </li>
-          <li class="nav-item" *ngIf="!isUser">
-            <a class="nav-link active" aria-current="page" routerLink="login">Login</a>
-          </li>
-        </ul>
-      </div>
+<nav class="navbar navbar-expand-lg navbar-secondary bg-secondary shadow-sm">
+  <div class="container-fluid">
+    <a class="navbar-brand d-flex align-items-center" routerLink="">
+      <img src="assets/wahra.png" alt="Logo" class="brand-logo">
+      <span class="fw-bold brand-name">Accessories by Wahra</span>
+    </a>
+
+    <!-- Navbar Toggler Button -->
+    <button id="navbarToggler" class="navbar-toggler" type="button" aria-controls="navbarSupportedContent"
+      aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
+      <span *ngIf="!isNavbarOpen"><i class="fas fa-bars"></i></span>
+      <span *ngIf="isNavbarOpen"><i class="fas fa-times"></i></span>
+    </button>
+
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item" *ngIf="isUser && userType === 'admin'">
+          <a class="nav-link" routerLink="manageAmbre" (click)="toggleNavbar()">Manage Ambre</a>
+        </li>
+        <li class="nav-item" *ngIf="isUser && userType === 'admin'">
+          <a class="nav-link" routerLink="managePierre" (click)="toggleNavbar()">Manage Pierre</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="ambre" (click)="toggleNavbar()">Ambre</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="pierre" (click)="toggleNavbar()">Pierre</a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item" *ngIf="isUser">
+          <a class="btn btn-outline-dark shadow-sm logout-btn" (click)="logout(); toggleNavbar()"
+            routerLink="login">Logout</a>
+        </li>
+        <li class="nav-item" *ngIf="!isUser">
+          <a class="btn btn-dark shadow-sm login-btn" routerLink="login" (click)="toggleNavbar()">Login</a>
+        </li>
+      </ul>
     </div>
-  </nav>
-  
+  </div>
+</nav>

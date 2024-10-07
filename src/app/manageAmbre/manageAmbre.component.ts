@@ -87,7 +87,7 @@ export class manageAmbreComponent implements OnInit {
       },
       (err) => {
         console.log('Error while fetching Ambre data: ', err);
-        alert('Error while fetching Ambre data');
+        // alert('Error while fetching Ambre data');
       }
     );
   }

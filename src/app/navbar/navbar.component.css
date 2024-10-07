@@ -1,12 +1,94 @@
+/* General Styling */
 .navbar {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  border-bottom: 1px solid #c2af6f;
+  padding: 10px 20px;
+}
+
+.brand-logo {
+  width: 40px;
+  margin-right: 10px;
+}
+
+.brand-name {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.5rem;
+  color: #c2af6f;
+}
+
+.nav-link {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #c2af6f;
+  transition: color 0.3s ease;
+  margin-left: 15px;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: #007bff;
+  font-weight: bold;
+}
+
+/* Buttons */
+.btn {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease-in-out;
+  border-radius: 25px;
+}
+
+.btn-dark {
+  background-color: #333;
+  color: #fff;
+  border: none;
+}
+
+.btn-dark:hover {
+  background-color: #000;
+}
+
+.btn-outline-dark {
+  border: 1px solid #333;
+  color: #333;
+}
+
+.btn-outline-dark:hover {
+  background-color: #333;
+  color: #ffffff;
+}
+
+/* Navbar Shadow */
+.shadow-sm {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Toggler */
+.navbar-toggler {
+  border-color: transparent;
+}
+
+.navbar-toggler-icon {
+  filter: brightness(0) invert(1);
+}
+
+@media (max-width: 992px) {
+  .navbar-nav .nav-link {
+    padding: 10px;
   }
-  
-  .navbar .nav-link {
-    transition: color 0.3s ease;
-  }
-  
-  .navbar .nav-link:hover {
-    color: #007bff; /* Changez la couleur selon vos besoins */
-  }
-  
+}
+
+
+
+.navbar-toggler {
+  border: none; /* Remove the border around the toggler button */
+  background: transparent; /* Make the background transparent */
+}
+
+.navbar-toggler:focus {
+  outline: none; /* Remove the outline on focus */
+  box-shadow: none; /* Remove box shadow on focus */
+}
+
+
+

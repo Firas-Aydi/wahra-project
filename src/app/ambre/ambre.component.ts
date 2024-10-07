@@ -12,6 +12,8 @@ export class AmbreComponent {
   ambreList: Ambre[] = [];
   modalDescription: string = '';
   selectedAmbre: Ambre | null = null;
+  quantity: number = 1;  // Default quantity
+  quantityError: string | null = null;
 
   constructor(private amb: AmbreService) {}
 
@@ -30,7 +32,7 @@ export class AmbreComponent {
       },
       (err) => {
         console.log('Error while fetching Ambre data: ', err);
-        alert('Error while fetching Ambre data');
+        // alert('Error while fetching Ambre data');
       }
     );
   }
@@ -48,4 +50,22 @@ export class AmbreComponent {
     }
     return groups;
   }
+  addToCart(ambre: Ambre, quantity: number) {
+    if (ambre && quantity > 0) {
+        // Implement your logic to add the item to the cart
+        console.log(`Added ${quantity} of ${ambre.name} to the cart.`);
+        // Example: this.cartService.addToCart(ambre, quantity);
+    }
+}
+validateQuantity() {
+  this.quantityError = null;  // Reset error message
+
+  if (this.quantity < 1) {
+    this.quantityError = 'Quantity must be at least 1.';
+  } else if (this.quantity > (this.selectedAmbre?.stock || 0)) {
+    this.quantityError = `Quantity cannot exceed stock limit of ${this.selectedAmbre?.stock}.`;
+  } else if (this.quantity === null || this.quantity === undefined || this.quantity === 0) {
+    this.quantityError = 'Quantity cannot be empty.';
+  }
+}
 }

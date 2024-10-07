@@ -1,53 +1,62 @@
 .carousel-inner {
     display: flex;
-  }
-  
-  .card {
-    transition: transform 0.3s, box-shadow 0.3s; /* Smooth hover effect */
-  }
-  
-  .card:hover {
-    transform: translateY(-5px); /* Lift effect on hover */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow on hover */
-  }
-  
-  .stock-badge {
-    left: 10px;
+    gap: 20px;
+}
+
+.card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    /* transform: translateY(-5px); */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.stock-badge {
     top: 10px;
-    z-index: 1; /* Ensure badge is above other content */
-  }
-  
-  .carousel-control-prev, 
-  .carousel-control-next {
-    color: #fff; /* Change to desired color for the icon */
-    background-color: rgba(0, 0, 0, 0.5); /* Change background color */
-    border-radius: 50%; /* Make it circular */
-    width: 50px; /* Adjust the width */
-    height: 50px; /* Adjust the height */
-    top: 50%; /* Center vertically */
-    transform: translateY(-50%); /* Adjust for true centering */
-  }
-  
-  .carousel-control-prev:hover, 
-  .carousel-control-next:hover {
-    background-color: rgba(0, 0, 0, 0.7); /* Darker on hover */
-  }
-  
-  .carousel-control-prev-icon, 
-  .carousel-control-next-icon {
-    filter: brightness(0) invert(1); /* Make the icons white */
-  }
-  .card-body {
-    padding: 15px; /* Consistent padding for card body */
-  }
-  
-  .card-text {
-    margin-bottom: 1rem; /* Adjust margin for clarity */
-  }
-  
-  .stock-badge {
     left: 10px;
-    top: 10px;
-    z-index: 1; /* Ensure badge is above other content */
-  }
-  
+    z-index: 1;
+}
+
+.carousel-control-prev, 
+.carousel-control-next {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.carousel-control-prev:hover, 
+.carousel-control-next:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.carousel-control-prev-icon, 
+.carousel-control-next-icon {
+    filter: brightness(0) invert(1);
+}
+
+.card-body {
+    padding: 15px;
+}
+
+.card-text {
+    margin-bottom: 1rem;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .col-md-4 {
+        max-width: 50%;
+    }
+}
+
+@media (max-width: 576px) {
+    .col-md-4 {
+        max-width: 100%;
+    }
+}

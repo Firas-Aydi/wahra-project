@@ -3,6 +3,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Collapse } from 'bootstrap';
+
 interface UserData {
   role: string;
   // Add other fields as necessary, e.g. name, email, etc.
@@ -16,6 +18,7 @@ interface UserData {
 export class NavbarComponent implements OnInit {
   isUser: boolean = false;
   userType: string = ''; // Ajoutez une propriété pour stocker le type d'utilisateur
+  isNavbarOpen=false;
 
   constructor(
     private af: AngularFireAuth,
@@ -65,5 +68,18 @@ export class NavbarComponent implements OnInit {
       .catch(() => {
         console.log('error');
       });
+    this.toggleNavbar();
   }
+  toggleNavbar() {
+        const navbarCollapse = document.getElementById('navbarSupportedContent');
+        
+        // Toggle the navbar open/close state
+        this.isNavbarOpen = !this.isNavbarOpen;
+        if (navbarCollapse?.classList.contains('show')) {
+            navbarCollapse.classList.remove('show'); // Collapse it
+        } else {
+            navbarCollapse?.classList.add('show'); // Open it if not already open
+        }
+    }
+  
 }
