@@ -1,10 +1,11 @@
-<nav class="navbar navbar-expand-lg navbar-secondary bg-secondary shadow-sm">
-  <div class="container-fluid">
-    <a class="navbar-brand d-flex align-items-center" routerLink="">
-      <img src="assets/wahra.png" alt="Logo" class="brand-logo">
-      <!-- <span class="fw-bold brand-name">Accessories by Wahra</span> -->
-    </a>
-
+<nav class="navbar navbar-expand-lg custom-navbar">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <!-- Logo au centre -->
+    <div class="logo-container">
+      <a class="navbar-brand" routerLink="">
+        <img src="assets/wahra.png" alt="Logo" class="brand-logo">
+      </a>
+    </div>
     <!-- Navbar Toggler Button -->
     <button id="navbarToggler" class="navbar-toggler" type="button" aria-controls="navbarSupportedContent"
       aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
@@ -13,32 +14,57 @@
     </button>
 
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item" *ngIf="isUser && userType === 'admin'">
-          <a class="nav-link" routerLink="manageAmbre" (click)="toggleNavbar()">Manage Ambre</a>
-        </li>
-        <li class="nav-item" *ngIf="isUser && userType === 'admin'">
-          <a class="nav-link" routerLink="managePierre" (click)="toggleNavbar()">Manage Pierre</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="ambre" (click)="toggleNavbar()">Ambre</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="pierre" (click)="toggleNavbar()">Pierre</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" style="float: right;" routerLink="cart" (click)="toggleNavbar()"><i class="fa-solid fa-cart-shopping"></i></a>
-        </li>
-      </ul>
-
+    <!-- Barre de recherche centrée -->
+    <div class="mx-auto"> <!-- Utilisation de mx-auto pour centrer -->
+      <div class="search-bar">
+        <div class="input-group">
+          <input class="search-input" type="search" placeholder="Rechercher un produit..." name="searchTerm"
+            aria-label="Search" aria-describedby="search-icon" />
+          <span class="input-group-text" id="search-icon">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div>
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+        <li class="nav-item">
+          <a class="nav-link" style="float: right;" routerLink="cart" (click)="toggleNavbar()"><i
+              class="fa-solid fa-cart-shopping"></i></a>
+        </li>
         <li class="nav-item" *ngIf="isUser">
-          <a class="btn btn-outline-dark shadow-sm logout-btn" (click)="logout(); toggleNavbar()"
-            routerLink="login">Logout</a>
+          <a class="nav-link" (click)="logout(); toggleNavbar()" routerLink="login"><i
+              class="fa-solid fa-arrow-right-from-bracket"></i></a>
         </li>
         <li class="nav-item" *ngIf="!isUser">
-          <a class="btn btn-dark shadow-sm login-btn" routerLink="login" (click)="toggleNavbar()">Login</a>
+          <a class="nav-link" routerLink="login" (click)="toggleNavbar()"><i class="fa-regular fa-user"></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<nav class="sub-navbar navbar-expand-lg custom-navbar">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+
+
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item" *ngIf="isUser && userType === 'admin'">
+          <a class="sub-nav-link" routerLink="manageAmbre" (click)="toggleNavbar()">Manage Ambre</a>
+        </li>
+        <li class="nav-item" *ngIf="isUser && userType === 'admin'">
+          <a class="sub-nav-link" routerLink="managePierre" (click)="toggleNavbar()">Manage Pierre</a>
+        </li>
+        <li class="nav-item">
+          <a class="sub-nav-link" routerLink="ambre" (click)="toggleNavbar()">Ambre</a>
+        </li>
+        <li class="nav-item">
+          <a class="sub-nav-link" routerLink="pierre" (click)="toggleNavbar()">Pierre</a>
         </li>
       </ul>
     </div>

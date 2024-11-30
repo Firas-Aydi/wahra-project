@@ -1,33 +1,81 @@
 /* General Styling */
 .navbar {
-  background-color: #ffffff;
-  border-bottom: 1px solid #c2af6f;
+  height: 100px;
+  background-color: #bd4800;
+  /* border-bottom: 1px solid #c2af6f; */
   padding: 10px 20px;
 }
-
+.sub-navbar {
+  height: 70px;
+  background-color: #b04200;
+  /* border-bottom: 1px solid #c2af6f; */
+  padding: 10px 20px;
+}
 .brand-logo {
   width: 40px;
   margin-right: 10px;
 }
-
-.brand-name {
-  font-family: 'Poppins', sans-serif;
-  font-size: 1.5rem;
-  color: #c2af6f;
+.search-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #bd4800;
+  width: 400px;
+  padding: 10px 0;
+  border: none;
 }
+.search-input {
+  width: 90%;
+  border: none;
+  border-radius: 6px;
+  background-color: #b04200;
+  color: #ffffff;
+  padding: 5px;
+}
+.search-input::-webkit-input-placeholder {
+  color: #f6ad55;
+} /* Chrome/Safari */
 
+.input-group-text {
+  color: #ffffff;
+  border: none;
+  background-color: #b04200;
+  cursor: pointer;
+}
 .nav-link {
-  font-family: 'Poppins', sans-serif;
-  font-size: 1rem;
-  font-weight: 500;
+  font-size: 32px;
+  font-weight: 300;
+  color: #ffffff;
+  padding: 5px 20px;
+  margin: auto 0px;
+  transition: color 0.3s, background-color 0.3s, transform 0.3s ease-in-out;
+}
+.nav-link:hover,
+.nav-link:focus {
   color: #c2af6f;
-  transition: color 0.3s ease;
-  margin-left: 15px;
+}
+/* Links Styling */
+.sub-nav-link {
+  line-height: 50px;
+  height: 60px;
+  padding: 0 10px 0 10px;
+  width: auto;
+  display: block;
+  color: #fff;
+  text-transform: none;
+  text-decoration: none;
+  text-align: left;
+  background: rgba(0, 0, 0, 0);
+  border: 0;
+  border-radius: 0;
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 300;
 }
 
-.nav-link:hover, .nav-link.active {
-  color: #007bff;
-  font-weight: bold;
+.sub-nav-link:hover,
+.sub-nav-link:focus {
+  color: #f6ad55;
 }
 
 /* Buttons */
@@ -78,8 +126,6 @@
   }
 }
 
-
-
 .navbar-toggler {
   border: none; /* Remove the border around the toggler button */
   background: transparent; /* Make the background transparent */
@@ -89,6 +135,3 @@
   outline: none; /* Remove the outline on focus */
   box-shadow: none; /* Remove box shadow on focus */
 }
-
-
-
