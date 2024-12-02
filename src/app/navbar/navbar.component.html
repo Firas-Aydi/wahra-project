@@ -1,49 +1,39 @@
 <nav class="navbar navbar-expand-lg custom-navbar">
-  <div class="container-fluid d-flex justify-content-between align-items-center">
-    <!-- Logo au centre -->
-    <div class="logo-container">
-      <a class="navbar-brand" routerLink="">
-        <img src="assets/wahra.png" alt="Logo" class="brand-logo">
-      </a>
-    </div>
-    <!-- Navbar Toggler Button -->
-    <button id="navbarToggler" class="navbar-toggler" type="button" aria-controls="navbarSupportedContent"
-      aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
+  <div class="container-fluid">
+    <!-- Toggler Button -->
+    <button id="navbarToggler" class="navbar-toggler" type="button" (click)="toggleNavbar()">
       <span *ngIf="!isNavbarOpen"><i class="fas fa-bars"></i></span>
       <span *ngIf="isNavbarOpen"><i class="fas fa-times"></i></span>
     </button>
 
+    <!-- Logo centré -->
+    <a class="navbar-brand" routerLink="">
+      <img src="assets/wahra.png" alt="Logo" class="brand-logo">
+    </a>
 
-    <!-- Barre de recherche centrée -->
-    <div class="mx-auto"> <!-- Utilisation de mx-auto pour centrer -->
-      <div class="search-bar">
-        <div class="input-group">
-          <input class="search-input" type="search" placeholder="Rechercher un produit..." name="searchTerm"
-            aria-label="Search" aria-describedby="search-icon" />
-          <span class="input-group-text" id="search-icon">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </span>
-        </div>
+    <!-- Barre de recherche -->
+    <div class="search-bar mx-auto">
+      <div class="input-group">
+        <input class="search-input" type="search" placeholder="Rechercher un produit..." />
+        <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
       </div>
     </div>
-    <div>
-      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 
-        <li class="nav-item">
-          <a class="nav-link" style="float: right;" routerLink="cart" (click)="toggleNavbar()"><i
-              class="fa-solid fa-cart-shopping"></i></a>
-        </li>
-        <li class="nav-item" *ngIf="isUser">
-          <a class="nav-link" (click)="logout(); toggleNavbar()" routerLink="login"><i
-              class="fa-solid fa-arrow-right-from-bracket"></i></a>
-        </li>
-        <li class="nav-item" *ngIf="!isUser">
-          <a class="nav-link" routerLink="login" (click)="toggleNavbar()"><i class="fa-regular fa-user"></i></a>
-        </li>
-      </ul>
-    </div>
+    <!-- Menu utilisateur -->
+    <ul class="navbar-nav ms-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="cart"><i class="fa-solid fa-cart-shopping"></i></a>
+      </li>
+      <li class="nav-item" *ngIf="isUser">
+        <a class="nav-link" (click)="logout()" routerLink="login"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+      </li>
+      <li class="nav-item" *ngIf="!isUser">
+        <a class="nav-link" routerLink="login"><i class="fa-regular fa-user"></i></a>
+      </li>
+    </ul>
   </div>
 </nav>
+
 
 
 <nav class="sub-navbar navbar-expand-lg custom-navbar">

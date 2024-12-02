@@ -1,4 +1,38 @@
 <body>
+    <div class="hero-section">
+        <div class="hero-content">
+            <!-- Texte à gauche -->
+            <div class="text-content">
+                <h1>Boutique de lithothérapie</h1>
+                <h2>et pierres de santé <i class="fas fa-gem" style="transform: rotate(15deg);font-size: 2rem;"></i>
+                </h2>
+                <p>
+                    Créée en ---, Wahra est la première marque tunisienne de bijoux
+                    d'exception en Ambre véritable, minéraux et pierres fines.
+                </p>
+                <p>
+                    Nous fabriquons à la main des bijoux en pierres naturelles à partir de
+                    minéraux importés des quatre coins du monde.
+                </p>
+            </div>
+
+            <!-- Images à droite -->
+            <div class="image-gallery">
+                <!-- <div  class="image-wrapper"> -->
+                    <img style="transform: rotate(-10deg);" src="https://www.123ambre.com/wp-content/themes/ambre3/img/bracelets.jpg"
+                        alt="Bracelet en pierre">
+                <!-- </div> -->
+                <!-- <div  class="image-wrapper"> -->
+                    <img style="transform: rotate(-4deg);" src="https://www.123ambre.com/wp-content/themes/ambre3/img/parure.png" alt="Bijoux en pierre">
+                <!-- </div> -->
+                <!-- <div  class="image-wrapper"> -->
+                    <img style="transform: rotate(4deg);" src="https://www.123ambre.com/wp-content/themes/ambre3/img/clients/eloise-b.jpg"
+                        alt="Enfant avec collier">
+                <!-- </div> -->
+            </div>
+        </div>
+    </div>
+
     <div class="slider" x-data="{start: true, end: false}" style="padding-top: 100px">
         <div class="slider__content" x-ref="slider"
             x-on:scroll.debounce="$refs.slider.scrollLeft == 0 ? start = true : start = false; Math.abs(($refs.slider.scrollWidth - $refs.slider.offsetWidth) - $refs.slider.scrollLeft) < 5 ? end = true : end = false;">
