@@ -1,42 +1,40 @@
 <div class="container my-5">
-    <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active" *ngFor="let group of groupAmbreList(); let i = index"
-                [ngClass]="{'active': i === 0}">
-                <div class="row justify-content-center">
-                    <div class="col-md-4 mb-4" *ngFor="let ambre of group">
-                        <div class="card h-100 shadow-sm position-relative" (click)="openProductDetailsModal(ambre)">
-                            <span class="badge position-absolute p-2 text-light stock-badge" [ngClass]="{
-                                'bg-success': ambre?.stock! > 0,
-                                'bg-danger': ambre?.stock! === 0
-                            }">
-                                {{ ambre?.stock! > 0 ? 'In Stock' : 'Out of Stock' }}
-                            </span>
-                            <img [src]="ambre.imageUrl" class="card-img-top" [alt]="ambre.name">
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="card-title">{{ ambre.name }}</h5>
-                                <p class="card-text"><strong>Price:</strong> {{ ambre.price | currency:'DT':'symbol' }}
-                                </p>
-                                <div class="mt-auto">
-                                    <div class="d-flex justify-content-between">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <div id="productCarousel" class="carousel slide justify-content-center" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item" *ngFor="let group of groupAmbreList(); let i = index" [ngClass]="{ 'active': i === 0 }">
+          <div class="d-flex justify-content-center">
+            <div class="card mx-2" *ngFor="let ambre of group" (click)="openProductDetailsModal(ambre)">
+                <span class="badge position-absolute p-2 text-light stock-badge" [ngClass]="{
+                    'bg-success': ambre?.stock! > 0,
+                    'bg-danger': ambre?.stock! === 0
+                }">
+                    {{ ambre?.stock! > 0 ? 'En stock' : 'En rupture' }}
+                </span>
+                <img [src]="ambre.imageUrl" class="card-img-top" [alt]="ambre.name" />
+              <div class="card-body">
+                  <p class="card-price" style="color: #bd4800;">
+                    {{ ambre.price }} DT
+                  </p>
+                <h5 class="card-title">{{ ambre.name }}</h5>
+                <!-- <span class="stock-badge" [ngClass]="{ 'bg-success': ambre?.stock! > 0, 'bg-danger': ambre?.stock === 0 }">
+                  {{ ambre?.stock! > 0 ? 'In Stock' : 'Out of Stock' }}
+                </span> -->
+              </div>
             </div>
+          </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
     </div>
-</div>
+  </div>
+  
 
 
 <!-- Bootstrap Modal for Product Details -->

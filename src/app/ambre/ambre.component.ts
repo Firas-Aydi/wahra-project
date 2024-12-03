@@ -49,8 +49,8 @@ export class AmbreComponent {
 
   groupAmbreList() {
     const groups = [];
-    for (let i = 0; i < this.ambreList.length; i += 3) {
-      groups.push(this.ambreList.slice(i, i + 3));
+    for (let i = 0; i < this.ambreList.length; i += 5) {
+      groups.push(this.ambreList.slice(i, i + 5));
     }
     return groups;
   }
