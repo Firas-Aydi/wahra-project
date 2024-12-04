@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AmbreService } from '../services/ambre.service';
 import { Ambre } from '../model/ambre';
 import { CartService } from '../services/cart.service';
+import { Router } from '@angular/router';
 
 declare var bootstrap: any;
 
@@ -17,7 +18,9 @@ export class AmbreComponent {
   quantity: number = 1; // Default quantity
   quantityError: string | null = null;
 
-  constructor(private amb: AmbreService, private cartService: CartService) {}
+  constructor(private amb: AmbreService, 
+    private router: Router,
+    private cartService: CartService) {}
 
   ngOnInit(): void {
     this.getAllAmbre();
@@ -38,7 +41,15 @@ export class AmbreComponent {
       }
     );
   }
-
+  viewProductDetails(ambreId: string | undefined) {
+    if (ambreId) {
+      this.router.navigate(['/ambres', ambreId]);
+    } else {
+      console.error(
+        'ambre ID is undefined. Cannot navigate to ambre details.'
+      );
+    }
+  }
   openProductDetailsModal(ambre: Ambre) {
     this.selectedAmbre = ambre;
     const productDetailsModal = new bootstrap.Modal(

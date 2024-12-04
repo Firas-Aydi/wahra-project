@@ -3,7 +3,7 @@ export interface Ambre {
     name: string; // Name of the product
     price: number; // Price of the product
     description: string; // Description of the product
-    imageUrl: string; // Optional URL for the product image
+    images: string[];
     // category: string; // Category the product belongs to
     stock: number; // Number of items available in stock
     // tags: string[]; // Array of tags for filtering or categorizing

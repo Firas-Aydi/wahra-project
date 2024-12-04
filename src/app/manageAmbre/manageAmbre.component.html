@@ -3,90 +3,109 @@
         <div class="col-md-4 mt-5">
             <div class="card border-0 shadow p-3">
                 <div class="form-floating mb-3 text-center">
-                    <h5 class="text-center text-warning">{{ id ? 'Edit' : 'Add' }} Ambre</h5>
+                    <h5 class="text-center text-warning">{{ ambreForm.value.id ? 'Modifier' : 'Ajouter' }} un Ambre</h5>
                 </div>
+                <form [formGroup]="ambreForm">
 
-                <!-- Name Input -->
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="Name" name="name" [(ngModel)]="name" required>
-                    <label for="Name">Name</label>
-                    <div *ngIf="errorMessages['name']" class="invalid-feedback">{{ errorMessages['name'] }}</div>
-                </div>
+                    <!-- Nom -->
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="Name" formControlName="name" placeholder="Nom"
+                            [ngClass]="{'is-invalid': isFieldInvalid('name')}">
+                        <label for="Name">Nom</label>
+                        <div *ngIf="isFieldInvalid('name')" class="invalid-feedback">Veuillez saisir un nom valide
+                            (minimum 3 caractères).</div>
+                    </div>
 
-                <!-- Price Input -->
-                <div class="form-floating mb-3">
-                    <input type="number" class="form-control" id="Price" name="price" [(ngModel)]="price" required>
-                    <label for="Price">Price</label>
-                    <div *ngIf="errorMessages['price']" class="invalid-feedback">{{ errorMessages['price'] }}</div>
-                </div>
+                    <!-- Prix -->
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="Price" formControlName="price" placeholder="Prix"
+                            [ngClass]="{'is-invalid': isFieldInvalid('price')}">
+                        <label for="Price">Prix</label>
+                        <div *ngIf="isFieldInvalid('price')" class="invalid-feedback">Veuillez entrer un prix valide
+                            (supérieur à 0).</div>
+                    </div>
 
-                <!-- Description Input -->
-                <div class="form-floating mb-3">
-                    <textarea class="form-control" id="Description" name="description" [(ngModel)]="description" required></textarea>
-                    <label for="Description">Description</label>
-                    <div *ngIf="errorMessages['description']" class="invalid-feedback">{{ errorMessages['description'] }}</div>
-                </div>
+                    <!-- Description -->
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" id="Description" formControlName="description"
+                            placeholder="Description" style="height: 100px;"
+                            [ngClass]="{'is-invalid': isFieldInvalid('description')}"></textarea>
+                        <label for="Description">Description</label>
+                        <div *ngIf="isFieldInvalid('description')" class="invalid-feedback">Veuillez entrer une
+                            description valide (minimum 10 caractères).</div>
+                    </div>
 
-                <!-- Stock Input -->
-                <div class="form-floating mb-3">
-                    <input type="number" class="form-control" id="Stock" name="stock" [(ngModel)]="stock" required>
-                    <label for="Stock">Stock</label>
-                    <div *ngIf="errorMessages['stock']" class="invalid-feedback">{{ errorMessages['stock'] }}</div>
-                </div>
+                    <!-- Stock -->
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="Stock" formControlName="stock" placeholder="Stock"
+                            [ngClass]="{'is-invalid': isFieldInvalid('stock')}">
+                        <label for="Stock">Stock</label>
+                        <div *ngIf="isFieldInvalid('stock')" class="invalid-feedback">Veuillez entrer une valeur valide
+                            pour le stock.</div>
+                    </div>
 
-                <!-- Discount Input -->
-                <!-- <div class="form-floating mb-3">
-                    <input type="number" class="form-control" id="Discount" name="discount" [(ngModel)]="discount">
-                    <label for="Discount">Discount (%)</label>
-                    <div *ngIf="errorMessages['discount']" class="invalid-feedback">{{ errorMessages['discount'] }}</div>
+                    <!-- Téléchargement des images -->
+                    <div class="form-floating mb-3">
+                        <input type="file" class="form-control" (change)="onFileChange($event)" id="Images"
+                            accept="image/*" multiple>
+                        <label for="Images">Images</label>
+                    </div>
+
+                    <!-- Aperçu des images -->
+                    <!-- <div *ngIf="imagePreview.length > 0" class="text-center mb-3">
+                    <div *ngFor="let img of imagePreview" class="mb-2">
+                        <img [src]="img" alt="Aperçu de l'image" class="img-fluid img-thumbnail" style="max-width: 200px;">
+                    </div>
                 </div> -->
-
-                <!-- Image Upload -->
-                <div class="form-floating mb-3">
-                    <input type="file" class="form-control" (change)="onImageSelected($event)" id="Image" accept="image/*" required>
-                    <label for="Image">Image</label>
-                    <div *ngIf="errorMessages['image']" class="invalid-feedback">{{ errorMessages['image'] }}</div>
-                </div>
-
-                <!-- Image Preview -->
-                <div *ngIf="imagePreview" class="text-center mb-3">
-                    <img [src]="imagePreview" alt="Preview Image" class="img-fluid img-thumbnail" style="max-width: 200px;">
-                </div>
-
-                <button type="button" class="btn btn-outline-success" *ngIf="!id" (click)="addAmbre()">Add Ambre</button>
-                <button type="button" class="btn btn-outline-primary" *ngIf="id" (click)="updateAmbre()">Update Ambre</button>
+                    <div style="display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px;">
+                        <div *ngFor="let img of ambreForm.get('images')?.value" style="position: relative;">
+                            <img [src]="img" alt="Image du Chambre" class="img-fluid img-thumbnail"
+                                style="max-width: 100px;">
+                            <!-- <button type="button" class="btn btn-danger badge position-absolute"
+                            (click)="removeImage(img)"
+                            style="width: 20px; height: 20px; padding: 0; border-radius: 50%; align-items: center; justify-content: center; top: 0; right: 0;">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button> -->
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-outline-success" *ngIf="!ambreForm.value.id"
+                        (click)="addAmbre()">Ajouter</button>
+                    <button type="button" class="btn btn-outline-primary" *ngIf="ambreForm.value.id"
+                        (click)="updateAmbre()">Mettre à jour</button>
+                </form>
             </div>
         </div>
 
         <div class="col-md-8 mt-2">
-            <h5 class="text-danger">Ambre List</h5>
+            <h5 class="text-danger">Liste des Ambres</h5>
             <div class="card p-3 shadow">
                 <div class="card-body">
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th scope="col">Name</th>
-                                <th scope="col">Price</th>
+                                <th scope="col">Nom</th>
+                                <th scope="col">Prix</th>
                                 <th scope="col">Description</th>
                                 <th scope="col">Stock</th>
-                                <th scope="col">Image</th>
-                                <!-- <th scope="col">Discount</th> -->
-                                <th scope="col">Action</th>
+                                <th scope="col">Images</th>
+                                <th scope="col">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let amb of ambreList">
                                 <td>{{ amb.name }}</td>
-                                <td>{{ amb.price }}</td>
+                                <td>{{ amb.price | currency:'EUR' }}</td>
                                 <td>{{ amb.description }}</td>
                                 <td>{{ amb.stock }}</td>
                                 <td>
-                                    <img *ngIf="amb.imageUrl" [src]="amb.imageUrl" alt="Ambre Image" class="img-fluid img-thumbnail" style="max-width: 100px;">
+                                    <div *ngFor="let img of amb.images" class="mb-2">
+                                        <img [src]="img" alt="Image de l'Ambre" class="img-fluid img-thumbnail"
+                                            style="max-width: 100px;">
+                                    </div>
                                 </td>
-                                <!-- <td>{{ amb.discount }}</td> -->
                                 <td>
-                                    <button class="btn btn-outline-warning" (click)="editAmbre(amb)">Edit</button>
-                                    <button class="btn btn-outline-danger" (click)="deleteAmbre(amb)">Delete</button>
+                                    <button class="btn btn-outline-warning" (click)="editAmbre(amb)">Modifier</button>
+                                    <button class="btn btn-outline-danger" (click)="deleteAmbre(amb)">Supprimer</button>
                                 </td>
                             </tr>
                         </tbody>

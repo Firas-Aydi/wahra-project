@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from '../environments/environment';
@@ -13,6 +13,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { manageAmbreComponent } from './manageAmbre/manageAmbre.component';
 import { AmbreComponent } from './ambre/ambre.component';
 import { CartComponent } from './cart/cart.component';
+import { AmbrdetailComponent } from './ambrdetail/ambrdetail.component';
 
 @NgModule({
   declarations: [
@@ -22,12 +23,14 @@ import { CartComponent } from './cart/cart.component';
     NavbarComponent,
     manageAmbreComponent,
     AmbreComponent,
-    CartComponent
+    CartComponent,
+    AmbrdetailComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase)
       ],
   providers: [],

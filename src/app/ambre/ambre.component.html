@@ -3,14 +3,14 @@
       <div class="carousel-inner">
         <div class="carousel-item" *ngFor="let group of groupAmbreList(); let i = index" [ngClass]="{ 'active': i === 0 }">
           <div class="d-flex justify-content-center">
-            <div class="card mx-2" *ngFor="let ambre of group" (click)="openProductDetailsModal(ambre)">
+            <div class="card mx-2" *ngFor="let ambre of group" (click)="viewProductDetails(ambre.id)">
                 <span class="badge position-absolute p-2 text-light stock-badge" [ngClass]="{
                     'bg-success': ambre?.stock! > 0,
                     'bg-danger': ambre?.stock! === 0
                 }">
                     {{ ambre?.stock! > 0 ? 'En stock' : 'En rupture' }}
                 </span>
-                <img [src]="ambre.imageUrl" class="card-img-top" [alt]="ambre.name" />
+                <img [src]="ambre.images[0]" class="card-img-top" [alt]="ambre.name" />
               <div class="card-body">
                   <p class="card-price" style="color: #bd4800;">
                     {{ ambre.price }} DT
@@ -48,7 +48,7 @@
             </div>
             <div class="modal-body d-flex"> <!-- Use flexbox for layout -->
                 <div class="w-50"> <!-- Image section -->
-                    <img [src]="selectedAmbre?.imageUrl" class="img-fluid" [alt]="selectedAmbre?.name">
+                    <img [src]="selectedAmbre?.images![0]" class="img-fluid" [alt]="selectedAmbre?.name">
                 </div>
                 <div class="w-50 ps-3"> <!-- Details section with padding on the left -->
                     <h5 class="card-title">{{ selectedAmbre?.name }}</h5>

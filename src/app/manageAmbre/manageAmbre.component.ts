@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../services/auth.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AmbreService } from '../services/ambre.service';
+// import { AngularFireStorage } from '@angular/fire/compat/storage';
+// import { finalize } from 'rxjs/operators';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Ambre } from '../model/ambre';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-ambre',
@@ -11,298 +12,140 @@ import { finalize } from 'rxjs/operators';
   styleUrls: ['./manageAmbre.component.css'],
 })
 export class manageAmbreComponent implements OnInit {
+  
+  ambreForm: FormGroup;
   ambreList: Ambre[] = [];
-  ambreObj: Ambre = {
-    id: '',
-    name: '',
-    price: 0,
-    description: '',
-    imageUrl: '',
-    // category: '',
-    stock: 0,
-    // tags: [],
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    // ratings: 0,
-    // reviewsCount: 0,
-    // discount: 0,
-    // isFeatured: false,
-  };
-  id: string = '';
-  name: string = '';
-  price: number = 0;
-  description: string = '';
-  // category: string = '';
-  stock: number = 0;
-  // tags: string[] = [];
-  // ratings: number = 0;
-  // reviewsCount: number = 0;
-  // discount: number = 0;
-  // isFeatured: boolean = false;
   selectedImage: File | null = null;
-  imagePreview: string | ArrayBuffer | null = null;
-  image: string = '';
+  imagePreview: string[] = [];
 
-  // Error messages
-  errorMessages: { [key: string]: string } = {
-    name: '',
-    price: '',
-    description: '',
-    stock: '',
-    // discount: '',
-    image: '',
-  };
-
-  constructor(private amb: AmbreService, private storage: AngularFireStorage) {}
+  constructor(
+    private fb: FormBuilder,
+    private ambreService: AmbreService,
+    // private storage: AngularFireStorage,
+    private firestore: AngularFirestore
+  ) {
+    // Initialisation du formulaire avec validation
+    this.ambreForm = this.fb.group({
+      id: [''], // Auto-généré si vide
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      price: [0, [Validators.required, Validators.min(0.01)]],
+      description: ['', [Validators.required, Validators.minLength(10)]],
+      stock: [0, [Validators.required, Validators.min(0)]],
+      images: [[]], // Tableau vide pour stocker les URLs des images
+      createdAt: [new Date()],
+      updatedAt: [new Date()],
+    });
+  }
 
   ngOnInit(): void {
     this.getAllAmbre();
   }
 
-  // Handle image file selection
-  onImageSelected(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      this.selectedImage = file;
+  generateUniqueId(): string {
+    return this.firestore.createId();
+  }
+  onFileChange(event: any) {
+    const files: FileList = event.target.files;
+    const ambreId = this.ambreForm.value.ambreId || this.generateUniqueId(); // Utiliser un ID unique
 
-      // Preview the image
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.imagePreview = reader.result;
-      };
-      reader.readAsDataURL(file);
+    const imagesArray: string[] = [];
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+
+      // Téléchargement de l'image dans Firebase Storage
+      this.ambreService.uploadImage(file, ambreId).subscribe((imageUrl: string) => {
+        console.log('Image téléchargée : ', imageUrl); // Log de l'URL
+        imagesArray.push(imageUrl); // Ajoute l'URL de l'image après le téléchargement
+
+        // Log de l'état du tableau images
+        console.log('Array d\'images après ajout : ', imagesArray);
+
+        this.ambreForm.patchValue({ images: imagesArray });
+        this.ambreForm.get('images')?.updateValueAndValidity();
+      });
     }
   }
-
-  getAllAmbre() {
-    this.amb.getAllAmbre().subscribe(
+  // Récupérer toutes les données Ambre
+  getAllAmbre(): void {
+    this.ambreService.getAllAmbre().subscribe(
       (res) => {
         this.ambreList = res.map((e: any) => {
           const data = e.payload.doc.data();
           data.id = e.payload.doc.id;
-          console.log('Fetched Ambre ID:', data.id); // Log the ID
-
           return data;
         });
       },
       (err) => {
-        console.log('Error while fetching Ambre data: ', err);
-        // alert('Error while fetching Ambre data');
+        console.error('Error while fetching Ambre data: ', err);
       }
     );
   }
 
-  resetForm() {
-    this.id = '';
-    this.name = '';
-    this.price = 0;
-    this.description = '';
-    // this.category = '';
-    this.stock = 0;
-    // this.tags = [];
-    // this.ratings = 0;
-    // this.reviewsCount = 0;
-    // this.discount = 0;
-    // this.isFeatured = false;
-    this.selectedImage = null;
-    this.imagePreview = null;
-
-    // Reset error messages
-    this.errorMessages = {
+  resetForm(): void {
+    this.ambreForm.reset({
+      id: '',
       name: '',
-      price: '',
+      price: 0,
       description: '',
-      stock: '',
-      image: '',
-    };
-  }
-
-  // Validate form inputs
-  validateForm() {
-    // Reset error messages
-    this.errorMessages['name'] = '';
-    this.errorMessages['price'] = '';
-    this.errorMessages['description'] = '';
-    this.errorMessages['stock'] = '';
-    this.errorMessages['image'] = '';
-
-    // Validation checks
-    if (this.name === '') {
-      this.errorMessages['name'] = 'Name is required.';
-    }
-
-    if (this.price <= 0) {
-      this.errorMessages['price'] = 'Price must be greater than zero.';
-    }
-
-    if (this.description === '') {
-      this.errorMessages['description'] = 'Description is required.';
-    }
-
-    if (this.stock < 0) {
-      this.errorMessages['stock'] = 'Stock cannot be negative.';
-    }
-
-    if (!this.selectedImage && !this.imagePreview) {
-      this.errorMessages['image'] = 'Image is required.';
-    }
-
-    // Return true if there are no error messages
-    return !Object.values(this.errorMessages).some((msg) => msg !== '');
+      stock: 0,
+      images: [],
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+    this.selectedImage = null;
+    this.imagePreview = [];
   }
 
   // Add new product with image upload
-  addAmbre() {
-    if (!this.validateForm()) {
-      // Create a string with error messages for each invalid field
-      let errorMessage = '';
+  addAmbre(): void {
+    if (this.ambreForm.valid) {
+      const ambreData = { ...this.ambreForm.value, id: this.firestore.createId() };
 
-      if (this.errorMessages['name']) {
-        errorMessage += `Name Error: ${this.errorMessages['name']}<br>`;
-      }
-      if (this.errorMessages['price']) {
-        errorMessage += `Price Error: ${this.errorMessages['price']}<br>`;
-      }
-      if (this.errorMessages['description']) {
-        errorMessage += `Description Error: ${this.errorMessages['description']}<br>`;
-      }
-      if (this.errorMessages['stock']) {
-        errorMessage += `Stock Error: ${this.errorMessages['stock']}<br>`;
-      }
-      if (this.errorMessages['image']) {
-        errorMessage += `Image Error: ${this.errorMessages['image']}<br>`;
-      }
-
-      // Display the error message using a customized alert
-      alert(errorMessage.replace(/<br>/g, '\n')); // To show new lines in the alert
-
-      return;
+      this.ambreService.addAmbre(ambreData).then(() => {
+        this.resetForm();
+        alert('Ambre added successfully!');
+      });
+    } else {
+      alert('Please fill out all required fields correctly.');
     }
-
-    // Upload image to Firebase Storage
-    const filePath = `AmbreImages/${Date.now()}_${this.selectedImage?.name}`;
-    const fileRef = this.storage.ref(filePath);
-    const task = this.storage.upload(filePath, this.selectedImage);
-
-    // Get the download URL after upload completes
-    task
-      .snapshotChanges()
-      .pipe(
-        finalize(() => {
-          fileRef.getDownloadURL().subscribe((url) => {
-            this.ambreObj.id = '';
-            this.ambreObj.name = this.name;
-            this.ambreObj.price = this.price;
-            this.ambreObj.description = this.description;
-            // this.ambreObj.category = this.category;
-            this.ambreObj.stock = this.stock;
-            // this.ambreObj.tags = this.tags;
-            // this.ambreObj.ratings = this.ratings;
-            // this.ambreObj.reviewsCount = this.reviewsCount;
-            // this.ambreObj.discount = this.discount;
-            // this.ambreObj.isFeatured = this.isFeatured;
-            this.ambreObj.imageUrl = url; // Set the image URL
-            this.ambreObj.createdAt = new Date();
-            this.ambreObj.updatedAt = new Date();
-
-            // Add product to Firestore
-            this.amb.addAmbre(this.ambreObj).then(() => {
-              this.resetForm();
-            });
-          });
-        })
-      )
-      .subscribe();
   }
 
-  updateAmbre() {
-    console.log('id: ' + this.id);
-  
-    // Validate form fields and check for errors
-    if (!this.validateForm()) {
-      let errorMessage = '';
-  
-      if (this.errorMessages['name']) {
-        errorMessage += `Name Error: ${this.errorMessages['name']}<br>`;
-      }
-      if (this.errorMessages['price']) {
-        errorMessage += `Price Error: ${this.errorMessages['price']}<br>`;
-      }
-      if (this.errorMessages['description']) {
-        errorMessage += `Description Error: ${this.errorMessages['description']}<br>`;
-      }
-      if (this.errorMessages['stock']) {
-        errorMessage += `Stock Error: ${this.errorMessages['stock']}<br>`;
-      }
-      if (!this.errorMessages['image']) {
-        errorMessage += `Image Error: ${this.errorMessages['image']}<br>`;
-      }
-  
-      // Display the error message using a customized alert
-      alert(errorMessage.replace(/<br>/g, '\n')); // To show new lines in the alert
-      return;
-    }
-  
-    if (!this.id) {
-      alert('No Ambre selected for update.');
-      return;
-    }
+  updateAmbre(): void {
+    if (this.ambreForm.valid && this.ambreForm.value.id) {
+      const updatedData = { ...this.ambreForm.value, updatedAt: new Date() };
 
-    const updateData: Partial<Ambre> = {
-      name: this.name,
-      price: this.price,
-      description: this.description,
-      stock: this.stock,
-      // discount: this.discount,
-      updatedAt: new Date(),
-    };
-
-    // Check if a new image is selected
-    if (this.selectedImage) {
-      // Upload new image to Firebase Storage
-      const filePath = `AmbreImages/${Date.now()}_${this.selectedImage?.name}`;
-      const fileRef = this.storage.ref(filePath);
-      const task = this.storage.upload(filePath, this.selectedImage);
-
-      // Update image URL after image upload completes
-      task
-        .snapshotChanges()
-        .pipe(
-          finalize(() => {
-            fileRef.getDownloadURL().subscribe((url) => {
-              updateData.imageUrl = url;
-
-              // Update product with new data and image URL
-              this.amb.updateAmbre(this.id, updateData).then(() => {
-                this.resetForm();
-                alert('Ambre updated successfully!');
-              });
-            });
-          })
-        )
-        .subscribe();
-    } else {
-      // If no new image is selected, update the product without changing the image URL
-      this.amb.updateAmbre(this.id, updateData).then(() => {
+      this.ambreService.updateAmbre(updatedData.id, updatedData).then(() => {
         this.resetForm();
         alert('Ambre updated successfully!');
       });
+    } else {
+      alert('Please select an Ambre to update and fill out all required fields.');
     }
   }
 
-  editAmbre(amb: Ambre) {
-    this.id = amb.id;
-    this.name = amb.name;
-    this.price = amb.price ?? 0;
-    this.description = amb.description;
-    this.stock = amb.stock ?? 0;
-    // this.discount = amb.discount ?? 0;
-    this.imagePreview = amb.imageUrl || ''; // Show the current image
+  editAmbre(amb: Ambre): void {
+    this.ambreForm.patchValue({
+      id: amb.id,
+      name: amb.name,
+      price: amb.price,
+      description: amb.description,
+      stock: amb.stock,
+      images: amb.images,
+      createdAt: amb.createdAt,
+      updatedAt: amb.updatedAt,
+    });
+    this.imagePreview = amb.images; // Affiche les images actuelles en preview
   }
 
-  deleteAmbre(amb: Ambre) {
-    if (window.confirm('Are you sure you want to delete ' + amb.name + ' ?')) {
-      this.amb.deleteAmbre(amb);
+  deleteAmbre(amb: Ambre): void {
+    if (window.confirm(`Are you sure you want to delete ${amb.name}?`)) {
+      this.ambreService.deleteAmbre(amb).then(() => {
+        alert('Ambre deleted successfully!');
+      });
     }
+  }
+  isFieldInvalid(fieldName: string): boolean {
+    const field = this.ambreForm.get(fieldName);
+    return !!field && field.invalid && (field.dirty || field.touched);
   }
 }
