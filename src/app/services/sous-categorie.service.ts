@@ -11,24 +11,26 @@ export class SousCategorieService {
 
   constructor(private firestore: AngularFirestore) {}
 
-  getSubCategoriesByCategory(categoryId: string): Observable<SousCategorie[]> {
+  getSousCategoriesByCategory(categoryId: string): Observable<SousCategorie[]> {
     return this.firestore
       .collection<SousCategorie>('sub-categories', (ref) =>
         ref.where('categoryId', '==', categoryId)
       )
       .valueChanges({ idField: 'id' });
   }
-
-  addSubCategory(subCategory: SousCategorie): Promise<void> {
+  getSousCategories(): Observable<SousCategorie[]> {
+    return this.collection.valueChanges({ idField: 'id' });
+  }
+  addSousCategorie(subCategory: SousCategorie): Promise<void> {
     const id = this.firestore.createId();
     return this.collection.doc(id).set({ ...subCategory, id });
   }
 
-  updateSubCategory(id: string, subCategory: Partial<SousCategorie>): Promise<void> {
+  updateSousCategorie(id: string, subCategory: Partial<SousCategorie>): Promise<void> {
     return this.collection.doc(id).update(subCategory);
   }
 
-  deleteSubCategory(id: string): Promise<void> {
+  deleteSousCategorie(id: string): Promise<void> {
     return this.collection.doc(id).delete();
   }
 }

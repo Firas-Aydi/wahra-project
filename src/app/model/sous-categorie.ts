@@ -1,4 +1,4 @@
-import { Produit } from "./produit";
+// import { Produit } from "./produit";
 
 export interface SousCategorie {
     // id: string; // Identifiant unique
@@ -7,8 +7,8 @@ export interface SousCategorie {
     // produits: Produit[]; // Produits associés à la sous-catégorie
     id: string;
     name: string;
-    description: string;
-    image: string;
+    // description: string;
+    // image: string;
     categoryId: string;
   }
   

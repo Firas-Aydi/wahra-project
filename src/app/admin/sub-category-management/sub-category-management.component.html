@@ -1,1 +1,50 @@
-<p>sub-category-management works!</p>
+<div class="sub-category-management">
+    <h2>Gestion des Sous-Catégories</h2>
+  
+    <!-- Formulaire pour ajouter ou modifier une sous-catégorie -->
+    <div class="form-container">
+      <h3>{{ editingIndex === null ? 'Ajouter' : 'Modifier' }} une Sous-Catégorie</h3>
+      <form [formGroup]="form" (ngSubmit)="saveForm()">
+        <div>
+          <label for="name">Nom :</label>
+          <input id="name" formControlName="name" placeholder="Nom" />
+        </div>
+        <div>
+          <label for="categoryId">Catégorie :</label>
+          <select id="categoryId" formControlName="categoryId" required>
+            <option *ngFor="let category of categories" [value]="category.id">
+              {{ category.name }}
+            </option>
+          </select>
+        </div>
+        <div class="actions">
+          <button type="submit" [disabled]="form.invalid">
+            {{ editingIndex === null ? 'Ajouter' : 'Enregistrer' }}
+          </button>
+          <button type="button" (click)="cancelForm()">Annuler</button>
+        </div>
+      </form>
+    </div>
+  
+    <!-- Tableau des sous-catégories -->
+    <table>
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Catégorie</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let subCategory of sousCategories; let i = index">
+          <td>{{ subCategory.name }}</td>
+          <td>{{ getCategoryName(subCategory.categoryId) }}</td>
+          <td>
+            <button (click)="editSubCategory(i)">Modifier</button>
+            <button (click)="deleteSubCategory(subCategory.id)">Supprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

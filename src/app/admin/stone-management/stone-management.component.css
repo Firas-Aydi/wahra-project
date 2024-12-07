@@ -1,0 +1,27 @@
+.stone-management {
+    padding: 1rem;
+  }
+  
+  .form-container {
+    margin-bottom: 2rem;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  table th,
+  table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  table th {
+    background-color: #f4f4f4;
+  }
+  
+  img {
+    border-radius: 4px;
+  }
+  

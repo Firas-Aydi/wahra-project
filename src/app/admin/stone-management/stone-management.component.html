@@ -1,1 +1,68 @@
-<p>stone-management works!</p>
+<div class="stone-management">
+    <h2>Gestion des Pierres</h2>
+  
+    <!-- Formulaire pour ajouter ou modifier une pierre -->
+    <div class="form-container">
+      <h3>{{ editingIndex === null ? 'Ajouter' : 'Modifier' }} une Pierre</h3>
+      <form [formGroup]="form" (ngSubmit)="saveForm()">
+        <div>
+          <label for="name">Nom :</label>
+          <input id="name" formControlName="name" placeholder="Nom de la pierre" />
+        </div>
+        <div>
+          <label for="description">Description :</label>
+          <textarea
+            id="description"
+            formControlName="description"
+            placeholder="Description"
+          ></textarea>
+        </div>
+        <div>
+          <label for="benefits">Bienfaits :</label>
+          <textarea
+            id="benefits"
+            formControlName="benefits"
+            placeholder="Bienfaits"
+          ></textarea>
+        </div>
+        <div>
+          <label for="image">Image :</label>
+          <input type="file" (change)="onFileSelected($event)" />
+          <!-- <small *ngIf="!form.value.image">Une image doit être ajoutée.</small> -->
+          <span *ngIf="isUploading">Téléchargement en cours...</span>
+        </div>
+        <div class="actions">
+          <button type="submit" [disabled]="form.invalid || isUploading">
+            {{ editingIndex === null ? 'Ajouter' : 'Enregistrer' }}
+          </button>
+          <button type="button" (click)="cancelForm()">Annuler</button>
+        </div>
+      </form>
+    </div>
+  
+    <!-- Tableau des pierres -->
+    <table>
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Description</th>
+          <th>Bienfaits</th>
+          <th>Image</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pierre of pierres; let i = index">
+          <td>{{ pierre.name }}</td>
+          <td>{{ pierre.description }}</td>
+          <td>{{ pierre.benefits }}</td>
+          <td><img [src]="pierre.image" alt="Image de la pierre" width="50" /></td>
+          <td>
+            <button (click)="editPierre(i)">Modifier</button>
+            <button (click)="deletePierre(pierre.id, pierre.image)">Supprimer</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
