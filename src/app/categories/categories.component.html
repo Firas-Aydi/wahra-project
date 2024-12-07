@@ -1,0 +1,40 @@
+<p>categories works!</p>
+<div class="container mt-4">
+    <h1 class="text-center">Nos Catégories</h1>
+    <hr>
+    <div *ngIf="isLoading" class="text-center">
+      <p>Chargement des catégories...</p>
+    </div>
+    <div *ngIf="!isLoading && categories.length === 0" class="text-center">
+      <p>Aucune catégorie disponible.</p>
+    </div>
+    <div *ngIf="!isLoading && categories.length > 0" class="row">
+      <div
+        *ngFor="let categorie of categories"
+        class="col-md-4 col-sm-6 my-3 d-flex align-items-stretch"
+      >
+        <div class="card shadow">
+          <!-- <img
+            [src]="categorie.image || 'assets/placeholder-category.jpg'"
+            class="card-img-top"
+            alt="{{ categorie.name }}"
+          /> -->
+          <div class="card-body">
+            <h5 class="card-title text-center">{{ categorie.name }}</h5>
+            <!-- <p class="card-text">
+              {{ categorie.description || 'Découvrez nos produits dans cette catégorie.' }}
+            </p> -->
+            <div class="text-center">
+              <a
+                [routerLink]="['/categories', categorie.id]"
+                class="btn btn-primary"
+              >
+                Explorer
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

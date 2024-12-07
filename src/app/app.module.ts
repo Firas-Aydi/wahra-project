@@ -14,6 +14,10 @@ import { manageAmbreComponent } from './manageAmbre/manageAmbre.component';
 import { AmbreComponent } from './ambre/ambre.component';
 import { CartComponent } from './cart/cart.component';
 import { AmbrdetailComponent } from './ambrdetail/ambrdetail.component';
+import { CategoriesComponent } from './categories/categories.component';
+import { SousCategoriesComponent } from './sous-categories/sous-categories.component';
+import { ProduitsComponent } from './produits/produits.component';
+import { BienfaitsComponent } from './bienfaits/bienfaits.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +28,11 @@ import { AmbrdetailComponent } from './ambrdetail/ambrdetail.component';
     manageAmbreComponent,
     AmbreComponent,
     CartComponent,
-    AmbrdetailComponent
+    AmbrdetailComponent,
+    CategoriesComponent,
+    SousCategoriesComponent,
+    ProduitsComponent,
+    BienfaitsComponent
   ],
   imports: [
     BrowserModule,

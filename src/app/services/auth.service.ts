@@ -8,7 +8,10 @@ import firebase from 'firebase/compat/app';
 })
 export class AuthService {
   user: Observable<firebase.User | null>;
-
+  isAdmin(): boolean {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    return user?.role === 'admin'; // Assurez-vous que le rôle de l'utilisateur est défini
+  }
   constructor(private fireauth: AngularFireAuth) {
     this.user = this.fireauth.user;
    }
