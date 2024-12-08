@@ -1,27 +1,177 @@
 .stone-management {
-    padding: 1rem;
+    margin: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   
+  .stone-management h2 {
+    text-align: center;
+    color: #333;
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  /* Conteneur du formulaire */
   .form-container {
-    margin-bottom: 2rem;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
   }
   
+  .form-container h3 {
+    text-align: center;
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+  }
+  
+  /* Formulaire */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  form div {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  form label {
+    font-weight: bold;
+    color: #555;
+  }
+  
+  form input,
+  form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  form textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  form button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+  }
+  
+  form button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  form button:hover:not(:disabled) {
+    background-color: #0056b3;
+  }
+  
+  form button[type="button"] {
+    background-color: #6c757d;
+  }
+  
+  form button[type="button"]:hover {
+    background-color: #5a6268;
+  }
+  
+  /* Actions - bouton "Annuler" et "Ajouter" */
+  .actions {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .actions button {
+    flex: 1;
+    margin: 0 5px;
+  }
+  
+  /* Tableau des pierres */
   table {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 30px;
+    background-color: white;
+  }
+  
+  table thead {
+    background-color: #007bff;
+    color: white;
   }
   
   table th,
   table td {
+    padding: 10px;
+    text-align: left;
     border: 1px solid #ddd;
-    padding: 8px;
   }
   
-  table th {
-    background-color: #f4f4f4;
+  table tbody tr:hover {
+    background-color: #f1f1f1;
   }
   
-  img {
+  table button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
     border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s;
+  }
+  
+  table button:hover {
+    background-color: #0056b3;
+  }
+  
+  table button:last-child {
+    background-color: #dc3545;
+  }
+  
+  table button:last-child:hover {
+    background-color: #c82333;
+  }
+  
+  /* Image dans le tableau */
+  table img {
+    border-radius: 4px;
+    max-height: 50px;
+  }
+  
+  /* Notification de téléchargement */
+  form span {
+    color: #28a745;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  /* Champ de fichier d'image */
+  input[type="file"] {
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 4px;
+  }
+
+  
+
+  @media (max-width: 768px) {
+    table {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
   }
   

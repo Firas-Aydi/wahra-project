@@ -39,7 +39,7 @@ export class CategoryManagementComponent implements OnInit {
     });
   }
 
-  openAddCategoryForm(): void {
+  cancel(): void {
     this.isEditMode = false; // Mode ajout
     this.selectedCategoryId = null;
     this.categoryForm.reset(); // Réinitialiser le formulaire

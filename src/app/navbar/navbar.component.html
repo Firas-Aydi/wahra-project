@@ -50,18 +50,24 @@
         <li class="nav-item" *ngIf="isUser && userType === 'admin'">
           <a class="sub-nav-link" routerLink="managePierre" (click)="toggleNavbar()">Manage Pierre</a>
         </li> -->
-        <li><a routerLink="/categories-management">Gestion des Catégories</a></li>
-    <li><a routerLink="/sub-categories-management">Gestion des Sous-Catégories</a></li>
-    <li><a routerLink="/products-management">Gestion des Produits</a></li>
-    <li><a routerLink="/stones-management">Gestion des Pierres</a></li>
-    <li><a routerLink="/users-management">Gestion des Utilisateurs</a></li>
-    <li><a routerLink="/carts-management">Gestion des Paniers</a></li>
         <li class="nav-item">
+          <a class="sub-nav-link" routerLink="/categories-management">Gestion des Catégories</a></li>
+    <li class="nav-item">
+          <a class="sub-nav-link" routerLink="/sub-categories-management">Gestion des Sous-Catégories</a></li>
+    <li class="nav-item">
+          <a class="sub-nav-link" routerLink="/products-management">Gestion des Produits</a></li>
+    <li class="nav-item">
+          <a class="sub-nav-link" routerLink="/stones-management">Gestion des Pierres</a></li>
+    <li class="nav-item">
+          <a class="sub-nav-link" routerLink="/users-management">Gestion des Utilisateurs</a></li>
+    <li class="nav-item">
+          <a class="sub-nav-link" routerLink="/carts-management">Gestion des Paniers</a></li>
+        <!-- <li class="nav-item">
           <a class="sub-nav-link" routerLink="ambre" (click)="toggleNavbar()">Ambre</a>
         </li>
         <li class="nav-item">
           <a class="sub-nav-link" routerLink="pierre" (click)="toggleNavbar()">Pierre</a>
-        </li>
+        </li> -->
       </ul>
     </div>
   </div>

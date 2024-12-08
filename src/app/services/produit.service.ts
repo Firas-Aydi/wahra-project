@@ -16,9 +16,12 @@ export class ProductService {
   getProduits(): Observable<Produit[]> {
     return this.firestore.collection<Produit>(this.collectionName).valueChanges({ idField: 'id' });
   }
-
+  generateId(): string {
+    return this.firestore.createId();
+  }
+  
   addProduit(produit: Produit): Promise<void> {
-    const id = this.firestore.createId();
+    const id = this.generateId()
     produit.id = id;
     produit.createdAt = new Date();
     produit.updatedAt = new Date();
@@ -35,7 +38,7 @@ export class ProductService {
   }
 
   uploadImage(file: File, produitId: string): Observable<string> {
-    const filePath = `produits/${produitId}/${file.name}`; // Chemin de stockage
+    const filePath = `produits/${produitId}/${file.name}`;
     const fileRef = this.storage.ref(filePath);
     const uploadTask = this.storage.upload(filePath, file);
 
@@ -43,7 +46,7 @@ export class ProductService {
       uploadTask.snapshotChanges().pipe(
         finalize(() => {
           fileRef.getDownloadURL().subscribe((url) => {
-            observer.next(url);  // Renvoie l'URL après téléchargement
+            observer.next(url);  
             observer.complete();
           });
         })
