@@ -1,1 +1,66 @@
-<p>product-management works!</p>
+<h1>Gestion des Produits</h1>
+
+<!-- Formulaire de gestion -->
+<form [formGroup]="form" (ngSubmit)="addProduit()">
+    <div><label>Nom:</label>
+        <input formControlName="name" placeholder="Nom du produit" />
+    </div>
+    <div><label>Description:</label>
+        <textarea formControlName="description" placeholder="Description"></textarea>
+    </div>
+    <div><label>Prix:</label>
+        <input type="number" formControlName="price" />
+    </div>
+    <div><label>Stock:</label>
+        <input type="number" formControlName="stock" />
+    </div>
+    <div><label>Sous-catégorie:</label>
+        <select formControlName="sousCategoryId">
+            <option *ngFor="let cat of sousCategories" [value]="cat.id">{{ cat.name }}</option>
+        </select>
+    </div>
+    <div><label>Pierre associée:</label>
+        <select formControlName="stoneId">
+            <option *ngFor="let pierre of pierres" [value]="pierre.id">{{ pierre.name }}</option>
+        </select>
+    </div>
+    <div><label>Images:</label>
+        <input type="file" multiple (change)="onFileChange($event)" />
+        <div *ngIf="isUploading">Téléchargement en cours...
+        </div>
+    </div>
+    <button type="submit">Enregistrer</button>
+</form>
+
+<!-- Tableau des produits -->
+<table>
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Description</th>
+            <th>Prix</th>
+            <th>Stock</th>
+            <!-- <th>Sous-catégorie</th>
+            <th>Pierre associée</th> -->
+            <th>Images</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let produit of produits; let i = index">
+            <td>{{ produit.name }}</td>
+            <td>{{ produit.description }}</td>
+            <td>{{ produit.price }}€</td>
+            <td>{{ produit.stock }}</td>
+            <!-- <td>{{ produit.sousCategory?.name }}</td>
+            <td>{{ produit.stone?.name }}</td> -->
+            <td>
+                <img *ngFor="let img of produit.images" [src]="img" alt="Image produit" width="50" />
+            </td>
+            <td>
+                <button (click)="editProduit(i)">Modifier</button>
+                <button (click)="deleteProduit(produit.id)">Supprimer</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
