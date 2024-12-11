@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../services/produit.service';
+import { Produit } from '../model/produit';
 
 @Component({
   selector: 'app-products',
@@ -8,7 +9,8 @@ import { ProductService } from '../services/produit.service';
   styleUrls: ['./produits.component.css'],
 })
 export class ProduitsComponent implements OnInit {
-  products: any[] = [];
+  products: Produit[] = [];
+  pierreId: string = '';
   sousCategorieId: string = '';
 
   constructor(
@@ -17,21 +19,37 @@ export class ProduitsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    
     // Écouter les changements de paramètres dans l'URL
     this.route.paramMap.subscribe((params) => {
-      this.sousCategorieId = params.get('id') || '';
-      console.log('Paramètre sousCategorieId changé :', this.sousCategorieId);
+      this.sousCategorieId = params.get('sousCategorieId') || '';
+      this.pierreId = params.get('pierreId') || '';
+      
       if (this.sousCategorieId) {
-        this.loadProducts(this.sousCategorieId);
+        this.loadProductsBySousCategorie(this.sousCategorieId);
+      } else if (this.pierreId) {
+        this.loadProductsByPierre(this.pierreId);
       }
     });
+    
   }
 
-  loadProducts(sousCategorieId: string): void {
+  loadProductsBySousCategorie(sousCategorieId: string): void {
     this.productService.getProductsBySousCategorie(sousCategorieId).subscribe(
       (products) => {
         this.products = products;
-        console.log('Produits chargés :', this.products);
+        console.log('Produits chargés pour la sousCategorie :', this.products);
+      },
+      (error) => {
+        console.error('Erreur lors du chargement des produits :', error);
+      }
+    );
+  }
+  loadProductsByPierre(pierreId: string): void {
+    this.productService.getProductsByPierre(pierreId).subscribe(
+      (products) => {
+        this.products = products;
+        console.log('Produits chargés pour la pierre :', this.products);
       },
       (error) => {
         console.error('Erreur lors du chargement des produits :', error);

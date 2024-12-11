@@ -1,4 +1,4 @@
-<div class="stone-management">
+<div class="container">
   <h2>Gestion des Pierres</h2>
   <div class="row">
     <div class="col-12">
@@ -14,7 +14,7 @@
               <label for="name">Nom :</label>
               <input id="name" class="form-control" formControlName="name" placeholder="Nom de la pierre" />
             </div>
-                    
+
             <!-- Image -->
             <div class="col-md-4 mb-3">
               <label for="image">Image :</label>
@@ -25,28 +25,26 @@
             <div class="col-md-4 mb-3">
               <label>Catégories :</label>
               <div *ngFor="let category of categories">
-                <input
-                  type="checkbox"
-                  [value]="category.id"
-                  (change)="onCategoryChange(category.id, $event)"
-                  [checked]="form.value.categoryId.includes(category.id)"
-                />
+                <input type="checkbox" [value]="category.id" (change)="onCategoryChange(category.id, $event)"
+                  [checked]="form.value.categoryId.includes(category.id)" />
                 {{ category.name }}
               </div>
             </div>
-            
+
             <!-- Description -->
             <div class="col-md-6 mb-3">
               <label for="description">Description :</label>
-              <textarea id="description" class="form-control" formControlName="description" placeholder="Description"></textarea>
+              <textarea id="description" class="form-control" formControlName="description"
+                placeholder="Description"></textarea>
             </div>
             <!-- Bienfaits -->
             <div class="col-md-6 mb-3">
               <label for="benefits">Bienfaits :</label>
-              <textarea id="bienfaits" class="form-control" formControlName="bienfaits" placeholder="Bienfaits"></textarea>
+              <textarea id="bienfaits" class="form-control" formControlName="bienfaits"
+                placeholder="Bienfaits"></textarea>
             </div>
           </div>
-        
+
           <div class="row">
             <!-- Boutons d'action -->
             <div class="col-12 text-center">
@@ -57,7 +55,7 @@
             </div>
           </div>
         </form>
-        
+
       </div>
     </div>
   </div>

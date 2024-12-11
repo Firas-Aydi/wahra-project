@@ -26,6 +26,12 @@ export class ProductService {
       )
       .valueChanges();
   }
+  getProductsByPierre(pierreId: string): Observable<Produit[]> {
+    return this.firestore
+      .collection<Produit>('produits', (ref) => ref.where('pierreId', '==', pierreId))
+      .valueChanges({ idField: 'id' });
+  }
+
   addProduit(produit: Produit): Promise<void> {
     const id = this.generateId()
     produit.id = id;

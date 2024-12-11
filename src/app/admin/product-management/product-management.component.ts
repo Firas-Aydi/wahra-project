@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Produit } from 'src/app/model/produit';
 import { ProductService } from 'src/app/services/produit.service';
 import { SousCategorieService } from 'src/app/services/sous-categorie.service';
@@ -9,7 +14,8 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-product-management',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],templateUrl: './product-management.component.html',
+  imports: [CommonModule, ReactiveFormsModule],
+  templateUrl: './product-management.component.html',
   styleUrls: ['./product-management.component.css'],
 })
 export class ProductManagementComponent implements OnInit {
@@ -33,7 +39,7 @@ export class ProductManagementComponent implements OnInit {
       price: [0, [Validators.required, Validators.min(0)]],
       stock: [0, [Validators.required, Validators.min(0)]],
       sousCategoryId: ['', Validators.required],
-      stoneId: ['', Validators.required],
+      pierreId: ['', Validators.required],
       images: [[]],
     });
   }
@@ -51,32 +57,32 @@ export class ProductManagementComponent implements OnInit {
   }
 
   loadSousCategories(): void {
-  this.sousCategorieService.getSousCategories().subscribe((data) => {
-    if (data) {
-      this.sousCategories = data;
-    } else {
-      console.error("Erreur : données de sous-catégories non disponibles.");
-    }
-  });
-}
+    this.sousCategorieService.getSousCategories().subscribe((data) => {
+      if (data) {
+        this.sousCategories = data;
+      } else {
+        console.error('Erreur : données de sous-catégories non disponibles.');
+      }
+    });
+  }
 
-loadPierres(): void {
-  this.pierreService.getPierres().subscribe((data) => {
-    if (data) {
-      this.pierres = data;
-    } else {
-      console.error("Erreur : données de pierres non disponibles.");
-    }
-  });
-}
-getSousCategorieName(sousCategoryId: string): string {
-  const cat = this.sousCategories.find(cat => cat.id === sousCategoryId);
-  return cat?.name || 'Non défini';
-}
-getPierreName(pierreId: string): string {
-  const p = this.pierres.find(p => p.id === pierreId);
-  return p?.name || 'Non défini';
-}
+  loadPierres(): void {
+    this.pierreService.getPierres().subscribe((data) => {
+      if (data) {
+        this.pierres = data;
+      } else {
+        console.error('Erreur : données de pierres non disponibles.');
+      }
+    });
+  }
+  getSousCategorieName(sousCategoryId: string): string {
+    const cat = this.sousCategories.find((cat) => cat.id === sousCategoryId);
+    return cat?.name || 'Non défini';
+  }
+  getPierreName(pierreId: string): string {
+    const p = this.pierres.find((p) => p.id === pierreId);
+    return p?.name || 'Non défini';
+  }
 
   onFileChange(event: any) {
     const files: FileList = event.target.files;
@@ -88,9 +94,11 @@ getPierreName(pierreId: string): string {
     const urls: string[] = [];
     for (const file of this.selectedFiles) {
       const url = await new Promise<string>((resolve) =>
-        this.productService.uploadImage(file, produitId).subscribe((downloadUrl) => {
-          resolve(downloadUrl);
-        })
+        this.productService
+          .uploadImage(file, produitId)
+          .subscribe((downloadUrl) => {
+            resolve(downloadUrl);
+          })
       );
       urls.push(url);
     }
@@ -100,14 +108,19 @@ getPierreName(pierreId: string): string {
 
   async addProduit() {
     if (this.form.valid) {
-      const produitId = this.editingIndex === null ? this.productService.generateId() : this.produits[this.editingIndex].id;
+      const produitId =
+        this.editingIndex === null
+          ? this.productService.generateId()
+          : this.produits[this.editingIndex].id;
       const images = await this.uploadFiles(produitId);
       const produit = { ...this.form.value, id: produitId, images };
 
       if (this.editingIndex === null) {
         this.productService.addProduit(produit).then(() => this.resetForm());
       } else {
-        this.productService.updateProduit(produitId, produit).then(() => this.resetForm());
+        this.productService
+          .updateProduit(produitId, produit)
+          .then(() => this.resetForm());
       }
     }
   }

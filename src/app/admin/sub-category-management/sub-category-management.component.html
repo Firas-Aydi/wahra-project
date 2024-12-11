@@ -1,15 +1,17 @@
 <div class="sub-category-management">
-    <h2>Gestion des Sous-Catégories</h2>
-  
-    <!-- Formulaire pour ajouter ou modifier une sous-catégorie -->
-    <div class="form-container">
-      <h3>{{ editingIndex === null ? 'Ajouter' : 'Modifier' }} une Sous-Catégorie</h3>
-      <form [formGroup]="form" (ngSubmit)="saveForm()">
-        <div>
+  <h2>Gestion des Sous-Catégories</h2>
+
+  <!-- Formulaire pour ajouter ou modifier une sous-catégorie -->
+  <div class="form-container">
+    <h3>{{ editingIndex === null ? 'Ajouter' : 'Modifier' }} une Sous-Catégorie</h3>
+    <form [formGroup]="form" (ngSubmit)="saveForm()">
+      <div class="row">
+        <!-- Nom -->
+        <div class="col-md-6 mb-3">
           <label for="name">Nom :</label>
-          <input id="name" formControlName="name" placeholder="Nom" />
+          <input id="name" class="form-control" formControlName="name" placeholder="Nom" />
         </div>
-        <div>
+        <div class="col-md-6 mb-3">
           <label for="categoryId">Catégorie :</label>
           <select id="categoryId" formControlName="categoryId" required>
             <option *ngFor="let category of categories" [value]="category.id">
@@ -17,34 +19,37 @@
             </option>
           </select>
         </div>
-        <div class="actions">
-          <button type="submit" [disabled]="form.invalid">
+      </div>
+      <div class="row">
+        <!-- Boutons d'action -->
+        <div class="col-12 text-center">
+          <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
             {{ editingIndex === null ? 'Ajouter' : 'Enregistrer' }}
           </button>
-          <button type="button" (click)="cancelForm()">Annuler</button>
+          <button type="button" class="btn btn-secondary" (click)="cancelForm()">Annuler</button>
         </div>
-      </form>
-    </div>
-  
-    <!-- Tableau des sous-catégories -->
-    <table>
-      <thead>
-        <tr>
-          <th>Nom</th>
-          <th>Catégorie</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let subCategory of sousCategories; let i = index">
-          <td>{{ subCategory.name }}</td>
-          <td>{{ getCategoryName(subCategory.categoryId) }}</td>
-          <td>
-            <button (click)="editSubCategory(i)">Modifier</button>
-            <button (click)="deleteSubCategory(subCategory.id)">Supprimer</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+      </div>
+    </form>
   </div>
-  
+
+  <!-- Tableau des sous-catégories -->
+  <table>
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Catégorie</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let subCategory of sousCategories; let i = index">
+        <td>{{ subCategory.name }}</td>
+        <td>{{ getCategoryName(subCategory.categoryId) }}</td>
+        <td>
+          <button (click)="editSubCategory(i)">Modifier</button>
+          <button (click)="deleteSubCategory(subCategory.id)">Supprimer</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

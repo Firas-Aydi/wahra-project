@@ -9,7 +9,7 @@ export interface Produit {
     images: string[]; // Liste des URLs des images
     // pierre?: Pierre; // Pierre utilisée (optionnelle)
     sousCategoryId: string;
-    stoneId: string;
+    pierreId: string;
     createdAt: Date; // Date de création
     updatedAt: Date; // Date de mise à jour
   }

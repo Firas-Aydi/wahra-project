@@ -97,10 +97,10 @@ export class NavbarComponent implements OnInit {
               );
             });
 
-            console.log(
-              'Catégories avec pierres et sous-catégories :',
-              this.categories
-            );
+            // console.log(
+            //   'Catégories avec pierres et sous-catégories :',
+            //   this.categories
+            // );
           });
         });
     });

@@ -1,79 +1,95 @@
-<h1>Gestion des Produits</h1>
+<div class="container">
+  <h2>Gestion des Produits</h2>
+  <div class="row">
+    <div class="col-12">
+      <div class="card border-0 shadow p-4">
+        <!-- Formulaire de gestion -->
+        <form [formGroup]="form" (ngSubmit)="addProduit()">
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <label>Nom:</label>
+              <input class="form-control" formControlName="name" placeholder="Nom du produit" />
+            </div>
+            <div class="col-md-4 mb-3">
+              <label>Prix:</label>
+              <input type="number" class="form-control" formControlName="price" />
+            </div>
 
-<!-- Formulaire de gestion -->
-<form [formGroup]="form" (ngSubmit)="addProduit()">
-  <div>
-    <label>Nom:</label>
-    <input formControlName="name" placeholder="Nom du produit" />
+            <div class="col-md-4 mb-3">
+              <label>Stock:</label>
+              <input type="number" class="form-control" formControlName="stock" />
+            </div>
+            <div class="col-md-4 mb-3">
+              <label>Sous-catégorie:</label>
+              <select class="form-select" formControlName="sousCategoryId">
+                <option *ngFor="let cat of sousCategories" [value]="cat.id">{{ cat.name }}</option>
+              </select>
+            </div>
+
+            <div class="col-md-4 mb-3">
+              <label>Pierre associée:</label>
+              <select class="form-select" formControlName="pierreId">
+                <option *ngFor="let pierre of pierres" [value]="pierre.id">{{ pierre.name }}</option>
+              </select>
+            </div>
+            <div class="col-md-4 mb-3">
+              <label>Images:</label>
+              <input type="file" class="form-control" multiple (change)="onFileChange($event)" />
+              <div *ngIf="isUploading" class="text-success mt-2">Téléchargement en cours...</div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+              <label>Description:</label>
+              <textarea class="form-control" formControlName="description" placeholder="Description"></textarea>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+              <button type="submit" class="btn btn-primary me-2" [disabled]="form.invalid || isUploading">
+                {{ editingIndex === null ? 'Ajouter' : 'Enregistrer' }}
+              </button>
+              <button type="button" class="btn btn-secondary" (click)="resetForm()">Annuler</button>
+            </div>
+          </div>
+      </form>
+    </div>
   </div>
-  <div>
-    <label>Description:</label>
-    <textarea formControlName="description" placeholder="Description"></textarea>
-  </div>
-  <div>
-    <label>Prix:</label>
-    <input type="number" formControlName="price" />
-  </div>
-  <div>
-    <label>Stock:</label>
-    <input type="number" formControlName="stock" />
-  </div>
-  <div>
-    <label>Sous-catégorie:</label>
-    <select formControlName="sousCategoryId">
-      <option *ngFor="let cat of sousCategories" [value]="cat.id">{{ cat.name }}</option>
-    </select>
-  </div>
-  <div>
-    <label>Pierre associée:</label>
-    <select formControlName="stoneId">
-      <option *ngFor="let pierre of pierres" [value]="pierre.id">{{ pierre.name }}</option>
-    </select>
-  </div>
-  <div>
-    <label>Images:</label>
-    <input type="file" multiple (change)="onFileChange($event)" />
-    <div *ngIf="isUploading">Téléchargement en cours...</div>
-  </div>
-  <button type="submit" [disabled]="form.invalid || isUploading">
-    {{ editingIndex === null ? 'Ajouter' : 'Enregistrer' }}
-  </button>
-  <button type="button" (click)="resetForm()">Annuler</button>
-</form>
+</div>
+</div>
 
 <!-- Tableau des produits -->
 <table>
-    <thead>
-      <tr>
-        <th>Nom</th>
-        <th>Description</th>
-        <th>Prix</th>
-        <th>Stock</th>
-        <th>Sous-catégorie</th>
-        <th>Pierre associée</th>
-        <th>Images</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let produit of produits; let i = index">
-        <td>{{ produit.name }}</td>
-        <td>{{ produit.description }}</td>
-        <td>{{ produit.price | currency: 'EUR' }}</td>
-        <td>{{ produit.stock }}</td>
-        <td>{{ getSousCategorieName(produit.sousCategoryId) }}</td>
-        <td>{{ getPierreName(produit.stoneId) }}</td>
-        <td>
-          <ng-container *ngIf="produit.images?.length; else noImage">
-            <img *ngFor="let image of produit.images" [src]="image" alt="Image" width="50" height="50" />
-          </ng-container>
-          <ng-template #noImage>Aucune image</ng-template>
-        </td>
-        <td>
-          <button (click)="editProduit(i)">Modifier</button>
-          <button (click)="deleteProduit(produit.id)">Supprimer</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Description</th>
+      <th>Prix</th>
+      <th>Stock</th>
+      <th>Sous-catégorie</th>
+      <th>Pierre associée</th>
+      <th>Images</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let produit of produits; let i = index">
+      <td>{{ produit.name }}</td>
+      <td>{{ produit.description }}</td>
+      <td>{{ produit.price | currency: 'EUR' }}</td>
+      <td>{{ produit.stock }}</td>
+      <td>{{ getSousCategorieName(produit.sousCategoryId) }}</td>
+      <td>{{ getPierreName(produit.pierreId) }}</td>
+      <td>
+        <ng-container *ngIf="produit.images?.length; else noImage">
+          <img *ngFor="let image of produit.images" [src]="image" alt="Image" width="50" height="50" />
+        </ng-container>
+        <ng-template #noImage>Aucune image</ng-template>
+      </td>
+      <td>
+        <button (click)="editProduit(i)">Modifier</button>
+        <button (click)="deleteProduit(produit.id)">Supprimer</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

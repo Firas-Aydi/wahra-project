@@ -28,8 +28,8 @@ const routes: Routes = [
   { path: 'categories', component: CategoriesComponent },
   { path: 'categories/:id', component: SousCategoriesComponent },
   
-  { path: 'sous-categorie/:id', component: ProduitsComponent },
-  { path: 'pierres/:id', component: ProduitsComponent },
+  { path: 'sous-categorie/:sousCategorieId', component: ProduitsComponent },
+  { path: 'pierres/:pierreId', component: ProduitsComponent },
   
   { path: 'products/:id', component: ProduitsComponent },
   { path: 'bienfaits/:pierreId', component: BienfaitsComponent },
