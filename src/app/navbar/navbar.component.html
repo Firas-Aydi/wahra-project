@@ -21,7 +21,7 @@
 
     <!-- Menu utilisateur -->
     <ul class="navbar-nav ms-auto">
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="userType !== 'admin'">
         <a class="nav-link" routerLink="cart"><i class="fa-solid fa-cart-shopping"></i></a>
       </li>
       <li class="nav-item" *ngIf="isUser">
@@ -43,19 +43,31 @@
 
       <ul class="navbar-nav mx-auto">
         <!-- Boucle sur les catégories -->
-        <ng-container *ngIf="!isUser">
+        <ng-container *ngIf="userType !== 'admin'">
           <li class="nav-item dropdown" *ngFor="let category of categories">
-            <a class="sub-nav-link dropdown-toggle" id="categoryDropdown{{ category.id }}" role="button"
-               data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="sub-nav-link " id="categoryDropdown{{ category.id }}" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
               {{ category.name }}
             </a>
-            <ul *ngIf="category.sousCategories.length > 0" class="dropdown-menu" [attr.aria-labelledby]="'categoryDropdown' + category.id">
-              <li *ngFor="let sousCat of category.sousCategories">
-                <a class="dropdown-item" [routerLink]="['/sous-categorie', sousCat.id]">
-                  {{ sousCat.name }}
-                </a>
-              </li>
-            </ul>
+            <ul *ngIf="category.sousCategories.length > 0 || category.pierres.length > 0" 
+              class="dropdown-menu" 
+              [attr.aria-labelledby]="'categoryDropdown' + category.id">
+            
+            <!-- Sous-catégories -->
+            <li *ngFor="let sousCat of category.sousCategories">
+              <a class="dropdown-item" [routerLink]="['/sous-categorie', sousCat.id]">
+                {{ sousCat.name }}
+              </a>
+            </li>
+          
+            <!-- Pierres -->
+            <li *ngFor="let pierre of category.pierres">
+              <a class="dropdown-item" [routerLink]="['/pierres', pierre.id]">
+                {{ pierre.name }}
+              </a>
+            </li>
+          </ul>
+          
           </li>
         </ng-container>
 

@@ -29,6 +29,7 @@ const routes: Routes = [
   { path: 'categories/:id', component: SousCategoriesComponent },
   
   { path: 'sous-categorie/:id', component: ProduitsComponent },
+  { path: 'pierres/:id', component: ProduitsComponent },
   
   { path: 'products/:id', component: ProduitsComponent },
   { path: 'bienfaits/:pierreId', component: BienfaitsComponent },

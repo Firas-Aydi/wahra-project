@@ -3,9 +3,10 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Collapse } from 'bootstrap';
+// import { Collapse } from 'bootstrap';
 import { CategorieService } from 'src/app/services/categorie.service';
 import { SousCategorieService } from '../services/sous-categorie.service';
+import { PierreService } from '../services/pierre.service';
 
 interface UserData {
   role: string;
@@ -20,13 +21,15 @@ interface UserData {
 export class NavbarComponent implements OnInit {
   isUser: boolean = false;
   userType: string = ''; // Ajoutez une propriété pour stocker le type d'utilisateur
-  isNavbarOpen=false;
+  isNavbarOpen = false;
   categories: any[] = []; // Liste des catégories avec sous-catégories
   // sousCategories: any[] = [];
+  pierres: any[] = [];
 
   constructor(
     private categoryService: CategorieService,
     private sousCategorieService: SousCategorieService,
+    private pierreService: PierreService,
     private af: AngularFireAuth,
     private route: Router,
     private as: AuthService,
@@ -65,46 +68,43 @@ export class NavbarComponent implements OnInit {
     this.loadCategories();
   }
 
-  // loadCategories(): void {
-  //   this.categoryService.getCategories().subscribe((data) => {
-  //     this.categories = data;
-  //   });
-  // }
   loadCategories(): void {
     this.categoryService.getCategories().subscribe((categories) => {
       // console.log('Catégories récupérées :', categories);
-  
       this.categories = categories.map((category) => ({
         ...category,
         sousCategories: [],
+        pierres: [],
       }));
-  
-      this.sousCategorieService.getSousCategories().subscribe((sousCategories) => {
-        // console.log('Sous-catégories récupérées :', sousCategories);
-  
-        this.categories.forEach((category) => {
-          category.sousCategories = sousCategories.filter(
-            (sousCat) => sousCat.categoryId === category.id
-          );
-  
-          // Ajout d'un log pour vérifier la correspondance
-          // console.log(
-          //   `Catégorie : ${category.name}, Sous-Catégories :`,
-          //   category.sousCategories
-          // );
+
+      this.sousCategorieService
+        .getSousCategories()
+        .subscribe((sousCategories) => {
+          // console.log('Sous-catégories récupérées :', sousCategories);
+          this.categories.forEach((category) => {
+            category.sousCategories = sousCategories.filter(
+              (sousCat) => sousCat.categoryId === category.id
+            );
+          });
+
+          // Charger les pierres et les associer aux catégories
+          this.pierreService.getPierres().subscribe((pierres) => {
+            this.pierres = pierres;
+
+            this.categories.forEach((category) => {
+              category.pierres = this.pierres.filter((pierre) =>
+                pierre.categoryId.includes(category.id)
+              );
+            });
+
+            console.log(
+              'Catégories avec pierres et sous-catégories :',
+              this.categories
+            );
+          });
         });
-  
-        // console.log('Catégories avec sous-catégories :', this.categories);
-      });
     });
   }
-  
-  
-  // loadSousCategories(): void {
-  //   this.sousCategorieService.getSousCategories().subscribe((data) => {
-  //     this.sousCategories = data;
-  //   });
-  // }
 
   logout() {
     this.af
@@ -120,15 +120,14 @@ export class NavbarComponent implements OnInit {
     this.toggleNavbar();
   }
   toggleNavbar() {
-        const navbarCollapse = document.getElementById('navbarSupportedContent');
-        
-        // Toggle the navbar open/close state
-        this.isNavbarOpen = !this.isNavbarOpen;
-        if (navbarCollapse?.classList.contains('show')) {
-            navbarCollapse.classList.remove('show'); // Collapse it
-        } else {
-            navbarCollapse?.classList.add('show'); // Open it if not already open
-        }
+    const navbarCollapse = document.getElementById('navbarSupportedContent');
+
+    // Toggle the navbar open/close state
+    this.isNavbarOpen = !this.isNavbarOpen;
+    if (navbarCollapse?.classList.contains('show')) {
+      navbarCollapse.classList.remove('show'); // Collapse it
+    } else {
+      navbarCollapse?.classList.add('show'); // Open it if not already open
     }
-  
+  }
 }

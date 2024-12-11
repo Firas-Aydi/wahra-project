@@ -16,7 +16,7 @@ export class PierreService {
   ) {}
 
   getPierres(): Observable<Pierre[]> {
-    return this.firestore.collection<Pierre>(this.collectionName).valueChanges();
+    return this.firestore.collection<Pierre>(this.collectionName).valueChanges({ idField: 'id' });
   }
   getPierreById(id: string): Observable<Pierre | undefined> {
     return this.firestore.collection(this.collectionName).doc<Pierre>(id).valueChanges();
