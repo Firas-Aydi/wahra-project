@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Collapse } from 'bootstrap';
+import { CategorieService } from 'src/app/services/categorie.service';
+import { SousCategorieService } from '../services/sous-categorie.service';
 
 interface UserData {
   role: string;
@@ -19,8 +21,12 @@ export class NavbarComponent implements OnInit {
   isUser: boolean = false;
   userType: string = ''; // Ajoutez une propriété pour stocker le type d'utilisateur
   isNavbarOpen=false;
+  categories: any[] = []; // Liste des catégories avec sous-catégories
+  // sousCategories: any[] = [];
 
   constructor(
+    private categoryService: CategorieService,
+    private sousCategorieService: SousCategorieService,
     private af: AngularFireAuth,
     private route: Router,
     private as: AuthService,
@@ -35,17 +41,17 @@ export class NavbarComponent implements OnInit {
           .doc(userId)
           .get()
           .subscribe((doc) => {
-            // console.log('doc:', doc);
+            console.log('doc:', doc);
             if (doc.exists) {
               const userData = doc.data() as UserData;
               if (userData && userData.role) {
                 this.userType = userData.role;
-                // console.log('User Type:', this.userType);
+                console.log('User Type:', this.userType);
               } else {
-                console.log('Role not found in user data');
+                // console.log('Role not found in user data');
               }
             } else {
-              console.log('User data not found');
+              // console.log('User data not found');
             }
           });
       } else {
@@ -55,7 +61,50 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadCategories();
+  }
+
+  // loadCategories(): void {
+  //   this.categoryService.getCategories().subscribe((data) => {
+  //     this.categories = data;
+  //   });
+  // }
+  loadCategories(): void {
+    this.categoryService.getCategories().subscribe((categories) => {
+      // console.log('Catégories récupérées :', categories);
+  
+      this.categories = categories.map((category) => ({
+        ...category,
+        sousCategories: [],
+      }));
+  
+      this.sousCategorieService.getSousCategories().subscribe((sousCategories) => {
+        // console.log('Sous-catégories récupérées :', sousCategories);
+  
+        this.categories.forEach((category) => {
+          category.sousCategories = sousCategories.filter(
+            (sousCat) => sousCat.categoryId === category.id
+          );
+  
+          // Ajout d'un log pour vérifier la correspondance
+          // console.log(
+          //   `Catégorie : ${category.name}, Sous-Catégories :`,
+          //   category.sousCategories
+          // );
+        });
+  
+        // console.log('Catégories avec sous-catégories :', this.categories);
+      });
+    });
+  }
+  
+  
+  // loadSousCategories(): void {
+  //   this.sousCategorieService.getSousCategories().subscribe((data) => {
+  //     this.sousCategories = data;
+  //   });
+  // }
 
   logout() {
     this.af
@@ -66,7 +115,7 @@ export class NavbarComponent implements OnInit {
         this.route.navigate(['/login']);
       })
       .catch(() => {
-        console.log('error');
+        // console.log('error');
       });
     this.toggleNavbar();
   }

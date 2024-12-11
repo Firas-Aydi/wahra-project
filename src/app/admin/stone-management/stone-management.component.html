@@ -1,68 +1,91 @@
 <div class="stone-management">
-    <h2>Gestion des Pierres</h2>
-  
-    <!-- Formulaire pour ajouter ou modifier une pierre -->
-    <div class="form-container">
-      <h3>{{ editingIndex === null ? 'Ajouter' : 'Modifier' }} une Pierre</h3>
-      <form [formGroup]="form" (ngSubmit)="saveForm()">
-        <div>
-          <label for="name">Nom :</label>
-          <input id="name" formControlName="name" placeholder="Nom de la pierre" />
+  <h2>Gestion des Pierres</h2>
+  <div class="row">
+    <div class="col-12">
+      <div class="card border-0 shadow p-4">
+        <!-- Formulaire pour ajouter ou modifier une pierre -->
+        <div class="form-floating mb-3 text-center">
+          <h4 class="text-center text-primary">{{ editingIndex === null ? 'Ajouter' : 'Modifier' }} une Pierre</h4>
         </div>
-        <div>
-          <label for="description">Description :</label>
-          <textarea
-            id="description"
-            formControlName="description"
-            placeholder="Description"
-          ></textarea>
-        </div>
-        <div>
-          <label for="benefits">Bienfaits :</label>
-          <textarea
-            id="benefits"
-            formControlName="benefits"
-            placeholder="Bienfaits"
-          ></textarea>
-        </div>
-        <div>
-          <label for="image">Image :</label>
-          <input type="file" (change)="onFileSelected($event)" />
-          <!-- <small *ngIf="!form.value.image">Une image doit être ajoutée.</small> -->
-          <span *ngIf="isUploading">Téléchargement en cours...</span>
-        </div>
-        <div class="actions">
-          <button type="submit" [disabled]="form.invalid || isUploading">
-            {{ editingIndex === null ? 'Ajouter' : 'Enregistrer' }}
-          </button>
-          <button type="button" (click)="cancelForm()">Annuler</button>
-        </div>
-      </form>
+        <form [formGroup]="form" (ngSubmit)="saveForm()">
+          <div class="row">
+            <!-- Nom -->
+            <div class="col-md-4 mb-3">
+              <label for="name">Nom :</label>
+              <input id="name" class="form-control" formControlName="name" placeholder="Nom de la pierre" />
+            </div>
+                    
+            <!-- Image -->
+            <div class="col-md-4 mb-3">
+              <label for="image">Image :</label>
+              <input type="file" class="form-control" (change)="onFileSelected($event)" />
+              <span *ngIf="isUploading" class="text-success">Téléchargement en cours...</span>
+            </div>
+            <!-- Catégorie -->
+            <div class="col-md-4 mb-3">
+              <label>Catégories :</label>
+              <div *ngFor="let category of categories">
+                <input
+                  type="checkbox"
+                  [value]="category.id"
+                  (change)="onCategoryChange(category.id, $event)"
+                  [checked]="form.value.categoryId.includes(category.id)"
+                />
+                {{ category.name }}
+              </div>
+            </div>
+            
+            <!-- Description -->
+            <div class="col-md-6 mb-3">
+              <label for="description">Description :</label>
+              <textarea id="description" class="form-control" formControlName="description" placeholder="Description"></textarea>
+            </div>
+            <!-- Bienfaits -->
+            <div class="col-md-6 mb-3">
+              <label for="benefits">Bienfaits :</label>
+              <textarea id="bienfaits" class="form-control" formControlName="bienfaits" placeholder="Bienfaits"></textarea>
+            </div>
+          </div>
+        
+          <div class="row">
+            <!-- Boutons d'action -->
+            <div class="col-12 text-center">
+              <button type="submit" class="btn btn-primary" [disabled]="form.invalid || isUploading">
+                {{ editingIndex === null ? 'Ajouter' : 'Enregistrer' }}
+              </button>
+              <button type="button" class="btn btn-secondary" (click)="cancelForm()">Annuler</button>
+            </div>
+          </div>
+        </form>
+        
+      </div>
     </div>
-  
-    <!-- Tableau des pierres -->
-    <table>
-      <thead>
-        <tr>
-          <th>Nom</th>
-          <th>Description</th>
-          <th>Bienfaits</th>
-          <th>Image</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let pierre of pierres; let i = index">
-          <td>{{ pierre.name }}</td>
-          <td>{{ pierre.description }}</td>
-          <td>{{ pierre.benefits }}</td>
-          <td><img [src]="pierre.image" alt="Image de la pierre" width="50" /></td>
-          <td>
-            <button (click)="editPierre(i)">Modifier</button>
-            <button (click)="deletePierre(pierre.id, pierre.image)">Supprimer</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
   </div>
-  
+</div>
+
+<!-- Tableau des pierres -->
+<table>
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Description</th>
+      <th>Bienfaits</th>
+      <th>Image</th>
+      <th>Catégorie</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let pierre of pierres; let i = index">
+      <td>{{ pierre.name }}</td>
+      <td>{{ pierre.description }}</td>
+      <td>{{ pierre.bienfaits }}</td>
+      <td><img [src]="pierre.image" alt="Image de la pierre" width="50" /></td>
+      <td>{{ getCategoryNames(pierre.categoryId) }}</td>
+      <td>
+        <button (click)="editPierre(i)">Modifier</button>
+        <button (click)="deletePierre(pierre.id, pierre.image)">Supprimer</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

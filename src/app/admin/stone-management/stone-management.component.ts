@@ -1,12 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import {
+  FormArray,
   FormBuilder,
+  FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Categorie } from 'src/app/model/categorie';
 import { Pierre } from 'src/app/model/pierre';
+import { CategorieService } from 'src/app/services/categorie.service';
 import { PierreService } from 'src/app/services/pierre.service';
 
 @Component({
@@ -22,17 +26,24 @@ export class StoneManagementComponent implements OnInit {
   editingIndex: number | null = null; // Pour suivre l'édition
   selectedFile: File | null = null; // Fichier sélectionné
   isUploading = false;
+  categories: Categorie[] = [];
 
-  constructor(private pierreService: PierreService, private fb: FormBuilder) {
+  constructor(
+    private pierreService: PierreService,
+    private categorieService: CategorieService,
+    private fb: FormBuilder
+  ) {
     this.form = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
-      benefits: ['', Validators.required],
+      bienfaits: ['', Validators.required],
       image: ['', Validators.required],
+      categoryId: this.fb.array([]),
     });
   }
 
   ngOnInit(): void {
+    this.loadCategories();
     this.loadPierres();
   }
 
@@ -41,7 +52,42 @@ export class StoneManagementComponent implements OnInit {
       this.pierres = data;
     });
   }
-
+  loadCategories(): void {
+    this.categorieService.getCategories().subscribe((data) => {
+      this.categories = data;
+    });
+  }
+  get categoryIdArray() {
+    return this.form.get('categoryId') as FormArray;
+  }
+  
+  onCategoryChange(categoryId: string, event: Event): void {
+    const input = event.target as HTMLInputElement;  // Cast de l'event.target vers un input HTML
+    const isChecked = input.checked;
+    
+    const categoryArray = this.categoryIdArray;
+    if (isChecked) {
+      categoryArray.push(new FormControl(categoryId));
+    } else {
+      const index = categoryArray.controls.findIndex((control) => control.value === categoryId);
+      if (index !== -1) {
+        categoryArray.removeAt(index);
+      }
+    }
+  }
+  
+  getCategoryNames(categoryIds: string[]): string {
+    return categoryIds
+      .map((id) => {
+        const category = this.categories.find((cat) => cat.id === id);
+        return category?.name
+        // return category ? category.name : 'Non attribuée';
+      })
+      .join(', ');
+  }
+  
+  
+  
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {

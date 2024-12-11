@@ -25,7 +25,8 @@
         <a class="nav-link" routerLink="cart"><i class="fa-solid fa-cart-shopping"></i></a>
       </li>
       <li class="nav-item" *ngIf="isUser">
-        <a class="nav-link" (click)="logout()" routerLink="login"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+        <a class="nav-link" (click)="logout()" routerLink="login"><i
+            class="fa-solid fa-arrow-right-from-bracket"></i></a>
       </li>
       <li class="nav-item" *ngIf="!isUser">
         <a class="nav-link" routerLink="login"><i class="fa-regular fa-user"></i></a>
@@ -38,30 +39,45 @@
 
 <nav class="sub-navbar navbar-expand-lg custom-navbar">
   <div class="container-fluid d-flex justify-content-between align-items-center">
-
-
-
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
       <ul class="navbar-nav mx-auto">
-        <!-- <li class="nav-item" *ngIf="isUser && userType === 'admin'">
-          <a class="sub-nav-link" routerLink="manageAmbre" (click)="toggleNavbar()">Manage Ambre</a>
+        <!-- Boucle sur les catégories -->
+        <ng-container *ngIf="!isUser">
+          <li class="nav-item dropdown" *ngFor="let category of categories">
+            <a class="sub-nav-link dropdown-toggle" id="categoryDropdown{{ category.id }}" role="button"
+               data-bs-toggle="dropdown" aria-expanded="false">
+              {{ category.name }}
+            </a>
+            <ul *ngIf="category.sousCategories.length > 0" class="dropdown-menu" [attr.aria-labelledby]="'categoryDropdown' + category.id">
+              <li *ngFor="let sousCat of category.sousCategories">
+                <a class="dropdown-item" [routerLink]="['/sous-categorie', sousCat.id]">
+                  {{ sousCat.name }}
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ng-container>
+
+        <!-- Lien pour les administrateurs -->
+        <li class="nav-item" *ngIf="isUser && userType === 'admin'">
+          <a class="sub-nav-link" routerLink="/categories-management">Gestion des Catégories</a>
         </li>
         <li class="nav-item" *ngIf="isUser && userType === 'admin'">
-          <a class="sub-nav-link" routerLink="managePierre" (click)="toggleNavbar()">Manage Pierre</a>
-        </li> -->
-        <li class="nav-item">
-          <a class="sub-nav-link" routerLink="/categories-management">Gestion des Catégories</a></li>
-    <li class="nav-item">
-          <a class="sub-nav-link" routerLink="/sub-categories-management">Gestion des Sous-Catégories</a></li>
-    <li class="nav-item">
-          <a class="sub-nav-link" routerLink="/products-management">Gestion des Produits</a></li>
-    <li class="nav-item">
-          <a class="sub-nav-link" routerLink="/stones-management">Gestion des Pierres</a></li>
-    <li class="nav-item">
-          <a class="sub-nav-link" routerLink="/users-management">Gestion des Utilisateurs</a></li>
-    <li class="nav-item">
-          <a class="sub-nav-link" routerLink="/carts-management">Gestion des Paniers</a></li>
+          <a class="sub-nav-link" routerLink="/sub-categories-management">Gestion des Sous-Catégories</a>
+        </li>
+        <li class="nav-item" *ngIf="isUser && userType === 'admin'">
+          <a class="sub-nav-link" routerLink="/products-management">Gestion des Produits</a>
+        </li>
+        <li class="nav-item" *ngIf="isUser && userType === 'admin'">
+          <a class="sub-nav-link" routerLink="/stones-management">Gestion des Pierres</a>
+        </li>
+        <li class="nav-item" *ngIf="isUser && userType === 'admin'">
+          <a class="sub-nav-link" routerLink="/users-management">Gestion des Utilisateurs</a>
+        </li>
+        <li class="nav-item" *ngIf="isUser && userType === 'admin'">
+          <a class="sub-nav-link" routerLink="/carts-management">Gestion des Paniers</a>
+        </li>
         <!-- <li class="nav-item">
           <a class="sub-nav-link" routerLink="ambre" (click)="toggleNavbar()">Ambre</a>
         </li>

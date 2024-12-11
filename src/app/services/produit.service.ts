@@ -19,7 +19,13 @@ export class ProductService {
   generateId(): string {
     return this.firestore.createId();
   }
-  
+  getProductsBySousCategorie(sousCategorieId: string): Observable<any[]> {
+    return this.firestore
+      .collection('produits', (ref) =>
+        ref.where('sousCategoryId', '==', sousCategorieId)
+      )
+      .valueChanges();
+  }
   addProduit(produit: Produit): Promise<void> {
     const id = this.generateId()
     produit.id = id;

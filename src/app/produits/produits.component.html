@@ -1,1 +1,28 @@
-<p>produits works!</p>
+<div class="container mt-4">
+    <h2>Produits</h2>
+    <div *ngIf="products.length > 0; else noProducts">
+      <div class="row">
+        <div class="col-md-4" *ngFor="let product of products">
+          <div class="card mb-4">
+            <img
+              [src]="product.images[0]"
+              class="card-img-top"
+              alt="{{ product.name }}"
+            />
+            <div class="card-body">
+              <h5 class="card-title">{{ product.name }}</h5>
+              <p class="card-text">{{ product.description }}</p>
+              <p class="card-text"><strong>{{ product.price | currency }}</strong></p>
+              <a [routerLink]="['/product', product.id]" class="btn btn-primary">
+                Voir le produit
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #noProducts>
+      <p>Aucun produit trouvé dans cette sous-catégorie.</p>
+    </ng-template>
+  </div>
+  
