@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
+import { Observable, of, switchMap } from 'rxjs';
 import { SousCategorie } from '../model/sous-categorie';
+import { Pierre } from '../model/pierre';
+import { Produit } from '../model/produit';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +22,34 @@ export class SousCategorieService {
   }
   getSousCategories(): Observable<SousCategorie[]> {
     return this.collection.valueChanges({ idField: 'id' });
+  }
+  getProductsByCategorySousCategorie(categoryId: string): Observable<Produit[]> {
+    return this.firestore.collection<SousCategorie>('sousCategories', ref => ref.where('categoryId', '==', categoryId))
+      .valueChanges({ idField: 'id' })
+      .pipe(
+        switchMap((sousCategories) => {
+          const sousCategoryIds = sousCategories.map(sc => sc.id);
+          
+          return this.firestore.collection<Produit>('produits', ref =>
+            ref.where('sousCategoryId', 'in', sousCategoryIds)
+          ).valueChanges({ idField: 'id' });
+        })
+      );
+  }
+  getProductsByCategoryPierre(categoryId: string): Observable<Produit[]> {
+    return this.firestore.collection<Pierre>('pierres', ref => ref.where('categoryId', 'array-contains', categoryId))
+      .valueChanges({ idField: 'id' })
+      .pipe(
+        switchMap((pierres) => {
+          const pierreIds = pierres.map(p => p.id);
+          if (pierreIds.length === 0) {
+            return of([]); // Retourne une liste vide si aucune pierre n'est trouvée
+          }
+          return this.firestore.collection<Produit>('produits', ref =>
+            ref.where('pierreId', 'in', pierreIds)
+          ).valueChanges({ idField: 'id' });
+        })
+      );
   }
   addSousCategorie(subCategory: SousCategorie): Promise<void> {
     const id = this.firestore.createId();

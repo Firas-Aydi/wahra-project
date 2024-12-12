@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { finalize, switchMap } from 'rxjs/operators';
 import { Produit } from '../model/produit';
+import { SousCategorie } from '../model/sous-categorie';
+import { Pierre } from '../model/pierre';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +33,8 @@ export class ProductService {
       .collection<Produit>('produits', (ref) => ref.where('pierreId', '==', pierreId))
       .valueChanges({ idField: 'id' });
   }
-
+  
+  
   addProduit(produit: Produit): Promise<void> {
     const id = this.generateId()
     produit.id = id;

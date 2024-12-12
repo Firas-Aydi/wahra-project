@@ -30,7 +30,7 @@
 }
 
 .search-input {
-  width: 90%; 
+  width: 90%;
   border: none;
   border-radius: 6px;
   background-color: #b04200;
@@ -78,13 +78,13 @@
 /* Sous-navbar */
 .sub-navbar {
   background-color: #b04200;
-  padding: 10px 20px;
+  padding: 1px 20px;
 }
 
 .sub-nav-link {
   line-height: 50px;
   height: 60px;
-  padding: 0 10px 0 10px;
+  padding: 0 10px;
   width: auto;
   display: block;
   color: #fff;
@@ -115,19 +115,35 @@
   outline: none;
 }
 
-
 .dropdown-menu {
-  display: none;
-}
-
-.nav-item.dropdown:hover .dropdown-menu {
-  display: block;
   position: absolute;
-}
-.sub-navbar .dropdown-menu {
+  top: 100%;
+  left: 0;
+  z-index: 1050;
+  display: none;
+  min-width: 200px;
   background-color: #f9f9f9;
   border-radius: 0px;
   border: 1px solid #ddd;
+}
+.nav-item.dropdown {
+  display: flex;
+  flex-direction: column; /* Colonne pour le dropdown */
+}
+
+.dropdown-menu {
+  margin: 0; /* Supprime les marges indésirables */
+  padding: 0; /* Supprime les paddings indésirables */
+  left: auto; /* Réinitialise le positionnement gauche */
+  right: auto; /* Réinitialise le positionnement droit */
+}
+
+.nav-item.dropdown {
+  position: relative;
+}
+.nav-item.dropdown:hover .dropdown-menu,
+.nav-item.dropdown .dropdown-menu.active {
+  display: block;
 }
 
 .sub-navbar .dropdown-item {
@@ -145,14 +161,14 @@
   /* Conteneur principal */
   .navbar .container-fluid {
     display: flex;
-  justify-content: space-between;
-  align-items: center;
-  /* flex-wrap: wrap; */
+    justify-content: space-between;
+    align-items: center;
+    /* flex-wrap: wrap; */
   }
 
   /* Logo centré */
   .navbar-brand {
-    margin: 10px ; /* Ajoute un espace autour du logo */
+    margin: 10px; /* Ajoute un espace autour du logo */
     display: flex;
     justify-content: center;
   }
@@ -228,4 +244,3 @@
     color: #f6ad55;
   }
 }
-

@@ -1,89 +1,91 @@
 <div class="container my-5">
-    <div id="productCarousel" class="carousel slide justify-content-center" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item" *ngFor="let group of groupAmbreList(); let i = index" [ngClass]="{ 'active': i === 0 }">
-          <div class="d-flex justify-content-center">
-            <div class="card mx-2" *ngFor="let ambre of group" (click)="viewProductDetails(ambre.id)">
-                <span class="badge position-absolute p-2 text-light stock-badge" [ngClass]="{
+  <div id="productCarousel" class="carousel slide justify-content-center" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item" *ngFor="let group of groupAmbreList(); let i = index"
+        [ngClass]="{ 'active': i === 0 }">
+        <div class="d-flex justify-content-center">
+          <div class="card mx-2" *ngFor="let ambre of group" (click)="viewProductDetails(ambre.id)">
+            <span class="badge position-absolute p-2 text-light stock-badge" [ngClass]="{
                     'bg-success': ambre?.stock! > 0,
                     'bg-danger': ambre?.stock! === 0
                 }">
-                    {{ ambre?.stock! > 0 ? 'En stock' : 'En rupture' }}
-                </span>
-                <img [src]="ambre.images[0]" class="card-img-top" [alt]="ambre.name" />
-              <div class="card-body">
-                  <p class="card-price" style="color: #bd4800;">
-                    {{ ambre.price }} DT
-                  </p>
-                <h5 class="card-title">{{ ambre.name }}</h5>
-                <!-- <span class="stock-badge" [ngClass]="{ 'bg-success': ambre?.stock! > 0, 'bg-danger': ambre?.stock === 0 }">
+              {{ ambre?.stock! > 0 ? 'En stock' : 'En rupture' }}
+            </span>
+            <img [src]="ambre.images[0]" class="card-img-top" [alt]="ambre.name" />
+            <div class="card-body">
+              <p class="card-price" style="color: #bd4800;">
+                {{ ambre.price }} DT
+              </p>
+              <h5 class="card-title">{{ ambre.name }}</h5>
+              <!-- <span class="stock-badge" [ngClass]="{ 'bg-success': ambre?.stock! > 0, 'bg-danger': ambre?.stock === 0 }">
                   {{ ambre?.stock! > 0 ? 'In Stock' : 'Out of Stock' }}
                 </span> -->
-              </div>
             </div>
           </div>
         </div>
       </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
     </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
   </div>
-  
+</div>
+
 
 
 <!-- Bootstrap Modal for Product Details -->
 <div class="modal fade" id="productDetailsModal" tabindex="-1" aria-labelledby="productDetailsModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg"> <!-- Make the modal larger -->
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="productDetailsModalLabel">{{ selectedAmbre?.name }}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body d-flex"> <!-- Use flexbox for layout -->
-                <div class="w-50"> <!-- Image section -->
-                    <img [src]="selectedAmbre?.images![0]" class="img-fluid" [alt]="selectedAmbre?.name">
-                </div>
-                <div class="w-50 ps-3"> <!-- Details section with padding on the left -->
-                    <h5 class="card-title">{{ selectedAmbre?.name }}</h5>
-                    <p class="card-text"><strong>Price:</strong> {{ selectedAmbre?.price | currency:'DT':'symbol' }}
-                    </p>
-                    <p class="card-text"><strong>Description:</strong> {{ selectedAmbre?.description }}</p>
-                    <p class="card-text"><strong>Stock:</strong>
-                        <span [ngClass]="{
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg"> <!-- Make the modal larger -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="productDetailsModalLabel">{{ selectedAmbre?.name }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body d-flex"> <!-- Use flexbox for layout -->
+        <div class="w-50"> <!-- Image section -->
+          <img [src]="selectedAmbre?.images![0]" class="img-fluid" [alt]="selectedAmbre?.name">
+        </div>
+        <div class="w-50 ps-3"> <!-- Details section with padding on the left -->
+          <h5 class="card-title">{{ selectedAmbre?.name }}</h5>
+          <p class="card-text"><strong>Price:</strong> {{ selectedAmbre?.price | currency:'DT':'symbol' }}
+          </p>
+          <p class="card-text"><strong>Description:</strong> {{ selectedAmbre?.description }}</p>
+          <p class="card-text"><strong>Stock:</strong>
+            <span [ngClass]="{
                             'text-success': selectedAmbre?.stock! > 0,
                             'text-danger': selectedAmbre?.stock! === 0
                         }">
-                            {{ selectedAmbre?.stock! > 0 ? 'In Stock' : 'Out of Stock' }}
-                        </span>
-                    </p>
-                    <div class="input-group mb-3"> <!-- Input for quantity -->
-                        <span class="input-group-text">Quantity</span>
-                        <input type="number" class="form-control" [(ngModel)]="quantity" min="1"
-                            max="{{ selectedAmbre?.stock }}" [disabled]="selectedAmbre?.stock === 0" (input)="validateQuantity()">
-                    </div>
-                    
-                    <!-- Error messages -->
-                    <div *ngIf="quantityError" class="text-danger">
-                        {{ quantityError }}
-                    </div>
-                    
-                    <button [disabled]="selectedAmbre?.stock! === 0" class="btn btn-primary" title="Add to Cart" (click)="addToCart(selectedAmbre!,quantity)">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                        Add to Cart
-                    </button>
+              {{ selectedAmbre?.stock! > 0 ? 'In Stock' : 'Out of Stock' }}
+            </span>
+          </p>
+          <div class="input-group mb-3"> <!-- Input for quantity -->
+            <span class="input-group-text">Quantity</span>
+            <input type="number" class="form-control" [(ngModel)]="quantity" min="1" max="{{ selectedAmbre?.stock }}"
+              [disabled]="selectedAmbre?.stock === 0" (input)="validateQuantity()">
+          </div>
 
-                </div>
-            </div>
-            <!-- <div class="modal-footer">
+          <!-- Error messages -->
+          <div *ngIf="quantityError" class="text-danger">
+            {{ quantityError }}
+          </div>
+
+          <button [disabled]="selectedAmbre?.stock! === 0" class="btn btn-primary" title="Add to Cart"
+            (click)="addToCart(selectedAmbre!,quantity)">
+            <i class="fa-solid fa-cart-shopping"></i>
+            Add to Cart
+          </button>
+
+        </div>
+      </div>
+      <!-- <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div> -->
-        </div>
     </div>
+  </div>
 </div>

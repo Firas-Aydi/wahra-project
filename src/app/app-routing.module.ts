@@ -25,9 +25,8 @@ const routes: Routes = [
   { path: 'ambre', component: AmbreComponent },
   { path: 'ambres/:id', component: AmbrdetailComponent },
   
-  { path: 'categories', component: CategoriesComponent },
-  { path: 'categories/:id', component: SousCategoriesComponent },
-  
+  // { path: 'categories', component: CategoriesComponent },
+  { path: 'categorie/:categorieId', component: SousCategoriesComponent },
   { path: 'sous-categorie/:sousCategorieId', component: ProduitsComponent },
   { path: 'pierres/:pierreId', component: ProduitsComponent },
   

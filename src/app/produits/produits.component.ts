@@ -12,6 +12,7 @@ export class ProduitsComponent implements OnInit {
   products: Produit[] = [];
   pierreId: string = '';
   sousCategorieId: string = '';
+  categorieId: string = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -24,11 +25,13 @@ export class ProduitsComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.sousCategorieId = params.get('sousCategorieId') || '';
       this.pierreId = params.get('pierreId') || '';
+      this.categorieId = params.get('categorieId') || '';
       
       if (this.sousCategorieId) {
         this.loadProductsBySousCategorie(this.sousCategorieId);
       } else if (this.pierreId) {
         this.loadProductsByPierre(this.pierreId);
+      
       }
     });
     
@@ -56,4 +59,6 @@ export class ProduitsComponent implements OnInit {
       }
     );
   }
+  
+  
 }
