@@ -1,13 +1,16 @@
 /* General Navbar Styling */
 .navbar {
-  height: auto; /* Ajuste la hauteur en fonction du contenu */
-  background-color: #bd4800; /* Couleur principale */
+  position: relative; /* Nécessaire pour centrer un élément enfant avec position absolue */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #bd4800;
   padding: 10px 20px;
 }
 
 .navbar .container-fluid {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   flex-wrap: wrap; /* Permet l'enroulement sur petits écrans */
 }
@@ -17,16 +20,19 @@
   height: auto;
 }
 
-.navbar-brand {
-  margin: 0 auto; /* Centre le logo */
-}
+/* .navbar-brand {
+  margin: 0 auto;
+} */
 
 .search-bar {
+  position: absolute; /* Permet de positionner au centre */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: flex;
   justify-content: center;
   align-items: center;
   width: 400px;
-  max-width: 100%; /* Limite la largeur sur petits écrans */
 }
 
 .search-input {
@@ -175,14 +181,14 @@
 
   /* Barre de recherche */
   .search-bar {
-    width: 60%;
-    margin: 15px 0;
-    display: flex;
-    justify-content: center;
+    width: 100%;
+    margin: 60px ;
+    /* display: flex;
+    justify-content: center; */
   }
 
   .search-input {
-    width: 80%;
+    width: 93%;
     font-size: 14px; /* Réduit légèrement la taille de la police */
   }
 

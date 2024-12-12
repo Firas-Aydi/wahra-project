@@ -60,34 +60,34 @@ export class StoneManagementComponent implements OnInit {
   get categoryIdArray() {
     return this.form.get('categoryId') as FormArray;
   }
-  
+
   onCategoryChange(categoryId: string, event: Event): void {
-    const input = event.target as HTMLInputElement;  // Cast de l'event.target vers un input HTML
+    const input = event.target as HTMLInputElement; // Cast de l'event.target vers un input HTML
     const isChecked = input.checked;
-    
+
     const categoryArray = this.categoryIdArray;
     if (isChecked) {
       categoryArray.push(new FormControl(categoryId));
     } else {
-      const index = categoryArray.controls.findIndex((control) => control.value === categoryId);
+      const index = categoryArray.controls.findIndex(
+        (control) => control.value === categoryId
+      );
       if (index !== -1) {
         categoryArray.removeAt(index);
       }
     }
   }
-  
+
   getCategoryNames(categoryIds: string[]): string {
     return categoryIds
       .map((id) => {
         const category = this.categories.find((cat) => cat.id === id);
-        return category?.name
+        return category?.name;
         // return category ? category.name : 'Non attribuée';
       })
       .join(', ');
   }
-  
-  
-  
+
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {

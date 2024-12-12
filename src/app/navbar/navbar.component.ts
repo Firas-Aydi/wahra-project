@@ -83,24 +83,18 @@ export class NavbarComponent implements OnInit {
           // console.log('Sous-catégories récupérées :', sousCategories);
           this.categories.forEach((category) => {
             category.sousCategories = sousCategories.filter(
-              (sousCat) => sousCat.categoryId === category.id
+              (sousCat) => sousCat.categoryId.includes(category.id)
             );
           });
 
           // Charger les pierres et les associer aux catégories
           this.pierreService.getPierres().subscribe((pierres) => {
             this.pierres = pierres;
-
             this.categories.forEach((category) => {
               category.pierres = this.pierres.filter((pierre) =>
                 pierre.categoryId.includes(category.id)
               );
             });
-
-            // console.log(
-            //   'Catégories avec pierres et sous-catégories :',
-            //   this.categories
-            // );
           });
         });
     });

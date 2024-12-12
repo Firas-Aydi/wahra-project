@@ -11,14 +11,24 @@
           <label for="name">Nom :</label>
           <input id="name" class="form-control" formControlName="name" placeholder="Nom" />
         </div>
-        <div class="col-md-6 mb-3">
+        <!-- Catégorie -->
+        <div class="col-md-4 mb-3">
+          <label>Catégories :</label>
+          <div *ngFor="let category of categories">
+            <input type="checkbox" [value]="category.id" (change)="onCategoryChange(category.id, $event)"
+              [checked]="form.value.categoryId.includes(category.id)" />
+            {{ category.name }}
+          </div>
+        </div>
+
+        <!-- <div class="col-md-6 mb-3">
           <label for="categoryId">Catégorie :</label>
           <select id="categoryId" formControlName="categoryId" required>
             <option *ngFor="let category of categories" [value]="category.id">
               {{ category.name }}
             </option>
           </select>
-        </div>
+        </div> -->
       </div>
       <div class="row">
         <!-- Boutons d'action -->
@@ -44,7 +54,7 @@
     <tbody>
       <tr *ngFor="let subCategory of sousCategories; let i = index">
         <td>{{ subCategory.name }}</td>
-        <td>{{ getCategoryName(subCategory.categoryId) }}</td>
+        <td>{{ getCategoryNames(subCategory.categoryId) }}</td>
         <td>
           <button (click)="editSubCategory(i)">Modifier</button>
           <button (click)="deleteSubCategory(subCategory.id)">Supprimer</button>

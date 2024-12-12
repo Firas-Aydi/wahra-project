@@ -24,12 +24,14 @@ export class SousCategorieService {
     return this.collection.valueChanges({ idField: 'id' });
   }
   getProductsByCategorySousCategorie(categoryId: string): Observable<Produit[]> {
-    return this.firestore.collection<SousCategorie>('sousCategories', ref => ref.where('categoryId', '==', categoryId))
+    return this.firestore.collection<SousCategorie>('sousCategories', ref => ref.where('categoryId', 'array-contains', categoryId))
       .valueChanges({ idField: 'id' })
       .pipe(
         switchMap((sousCategories) => {
           const sousCategoryIds = sousCategories.map(sc => sc.id);
-          
+          if (sousCategoryIds.length === 0) {
+            return of([]);
+          }
           return this.firestore.collection<Produit>('produits', ref =>
             ref.where('sousCategoryId', 'in', sousCategoryIds)
           ).valueChanges({ idField: 'id' });
@@ -43,7 +45,7 @@ export class SousCategorieService {
         switchMap((pierres) => {
           const pierreIds = pierres.map(p => p.id);
           if (pierreIds.length === 0) {
-            return of([]); // Retourne une liste vide si aucune pierre n'est trouvée
+            return of([]);
           }
           return this.firestore.collection<Produit>('produits', ref =>
             ref.where('pierreId', 'in', pierreIds)

@@ -1,15 +1,15 @@
 <nav class="navbar navbar-expand-lg custom-navbar">
   <div class="container-fluid">
+    <!-- Logo centré -->
+    <a class="navbar-brand" routerLink="">
+      <img src="assets/wahra.png" alt="Logo" class="brand-logo">
+    </a>
     <!-- Toggler Button -->
     <button id="navbarToggler" class="navbar-toggler" type="button" (click)="toggleNavbar()">
       <span *ngIf="!isNavbarOpen"><i class="fas fa-bars"></i></span>
       <span *ngIf="isNavbarOpen"><i class="fas fa-times"></i></span>
     </button>
 
-    <!-- Logo centré -->
-    <a class="navbar-brand" routerLink="">
-      <img src="assets/wahra.png" alt="Logo" class="brand-logo">
-    </a>
 
     <!-- Barre de recherche -->
     <div class="search-bar mx-auto">
@@ -46,10 +46,9 @@
         <ng-container *ngIf="userType !== 'admin'"> 
           <li class="nav-item dropdown position-relative" *ngFor="let category of categories">
             <a 
-              class="sub-nav-link dropdown-toggle" 
+              class="sub-nav-link d-flex align-items-center me-3 ms-3 dropdown-toggle" 
               id="categoryDropdown{{ category.id }}" 
               role="button" 
-              data-bs-toggle="dropdown"
               aria-expanded="false" 
               [routerLink]="['/categorie', category.id]"
               >
