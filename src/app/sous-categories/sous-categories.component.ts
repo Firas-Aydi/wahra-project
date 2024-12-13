@@ -9,15 +9,16 @@ import { Produit } from '../model/produit';
   styleUrls: ['./sous-categories.component.css'],
 })
 export class SousCategoriesComponent implements OnInit {
-  products: Produit[] = [];
+  produitParPierre: Produit[] = [];
   categorieId: string = '';
-  // currentIndex: number = 0;
+  pierreCurrentIndex: number = 0;
   visibleProducts: number = 5;
-  
+
   groupedProducts: { [key: string]: Produit[] } = {};
   sousCategories: { id: string; name: string }[] = [];
   currentIndex: { [key: string]: number } = {};
-  
+  carouselIndexes: { [key: string]: number } = {};
+
   constructor(
     private route: ActivatedRoute,
     private sousCategorieService: SousCategorieService
@@ -38,7 +39,8 @@ export class SousCategoriesComponent implements OnInit {
       .getProductsByCategorySousCategorie(categoryId)
       .subscribe(
         (products) => {
-this.groupProductsBySousCategorie(products)        },
+          this.groupProductsBySousCategorie(products);
+        },
         (error) => {
           console.error('Erreur lors du chargement des produits :', error);
         }
@@ -47,8 +49,12 @@ this.groupProductsBySousCategorie(products)        },
   loadProductsByCategoryPierre(categoryId: string): void {
     this.sousCategorieService.getProductsByCategoryPierre(categoryId).subscribe(
       (products) => {
-        this.products = products;
-        // console.log('Produits chargés pour la catégorie :', this.products);
+        this.produitParPierre = products;
+        this.groupProductsByPierre(products);
+        console.log(
+          'Produits chargés pour produitParPierre :',
+          this.produitParPierre
+        );
       },
       (error) => {
         console.error('Erreur lors du chargement des produits :', error);
@@ -60,14 +66,14 @@ this.groupProductsBySousCategorie(products)        },
     const sousCategoryIds = Array.from(
       new Set(products.map((produit) => produit.sousCategoryId))
     );
-  
+
     this.sousCategorieService.getSousCategoriesByIds(sousCategoryIds).subscribe(
       (sousCategories) => {
         this.sousCategories = sousCategories.map((sc) => ({
           id: sc.id,
           name: sc.name,
         }));
-  
+
         this.groupedProducts = products.reduce((acc, produit) => {
           if (!acc[produit.sousCategoryId]) {
             acc[produit.sousCategoryId] = [];
@@ -82,15 +88,40 @@ this.groupProductsBySousCategorie(products)        },
       }
     );
   }
-  
+  groupProductsByPierre(products: Produit[]): void {
+    const pierreIds = Array.from(
+      new Set(
+        products
+          .map((produit) => produit.pierreId)
+          .filter((id): id is string => !!id)
+      )
+    );
 
-  // groupProduitList() {
-  //   const groups = [];
-  //   for (let i = 0; i < this.products.length; i += 5) {
-  //     groups.push(this.products.slice(i, i + 5));
-  //   }
-  //   return groups;
-  // }
+    this.sousCategorieService.getPierresByIds(pierreIds).subscribe(
+      (pierres) => {
+        const pierreMap = pierres.reduce(
+          (acc: { [key: string]: string }, pierre) => {
+            acc[pierre.id] = pierre.name;
+            return acc;
+          },
+          {}
+        ); // Le type explicite corrige l'erreur ici
+
+        this.groupedProducts = products.reduce((acc, produit) => {
+          const pierreName = pierreMap[produit.pierreId!] || 'Inconnue';
+          if (!acc[pierreName]) {
+            acc[pierreName] = [];
+          }
+          acc[pierreName].push(produit);
+          return acc;
+        }, {} as { [key: string]: Produit[] });
+      },
+      (error) => {
+        console.error('Erreur lors du chargement des pierres :', error);
+      }
+    );
+  }
+
   getVisibleProducts(sousCategoryId: string): Produit[] {
     const currentIndex = this.currentIndex[sousCategoryId] || 0;
     const products = this.groupedProducts[sousCategoryId] || [];
@@ -103,10 +134,29 @@ this.groupProductsBySousCategorie(products)        },
   }
 
   nextSlide(sousCategoryId: string): void {
-    const maxIndex =
-      (this.groupedProducts[sousCategoryId]?.length || 0) - 5;
+    const maxIndex = (this.groupedProducts[sousCategoryId]?.length || 0) - 5;
     if (this.currentIndex[sousCategoryId] < maxIndex) {
       this.currentIndex[sousCategoryId]++;
     }
+  }
+  // Boutons de navigation pour les produits par pierre
+  prevSlideForPierre(pierreId: string): void {
+    if (this.carouselIndexes[pierreId] > 0) {
+      this.carouselIndexes[pierreId]--;
+    }
+  }
+
+  nextSlideForPierre(pierreId: string): void {
+    const maxIndex =
+      (this.groupedProducts[pierreId]?.length || 0) - this.visibleProducts;
+    if (this.carouselIndexes[pierreId] < maxIndex) {
+      this.carouselIndexes[pierreId]++;
+    }
+  }
+
+  getVisibleProductsForPierre(pierreId: string): Produit[] {
+    const currentIndex = this.carouselIndexes[pierreId] || 0;
+    const products = this.groupedProducts[pierreId] || [];
+    return products.slice(currentIndex, currentIndex + this.visibleProducts);
   }
 }

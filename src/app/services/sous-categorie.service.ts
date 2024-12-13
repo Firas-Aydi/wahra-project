@@ -20,6 +20,14 @@ export class SousCategorieService {
       ref.where('id', 'in', ids)
     ).valueChanges({ idField: 'id' });
   }
+  getPierresByIds(ids: string[]): Observable<Pierre[]> {
+    if (ids.length === 0) {
+      return of([]);
+    }
+    return this.firestore.collection<Pierre>('pierres', ref =>
+      ref.where('id', 'in', ids)
+    ).valueChanges({ idField: 'id' });
+  }
   
   getSousCategoriesByCategory(categoryId: string): Observable<SousCategorie[]> {
     return this.firestore

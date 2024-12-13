@@ -77,12 +77,11 @@
 
 
 
-<div class="container mt-4" *ngIf="sousCategories.length > 0; else noCategories">
+<!-- <div class="container mt-4" *ngIf="sousCategories.length > 0; else noCategories">
   <div *ngFor="let sousCategory of sousCategories" class="mb-5">
     <h3 class="text-center">{{ sousCategory.name }}</h3>
     <div class="carousel-container">
       <div class="d-flex justify-content-center">
-        <!-- Produits visibles -->
         <div class="card mx-2" *ngFor="let produit of getVisibleProducts(sousCategory.id)">
           <span
             class="badge position-absolute p-2 text-light stock-badge"
@@ -102,7 +101,6 @@
           </div>
         </div>
       </div>
-      <!-- Boutons de navigation -->
       <button
         (click)="prevSlide(sousCategory.id)"
         class="carousel-control-prev"
@@ -128,4 +126,93 @@
 
 <ng-template #noCategories>
   <p class="text-center">Aucune sous-catégorie trouvée.</p>
-</ng-template>
+</ng-template> -->
+
+<div class="container mt-4">
+  <div *ngIf="produitParPierre.length > 0 || sousCategories.length > 0; else noCategories">
+    <!-- Carrousels pour sousCategories -->
+    <div *ngIf="sousCategories.length > 0; else produitParPierre">
+      <div *ngFor="let sousCategory of sousCategories" class="mb-5">
+        <h3 class="text-center">{{ sousCategory.name }}</h3>
+        <div class="carousel-container position-relative">
+          <div class="d-flex justify-content-center">
+            <!-- Produits visibles -->
+            <div class="card mx-2" *ngFor="let produit of getVisibleProducts(sousCategory.id)">
+              <span class="badge position-absolute p-2 text-light stock-badge" [ngClass]="{
+                  'bg-success': produit?.stock! > 0,
+                  'bg-danger': produit?.stock! === 0
+                }">
+                {{ produit?.stock! > 0 ? 'En stock' : 'En rupture' }}
+              </span>
+              <img [src]="produit.images[0]" class="card-img-top" [alt]="produit.name" />
+              <div class="card-body">
+                <p class="card-price" style="color: #bd4800;">
+                  {{ produit.price }} DT
+                </p>
+                <h5 class="card-title">{{ produit.name }}</h5>
+              </div>
+            </div>
+          </div>
+          <!-- Boutons de navigation -->
+          <button (click)="prevSlide(sousCategory.id)" class="carousel-control-prev"
+            [disabled]="currentIndex[sousCategory.id] === 0">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button (click)="nextSlide(sousCategory.id)" class="carousel-control-next" [disabled]="
+              currentIndex[sousCategory.id] >=
+              (groupedProducts[sousCategory.id].length || 0) - visibleProducts
+            ">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carrousel pour produitParPierre -->
+    <ng-template #produitParPierre>
+      <div *ngIf="groupedProducts | keyvalue" class="mb-5">
+        <div *ngFor="let group of groupedProducts | keyvalue">
+          <h3 class="text-center">Pierre : {{ group.key }}</h3>
+          <div class="carousel-container position-relative">
+            <div class="d-flex justify-content-center">
+              <!-- Produits visibles -->
+              <div class="card mx-2" *ngFor="let produit of getVisibleProductsForPierre(group.key)">
+                <span class="badge position-absolute p-2 text-light stock-badge" [ngClass]="{
+                  'bg-success': produit?.stock! > 0,
+                  'bg-danger': produit?.stock! === 0
+                }">
+                  {{ produit?.stock! > 0 ? 'En stock' : 'En rupture' }}
+                </span>
+                <img [src]="produit.images[0]" class="card-img-top" [alt]="produit.name" />
+                <div class="card-body">
+                  <p class="card-price" style="color: #bd4800;">
+                    {{ produit.price }} DT
+                  </p>
+                  <h5 class="card-title">{{ produit.name }}</h5>
+                </div>
+              </div>
+            </div>
+            <!-- Boutons de navigation -->
+            <button (click)="prevSlideForPierre(group.key)" class="carousel-control-prev"
+              [disabled]="carouselIndexes[group.key] === 0">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button (click)="nextSlideForPierre(group.key)" class="carousel-control-next"
+              [disabled]="carouselIndexes[group.key] >= (group.value.length - visibleProducts)">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+
+  <ng-template #noCategories>
+    <p class="text-center text-muted">Nous n'avons actuellement aucun produit disponible dans cette catégorie.
+      N'hésitez pas à explorer nos autres collections pour découvrir nos articles uniques.</p>
+  </ng-template>
+</div>
