@@ -6,7 +6,7 @@ export interface Produit {
   stock: number; // Stock disponible
   images: string[]; // Liste des URLs des images
   sousCategoryId: string;
-  pierreId: string;
+  pierreId?: string;
   createdAt: Date; // Date de création
   updatedAt: Date; // Date de mise à jour
 }

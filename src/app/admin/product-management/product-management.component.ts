@@ -39,7 +39,7 @@ export class ProductManagementComponent implements OnInit {
       price: [0, [Validators.required, Validators.min(0)]],
       stock: [0, [Validators.required, Validators.min(0)]],
       sousCategoryId: ['', Validators.required],
-      pierreId: ['', Validators.required],
+      pierreId: [''],
       images: [[]],
     });
   }

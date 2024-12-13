@@ -29,6 +29,7 @@
             <div class="col-md-4 mb-3">
               <label>Pierre associée:</label>
               <select class="form-select" formControlName="pierreId">
+                <option ></option>
                 <option *ngFor="let pierre of pierres" [value]="pierre.id">{{ pierre.name }}</option>
               </select>
             </div>
@@ -79,7 +80,7 @@
       <td>{{ produit.price | currency: 'EUR' }}</td>
       <td>{{ produit.stock }}</td>
       <td>{{ getSousCategorieName(produit.sousCategoryId) }}</td>
-      <td>{{ getPierreName(produit.pierreId) }}</td>
+      <td>{{ getPierreName(produit.pierreId!) }}</td>
       <td>
         <ng-container *ngIf="produit.images?.length; else noImage">
           <img *ngFor="let image of produit.images" [src]="image" alt="Image" width="50" height="50" />

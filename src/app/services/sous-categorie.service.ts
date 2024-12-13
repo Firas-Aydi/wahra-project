@@ -12,7 +12,15 @@ export class SousCategorieService {
   private collection = this.firestore.collection<SousCategorie>('sousCategories');
 
   constructor(private firestore: AngularFirestore) {}
-
+  getSousCategoriesByIds(ids: string[]): Observable<SousCategorie[]> {
+    if (ids.length === 0) {
+      return of([]);
+    }
+    return this.firestore.collection<SousCategorie>('sousCategories', ref =>
+      ref.where('id', 'in', ids)
+    ).valueChanges({ idField: 'id' });
+  }
+  
   getSousCategoriesByCategory(categoryId: string): Observable<SousCategorie[]> {
     return this.firestore
       .collection<SousCategorie>('sub-categories', (ref) =>
