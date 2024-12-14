@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SousCategorieService } from '../services/sous-categorie.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Produit } from '../model/produit';
 
 @Component({
@@ -21,6 +21,7 @@ export class SousCategoriesComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private sousCategorieService: SousCategorieService
   ) {}
 
@@ -158,5 +159,15 @@ export class SousCategoriesComponent implements OnInit {
     const currentIndex = this.carouselIndexes[pierreId] || 0;
     const products = this.groupedProducts[pierreId] || [];
     return products.slice(currentIndex, currentIndex + this.visibleProducts);
+  }
+
+  viewProductDetails(produitId: string | undefined) {
+    if (produitId) {
+      this.router.navigate(['/products', produitId]);
+    } else {
+      console.error(
+        'produit ID is undefined. Cannot navigate to produit details.'
+      );
+    }
   }
 }

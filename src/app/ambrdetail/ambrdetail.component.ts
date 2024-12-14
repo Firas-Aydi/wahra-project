@@ -24,18 +24,6 @@ export class AmbrdetailComponent implements OnInit {
     this.loadAmbreDetails(ambreId);
     console.log('ambreId: ', ambreId);
   }
-  // ngOnInit() {
-  //   this.ambre = {
-  //     id:'111',
-  //     name: 'Ambre Test',
-  //     price: 200,
-  //     description: 'Description fictive pour test',
-  //     images: ['image1.jpg', 'image2.jpg'],
-  //     stock: 5,
-  //     createdAt:
-  //   };
-  //   this.selectedImage = this.ambre.images[0];
-  // }
   
   loadAmbreDetails(ambreId: string | null) {
     if (ambreId) {

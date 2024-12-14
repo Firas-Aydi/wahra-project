@@ -19,7 +19,6 @@ export class AmbreService {
     amb.id = this.firestore.createId();
     return this.firestore.collection('/Ambre').add(amb);
   }
-  // Get chambre by ID
   getAmbreById(ambreId: string): Observable<Ambre | null | undefined> {
     return this.ambreCollection.doc(ambreId).valueChanges().pipe(
       catchError((error) => {

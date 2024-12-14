@@ -16,6 +16,7 @@ import { ProductManagementComponent } from './admin/product-management/product-m
 import { StoneManagementComponent } from './admin/stone-management/stone-management.component';
 import { SubCategoryManagementComponent } from './admin/sub-category-management/sub-category-management.component';
 import { UserManagementComponent } from './admin/user-management/user-management.component';
+import { ProduitdetailComponent } from './produitdetail/produitdetail.component';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -30,7 +31,7 @@ const routes: Routes = [
   { path: 'sous-categorie/:sousCategorieId', component: ProduitsComponent },
   { path: 'pierres/:pierreId', component: ProduitsComponent },
   
-  { path: 'products/:id', component: ProduitsComponent },
+  { path: 'products/:id', component: ProduitdetailComponent },
   { path: 'bienfaits/:pierreId', component: BienfaitsComponent },
   
   { path: 'cart', component: CartComponent },

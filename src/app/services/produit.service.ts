@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Observable, of } from 'rxjs';
-import { finalize, switchMap } from 'rxjs/operators';
+import { catchError, finalize } from 'rxjs/operators';
 import { Produit } from '../model/produit';
 import { SousCategorie } from '../model/sous-categorie';
 import { Pierre } from '../model/pierre';
@@ -18,6 +18,15 @@ export class ProductService {
   getProduits(): Observable<Produit[]> {
     return this.firestore.collection<Produit>(this.collectionName).valueChanges({ idField: 'id' });
   }
+  getProduitById(produitId: string): Observable<Produit | null | undefined> {
+    return this.firestore.collection<Produit>(this.collectionName).doc(produitId).valueChanges().pipe(
+      catchError((error) => {
+        console.error('Erreur lors de la récupération de l’produit :', error);
+        return of(null); // Retourne `null` en cas d'erreur
+      })
+    );;
+  }
+
   generateId(): string {
     return this.firestore.createId();
   }

@@ -1,0 +1,60 @@
+<!-- <p>produitdetail works!</p> -->
+<div class="container mt-5">
+    <div *ngIf="produit" class="row align-items-start">
+        <!-- Left Section: Sidebar and Main Image -->
+        <div class="col-md-8 d-flex flex-column">
+            <!-- Conteneur pour l'image principale -->
+            <div class="main-image-container">
+                <img [src]="selectedImage" alt="{{ produit.name }}" class="main-image" />
+            </div>
+
+            <!-- Conteneur pour les thumbnails -->
+            <div class="thumbnails-container d-flex justify-content-center">
+                <img *ngFor="let image of produit.images" [src]="image" alt="{{ produit.name }}" class="thumbnail-image"
+                    (click)="selectImage(image)" [class.active]="image === selectedImage" />
+            </div>
+        </div>
+
+
+        <!-- Right Section: produit Information -->
+        <div class="col-md-4">
+            <h2 class="produit-title">{{ produit.name }}</h2>
+            <hr>
+            <h6>
+                <p class="price">
+                    <span class="line"></span>{{ produit.price }} TND
+                </p>
+            </h6>
+
+            <hr>
+            <!-- <div class="produit-info mt-3"> -->
+            <p class="description">
+                <strong>Description</strong><br>
+                {{ produit.description }}
+            </p>
+            <hr>
+            <div class="input-group mb-3 quantity-input">
+                <span class="input-group-text quantity">Quantité:</span>
+                <input type="number" [(ngModel)]="quantity" min="1" max="{{ produit.stock }}" class="form-control"
+                    [disabled]="produit.stock === 0" (input)="validateQuantity()" />
+            </div>
+            <!-- Error messages -->
+            <div *ngIf="quantityError" class="text-danger">
+                {{ quantityError }}
+            </div>
+            <button [disabled]="produit.stock! === 0" class="btn custom-btn" title="Add to Cart"
+                (click)="addToCart(produit,quantity)">
+                <i class="fa-solid fa-cart-shopping"></i>
+                Ajouter au panier
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="!produit">
+        <div class="error-page">
+            <div class="error-content">
+                <p>produit non trouvé.</p>
+            </div>
+        </div>
+    </div>
+</div>

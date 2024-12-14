@@ -178,7 +178,8 @@
           <div class="carousel-container position-relative">
             <div class="d-flex justify-content-center">
               <!-- Produits visibles -->
-              <div class="card mx-2" *ngFor="let produit of getVisibleProductsForPierre(group.key)">
+              <div class="card mx-2" *ngFor="let produit of getVisibleProductsForPierre(group.key)"
+                (click)="viewProductDetails(produit.id)">
                 <span class="badge position-absolute p-2 text-light stock-badge" [ngClass]="{
                   'bg-success': produit?.stock! > 0,
                   'bg-danger': produit?.stock! === 0
