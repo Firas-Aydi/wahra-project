@@ -1,34 +1,30 @@
-<p>Prod</p>
 <div class="container mt-4">
-  <!-- <h2 class="text-center">Produits</h2> -->
   <div *ngIf="products.length > 0; else noProducts">
     <div class="row">
-      <div
-        class="col-md-4 d-flex align-items-stretch"
-        *ngFor="let product of products"
-      >
-        <div class="card mb-4 w-100">
-          <img
-            [src]="product.images[0] || 'assets/default-image.png'"
-            class="card-img-top"
-            [alt]="product.name"
-            (error)="product.images[0] = 'assets/default-image.png'"
-          />
-          <div class="card-body">
-            <h5 class="card-title">{{ product.name }}</h5>
-            <p class="card-text">{{ product.description }}</p>
-            <p class="card-text">
-              <strong>{{ product.price | currency }}</strong>
-            </p>
-            <a [routerLink]="['/products', product.id]" class="btn btn-primary">
-              Voir le produit
-            </a>
+      <div class="col-md-4 d-flex align-items-stretch" *ngFor="let produit of products">
+        <div class="card product-card shadow-sm mx-2" (click)="viewProductDetails(produit.id)">
+          <!-- Badge Stock -->
+          <span class="badge position-absolute stock-badge" [ngClass]="{
+              'bg-success': produit?.stock! > 0, 'bg-danger': produit?.stock! === 0 }">
+            {{ produit?.stock! > 0 ? 'En stock' : 'En rupture' }}
+          </span>
+          <!-- Image -->
+          <img [src]="produit.images[0]" class="card-img-top product-img" [alt]="produit.name" />
+          <!-- Card Body -->
+          <div class="card-body text-center">
+            <p class="card-price">{{ produit.price }} DT</p>
+            <h5 class="card-title">{{ produit.name }}</h5>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Message No Products -->
   <ng-template #noProducts>
-    <p class="text-center">Aucun produit trouvé dans cette sous-catégorie.</p>
+    <p class="text-center text-muted no-products-message">
+      Nous n'avons actuellement aucun produit disponible dans cette catégorie.
+      N'hésitez pas à explorer nos autres collections pour découvrir nos articles uniques.
+    </p>
   </ng-template>
 </div>

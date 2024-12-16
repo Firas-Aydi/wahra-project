@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../services/produit.service';
 import { Produit } from '../model/produit';
 
@@ -16,6 +16,7 @@ export class ProduitsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private productService: ProductService
   ) {}
 
@@ -60,5 +61,13 @@ export class ProduitsComponent implements OnInit {
     );
   }
   
-  
+  viewProductDetails(produitId: string | undefined) {
+    if (produitId) {
+      this.router.navigate(['/products', produitId]);
+    } else {
+      console.error(
+        'produit ID is undefined. Cannot navigate to produit details.'
+      );
+    }
+  }
 }
