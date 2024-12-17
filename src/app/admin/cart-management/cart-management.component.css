@@ -1,0 +1,27 @@
+.table {
+    font-size: 14px;
+  }
+  
+  .table th,
+  .table td {
+    text-align: center;
+  }
+  
+  .btn-sm {
+    margin: 0 5px;
+  }
+  .color-samples {
+    display: flex;
+    gap: 8px; /* Espace entre les couleurs */
+    align-items: center;
+  }
+  
+  .color-sample {
+    display: inline-block;
+    width: 20px; /* Taille de l'échantillon */
+    height: 20px;
+    border-radius: 50%; /* Cercle, changer pour 0 si vous voulez des carrés */
+    border: 1px solid #ccc; /* Optionnel, bordure autour de la couleur */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); /* Un peu d'ombre pour effet 3D */
+  }
+  

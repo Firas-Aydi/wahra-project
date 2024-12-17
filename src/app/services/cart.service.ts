@@ -62,7 +62,10 @@ export class CartService {
   }
 
   // Clear the cart after checkout
-  clearCart() {
-    this.cartItems = [];
-  }
+clearCart() {
+  this.cartItems = [];
+  this.cartItemCount$.next(0); // Mettre à jour le compteur à 0
+  this.saveCartToLocalStorage();
+}
+
 }

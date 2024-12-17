@@ -1,0 +1,141 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h2 class="">Passer la Commande</h2>
+            <form #orderForm="ngForm" (ngSubmit)="onSubmit()" class="p-4 border bg-light">
+                <div class="mb-3">
+                    <label for="firstName" class="form-label">Prénom *</label>
+                    <input type="text" id="firstName" class="form-control" required minlength="3"
+                        [(ngModel)]="commande.firstName" name="firstName" #firstName="ngModel"
+                        placeholder="Entrez votre prénom">
+                    <!-- Validation message -->
+                    <div *ngIf="firstName.invalid && firstName.touched" class="text-danger">
+                        <small *ngIf="firstName.errors?.['required']">Le prénom est requis.</small>
+                        <small *ngIf="firstName.errors?.['minlength']">Le prénom doit contenir au moins 2
+                            caractères.</small>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="lastName" class="form-label">Nom *</label>
+                    <input type="text" id="lastName" class="form-control" required [(ngModel)]="commande.lastName"
+                        name="lastName" #lastName="ngModel" placeholder="Entrez votre nom">
+                    <!-- Validation message -->
+                    <div *ngIf="lastName.invalid && lastName.touched" class="text-danger">
+                        <small *ngIf="lastName.errors?.['required']">Le nom est requis.</small>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="address" class="form-label">Numéro et nom de rue *</label>
+                    <input type="text" id="address" class="form-control" required [(ngModel)]="commande.address"
+                        name="address" #address="ngModel" placeholder="Entrez votre adresse">
+                    <!-- Validation message -->
+                    <div *ngIf="address.invalid && address.touched" class="text-danger">
+                        <small *ngIf="address.errors?.['required']">L'adresse est requise.</small>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="city" class="form-label">Ville *</label>
+                    <input type="text" id="city" class="form-control" required [(ngModel)]="commande.city"
+                        name="city" #city="ngModel" placeholder="Entrez votre ville">
+                    <!-- <select id="city" class="form-control" required [(ngModel)]="commande.city" name="city"
+                        #city="ngModel" (change)="updateDeliveryPrice(commande.city)">
+                        <option value="">Sélectionnez votre ville</option>
+                        <option *ngFor="let city of cities" [value]="city.name">
+                            {{ city.name }} - {{ city.price }} TND
+                        </option>
+                    </select> -->
+                    <!-- Validation message -->
+                    <div *ngIf="city.invalid && city.touched" class="text-danger">
+                        <small *ngIf="city.errors?.['required']">La ville est requise.</small>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="region" class="form-label">Région / Département *</label>
+                    <input type="text" id="region" class="form-control" required [(ngModel)]="commande.region"
+                        name="region" #region="ngModel" placeholder="Entrez votre région">
+                    <!-- Validation message -->
+                    <div *ngIf="region.invalid && region.touched" class="text-danger">
+                        <small *ngIf="region.errors?.['required']">La région est requise.</small>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="codePostal" class="form-label">Code postal *</label>
+                    <input type="number" id="codePostal" class="form-control" required pattern="^[0-9]{4}$"
+                        [(ngModel)]="commande.codePostal" name="codePostal" #codePostal="ngModel"
+                        placeholder="Entrez votre Code postal">
+                    <!-- Validation message -->
+                    <div *ngIf="codePostal.invalid && codePostal.touched" class="text-danger">
+                        <small *ngIf="codePostal.errors?.['required']">Le Code postal est requis.</small>
+                        <small *ngIf="codePostal.errors?.['pattern']">Le Code postal doit comporter chiffres.</small>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email *</label>
+                    <input type="email" id="email" class="form-control" required email [(ngModel)]="commande.email"
+                        name="email" #email="ngModel" placeholder="Entrez votre email">
+                    <!-- Validation message -->
+                    <div *ngIf="email.invalid && email.touched" class="text-danger">
+                        <small *ngIf="email.errors?.['required']">L'email est requis.</small>
+                        <small *ngIf="email.errors?.['email']">Veuillez entrer un email valide.</small>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Téléphone *</label>
+                    <input type="tel" id="phone" class="form-control" required pattern="^[0-9]{8}$"
+                        [(ngModel)]="commande.phone" name="phone" #phone="ngModel" placeholder="Entrez votre téléphone">
+                    <!-- Validation message -->
+                    <div *ngIf="phone.invalid && phone.touched" class="text-danger">
+                        <small *ngIf="phone.errors?.['required']">Le téléphone est requis.</small>
+                        <small *ngIf="phone.errors?.['pattern']">Le téléphone doit comporter 8 chiffres.</small>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="notes" class="form-label">Notes de commande (facultatif) </label>
+                    <textarea id="notes" class="form-control" [(ngModel)]="commande.notes" name="notes" rows="3"
+                        placeholder="Ajouter des notes supplémentaires..."></textarea>
+                </div>
+
+                <button type="submit" class="btn custom-btn w-100" [disabled]="orderForm.invalid">Confirmer la
+                    commande</button>
+            </form>
+        </div>
+
+        <div class="col-md-6">
+            <h2 class="">Détails de la Commande</h2>
+            <div class="p-4 border bg-light">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Article</th>
+                            <th>Prix Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let cartItem of cartItems">
+                            <td>
+                                <img [src]="cartItem.product.images[0]" alt="{{ cartItem.product.name }}"
+                                    style="width: 60px; height: auto; margin-right: 10px;">
+                                {{ cartItem.product.name }} x {{ cartItem.quantity }}
+                            </td>
+                            <td class="text-primary">{{ (cartItem.product.price * cartItem.quantity) | currency:'DT':'symbol' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-between mt-3">
+                    <strong>Livraison :</strong>
+                    <strong>7 DT</strong>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <strong>Total :</strong>
+                    <strong>{{ (totalPrice + 7) | currency:'DT ':'symbol' }}</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -57,6 +57,23 @@
 .search-input::-webkit-input-placeholder {
   color: #f6ad55;
 } /* Chrome/Safari */
+.badge {
+  font-size: 12px;
+  width: auto;
+  height: 18px;
+  padding: 0 6px;
+  line-height: 18px;
+  border-radius: 50%;
+  min-width: 18px;
+  display: inline-block;
+  text-align: center;
+  background-color: #f6ad55;
+  color: white;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  z-index: 1;
+}
 /* Liens de navigation */
 .navbar-nav {
   display: flex; /* Garde les éléments alignés horizontalement */

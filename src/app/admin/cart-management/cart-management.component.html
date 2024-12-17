@@ -1,1 +1,93 @@
-<p>cart-management works!</p>
+<div class="container mt-5">
+    <h2 class="text-center">Gestion des Commandes</h2>
+    <table class="table table-bordered table-hover mt-4">
+        <thead>
+            <tr>
+                <th>Client</th>
+                <th>Total</th>
+                <th>Date</th>
+                <th>État</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let commande of commandes" [ngClass]="getCommandeRowClass(commande.etat)">
+                <td>{{ commande.firstName }} {{ commande.lastName }}</td>
+                <td>{{ commande.totalPrice | currency:'DT ':'symbol' }}</td>
+                <td>{{ commande.timestamp?.toDate() | date:'dd-MM-yyyy HH:mm' }}</td>
+                <td>{{ commande.etat }}</td>
+                <td>
+                    <button class="btn btn-info btn-sm text-light m-2" (click)="openDetailsModal(commande)">Détails</button>
+                    <button class="btn btn-success btn-sm m-2"
+                        (click)="accepterCommande(commande.commandeId!)">Accepter</button>
+                    <button class="btn btn-danger btn-sm m-2"
+                        (click)="refuserCommande(commande.commandeId!)">Refuser</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Modale pour afficher les détails de la commande -->
+    <div class="modal fade" id="commandeDetailsModal" tabindex="-1" aria-labelledby="commandeDetailsModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document"> <!-- Ajout de 'modal-lg' pour rendre la modal plus large -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!-- <h5 class="modal-title" id="commandeDetailsModalLabel">Détails de la Commande</h5> -->
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <!-- Colonne pour les détails de la commande -->
+                        <div class="col-md-6">
+                            <h5>Détails de la Commande</h5>
+                            <hr>
+                            <p><strong>Client :</strong> {{ selectedCommande?.firstName }} {{ selectedCommande?.lastName
+                                }}</p>
+                            <p><strong>Adresse :</strong> {{ selectedCommande?.address }}</p>
+                            <p><strong>Ville :</strong> {{ selectedCommande?.city }}, {{ selectedCommande?.region }}</p>
+                            <p><strong>Email :</strong> {{ selectedCommande?.email }}</p>
+                            <p><strong>Téléphone :</strong> {{ selectedCommande?.phone }}</p>
+                            <p><strong>Notes :</strong> {{ selectedCommande?.notes }}</p>
+                            <p><strong>Total :</strong> {{ selectedCommande?.totalPrice | currency:'DT ':'symbol' }}</p>
+                            <!-- <p><strong>État :</strong> {{ selectedCommande?.etat }}</p> -->
+                            <p><strong>Date :</strong> {{ selectedCommande?.timestamp?.toDate() | date:'dd-MM-yyyy
+                                HH:mm' }}</p>
+                        </div>
+
+                        <!-- Colonne pour les articles commandés -->
+                        <div class="col-md-6">
+                            <h5>Articles commandés</h5>
+                            <div *ngFor="let item of selectedCommande?.cartItems">
+                                <hr>
+                                <p><strong>Nom de l'article :</strong> {{ item.product.name }}</p>
+                                <!-- <p><strong>Description :</strong> -->
+                                <!-- <p class="color-samples">
+                                <strong>Couleurs :</strong>
+                                <span *ngFor="let color of item.item.colors" 
+                                      [style.backgroundColor]="color" 
+                                      class="color-sample" 
+                                      title="{{ color }}"></span>
+                            </p>               -->
+                                <p><strong>Prix unitaire :</strong> {{ item.product.price | currency:'DT ':'symbol' }}
+                                </p>
+                                <p><strong>Quantité :</strong> {{ item.quantity }}</p>
+                                <div class="thumbnails-container d-flex" *ngIf="item.product.images?.length">
+                                    <strong>Images :</strong>
+                                    <div *ngFor="let image of item.product.images">
+                                        <img [src]="image" alt="{{ item.product.name }}" class="img-fluid"
+                                            style="width: 50px; height: 50px; margin-right: 10px;">
+                                    </div>
+                                </div>
+                                <p><strong>Total pour cet article :</strong> {{ item.product.price * item.quantity |
+                                    currency:'DT ':'symbol' }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div> -->
+            </div>
+        </div>
+    </div>

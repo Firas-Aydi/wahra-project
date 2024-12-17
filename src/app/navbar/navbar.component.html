@@ -22,7 +22,16 @@
     <!-- Menu utilisateur -->
     <ul class="navbar-nav ms-auto">
       <li class="nav-item" *ngIf="userType !== 'admin'">
-        <a class="nav-link" routerLink="cart"><i class="fa-solid fa-cart-shopping"></i></a>
+        <a class="nav-link position-relative" routerLink="cart">
+          <i class="fa-solid fa-cart-shopping"></i>
+          <span class="badge">{{ cartItemCount }}</span>
+        </a>
+      </li>
+      <li class="nav-item" *ngIf="isUser && userType === 'admin'">
+        <a class="nav-link chic-link position-relative" aria-current="page" routerLink="carts-management">
+          <i class="fa-regular fa-bell"></i>
+          <span class="badge">{{ commandeItemCount }}</span>
+        </a>
       </li>
       <li class="nav-item" *ngIf="isUser">
         <a class="nav-link" (click)="logout()" routerLink="login"><i
@@ -92,9 +101,9 @@
         <li class="nav-item" *ngIf="isUser && userType === 'admin'">
           <a class="sub-nav-link" routerLink="/users-management">Gestion des Utilisateurs</a>
         </li>
-        <li class="nav-item" *ngIf="isUser && userType === 'admin'">
+        <!-- <li class="nav-item" *ngIf="isUser && userType === 'admin'">
           <a class="sub-nav-link" routerLink="/carts-management">Gestion des Paniers</a>
-        </li>
+        </li> -->
         <!-- <li class="nav-item">
           <a class="sub-nav-link" routerLink="ambre" (click)="toggleNavbar()">Ambre</a>
         </li>

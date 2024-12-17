@@ -1,0 +1,56 @@
+body {
+    background-color: #f8f9fa; /* Light background for better contrast */
+  }
+  h2 {
+    font-family: "Harmonia Sans", sans-serif;
+    font-size: 25px;
+    font-weight: 500;
+  }
+  .custom-btn {
+      background-color: #ffffff; /* A vibrant green */
+      color: black; /* Text color */
+      border: 1px solid #ccc;;
+      padding: 10px 10px; /* Adjust padding */
+      font-family: "Harmonia Sans", sans-serif; 
+      font-size: 16px; /* Font size */
+      border-radius: 0px; 
+      transition: background-color 0.3s, transform 0.2s; /* Transition for hover effects */
+      /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  */
+    }
+    
+    .custom-btn:hover {
+      background-color: #ccc; /* Darker green on hover */
+      /* transform: translateY(-2px);  */
+    }
+  .container {
+    max-width: 1200px; /* Limit the width for a more focused look */
+  }
+  
+  .border {
+    border: 1px solid #e0e0e0; /* Light gray border for separation */
+  }
+  
+  .shadow-sm {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075); /* Light shadow for depth */
+  }
+  
+  .btn-primary {
+    background-color: #007bff; /* Primary button color */
+    border-color: #007bff; /* Match border with button */
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+  }
+  
+  .table th {
+    font-family: "Harmonia Sans", sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  
+  .table th,
+  .table td {
+    vertical-align: middle; /* Align text vertically */
+  }
+  

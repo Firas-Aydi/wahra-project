@@ -7,6 +7,9 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { CategorieService } from 'src/app/services/categorie.service';
 import { SousCategorieService } from '../services/sous-categorie.service';
 import { PierreService } from '../services/pierre.service';
+import { Subscription } from 'rxjs';
+import { CartService } from '../services/cart.service';
+import { CommandeService } from '../services/commande.service';
 
 interface UserData {
   role: string;
@@ -26,6 +29,11 @@ export class NavbarComponent implements OnInit {
   // sousCategories: any[] = [];
   pierres: any[] = [];
 
+  cartItemCount: number = 0;
+  private cartSubscription: Subscription | undefined; // Pour gérer l'abonnement
+  commandeItemCount: number = 0;
+  private pendingCommandeSubscription: Subscription | undefined;
+
   constructor(
     private categoryService: CategorieService,
     private sousCategorieService: SousCategorieService,
@@ -33,7 +41,9 @@ export class NavbarComponent implements OnInit {
     private af: AngularFireAuth,
     private route: Router,
     private as: AuthService,
-    private firestore: AngularFirestore
+    private firestore: AngularFirestore,
+    private commandeService: CommandeService,
+    private cartService: CartService
   ) {
     this.as.user.subscribe((user) => {
       if (user) {
@@ -66,6 +76,33 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCategories();
+
+     // Abonnez-vous au nombre de commandes en attente
+     this.pendingCommandeSubscription = this.commandeService
+     .getPendingCommandesCount()
+     .subscribe((count) => {
+       this.commandeItemCount = count;
+     });
+     
+    // Charger le compteur du panier depuis localStorage
+    const savedCartCount = localStorage.getItem('wahracartItemCount');
+    this.cartItemCount = savedCartCount ? +savedCartCount : 0;
+    // S'abonner aux changements du panier
+    this.cartSubscription = this.cartService.cartItemCount$.subscribe(
+      (count) => {
+        this.cartItemCount = count;
+        localStorage.setItem('wahracartItemCount', count.toString());
+      }
+    );
+  }
+  ngOnDestroy(): void {
+    if (this.cartSubscription) {
+      this.cartSubscription.unsubscribe();
+    }
+    // Désabonnement lors de la destruction du composant pour éviter les fuites de mémoire
+    if (this.pendingCommandeSubscription) {
+      this.pendingCommandeSubscription.unsubscribe();
+    }
   }
 
   loadCategories(): void {

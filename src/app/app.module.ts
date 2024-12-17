@@ -19,6 +19,7 @@ import { SousCategoriesComponent } from './sous-categories/sous-categories.compo
 import { ProduitsComponent } from './produits/produits.component';
 import { BienfaitsComponent } from './bienfaits/bienfaits.component';
 import { ProduitdetailComponent } from './produitdetail/produitdetail.component';
+import { CommandeComponent } from './commande/commande.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ProduitdetailComponent } from './produitdetail/produitdetail.component'
     SousCategoriesComponent,
     ProduitsComponent,
     BienfaitsComponent,
-    ProduitdetailComponent
+    ProduitdetailComponent,
+    CommandeComponent
   ],
   imports: [
     BrowserModule,

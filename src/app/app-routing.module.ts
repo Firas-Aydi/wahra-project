@@ -17,6 +17,7 @@ import { StoneManagementComponent } from './admin/stone-management/stone-managem
 import { SubCategoryManagementComponent } from './admin/sub-category-management/sub-category-management.component';
 import { UserManagementComponent } from './admin/user-management/user-management.component';
 import { ProduitdetailComponent } from './produitdetail/produitdetail.component';
+import { CommandeComponent } from './commande/commande.component';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -35,7 +36,8 @@ const routes: Routes = [
   { path: 'bienfaits/:pierreId', component: BienfaitsComponent },
   
   { path: 'cart', component: CartComponent },
-  
+  { path: 'commande', component: CommandeComponent },
+
   { path: 'categories-management', component: CategoryManagementComponent },
   { path: 'sub-categories-management', component: SubCategoryManagementComponent },
   { path: 'products-management', component: ProductManagementComponent },
