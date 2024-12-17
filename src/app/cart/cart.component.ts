@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../services/cart.service'; // Assuming you have a CartService
-import { Ambre } from '../model/ambre'; // Assuming you're using the Ambre model for products
+// import { Ambre } from '../model/ambre';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -8,31 +9,44 @@ import { Ambre } from '../model/ambre'; // Assuming you're using the Ambre model
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-  cartItems: { product: Ambre, quantity: number }[] = [];
+  allCartItems: any[] = [];
   totalPrice: number = 0;
+  quantityErrors: { [itemId: string]: string } = {};
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadCartItems();
-    this.calculateTotalPrice();
   }
 
   // Load the cart items from the CartService
   loadCartItems() {
-    this.cartItems = this.cartService.getCartItems();
+    this.allCartItems = this.cartService.getCartItems();
+    console.log('allCartItems:', this.allCartItems);
+    this.calculateTotalPrice();
   }
 
   // Calculate the total price
   calculateTotalPrice() {
-    this.totalPrice = this.cartItems.reduce((total, item) => total + (item.product.price * item.quantity), 0);
+    this.totalPrice = this.allCartItems.reduce(
+      (total, item) => total + (item.product.price * item.quantity), 0);
   }
 
-  // Update the quantity of a product in the cart
-  updateQuantity(item: { product: Ambre, quantity: number }, quantity: number) {
-    if (quantity > 0 && quantity <= item.product.stock) {
-      item.quantity = quantity;
-      this.cartService.updateCartItem(item.product.id, quantity); // Update in CartService
+  // Update quantity and handle stock checks
+  updateQuantity(cartItem: any, quantity: number) {
+    const stock = cartItem.product.stock || 0;
+    const itemId = cartItem.product.id;
+    console.log('itemId:', itemId)
+    if (quantity < 1) {
+      this.quantityErrors[itemId] = "La quantité doit être d'au moins 1.";
+    } else if (quantity > stock) {
+      this.quantityErrors[
+        itemId
+      ] = `La quantité ne peut pas dépasser la limite de stock de ${stock}.`;
+    } else {
+      this.quantityErrors[itemId] = '';
+      cartItem.quantity = quantity;
+      this.cartService.updateCartItem(itemId, quantity); // Update in CartService
       this.calculateTotalPrice(); // Recalculate the total price
     }
   }
@@ -46,7 +60,7 @@ export class CartComponent implements OnInit {
 
   // Proceed to checkout
   proceedToCheckout() {
-    // Implement checkout logic
+    this.router.navigate(['/commande']);
     console.log('Proceeding to checkout with total price: ', this.totalPrice);
   }
 }

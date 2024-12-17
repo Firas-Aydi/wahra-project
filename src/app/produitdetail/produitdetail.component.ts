@@ -76,6 +76,12 @@ export class ProduitdetailComponent {
     if (produit && quantity > 0) {
       this.cartService.addToCart(produit, quantity);
       alert(`${quantity} ${produit.name}(s) ajoutée(s) au panier !`);
+    } else if (quantity <= 0) {
+      // Handle case where the quantity is invalid (e.g., less than 1)
+      alert('Veuillez entrer une quantité valide supérieure à 0.');
+    } else if (quantity > produit.stock) {
+      // Handle case where the quantity exceeds the stock
+      alert('La quantité entrée dépasse le stock disponible.');
     } else {
       alert('Une erreur est survenue. Veuillez réessayer.');
     }
@@ -87,6 +93,12 @@ export class ProduitdetailComponent {
       this.quantityError = 'La quantité doit être au moins de 1.';
     } else if (this.quantity > (this.produit?.stock || 0)) {
       this.quantityError = `La quantité ne peut pas dépasser le stock disponible (${this.produit?.stock}).`;
+    } else if (
+      this.quantity === null ||
+      this.quantity === undefined ||
+      this.quantity === 0
+    ) {
+      this.quantityError = 'La quantité ne peut pas être vide.';
     }
   }
 }

@@ -1,79 +1,88 @@
 <div class="container mt-4">
-    <div class="row">
-      <!-- Left column: Cart items -->
-      <div class="col-md-8">
-        <h2>Your Cart</h2>
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th>Product</th>
-              <th>Quantity</th>
-              <th>Price</th>
-              <th>Total</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of cartItems">
-                <td>
-                    <div class="d-flex align-items-center">
-                      <!-- Image section -->
-                      <div class="me-2"> <!-- Add margin-right between the image and text -->
-                        <img [src]="item.product.images[0]" alt="{{ item.product.name }}" style="width: 60px; height: auto;">
-                      </div>
-                  
-                      <!-- Product name section -->
-                      <div>
-                        {{ item.product.name }}
-                      </div>
-                    </div>
-                  </td>
-              <td>
-                <input type="number" [(ngModel)]="item.quantity" (change)="updateQuantity(item, item.quantity)"
-                  [min]="1" [max]="item.product.stock" class="form-control" style="width: 60px;">
-              </td>
-              <td>{{ item.product.price | currency:'DT ':'symbol' }}</td>
-              <td>{{ (item.product.price * item.quantity) | currency:'DT ':'symbol' }}</td>
-              <td>
-                <button class="btn btn-danger" (click)="removeItem(item.product.id)">
-                  <i class="fa fa-trash"></i>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-  
-      <!-- Right column: General Information -->
-      <div class="col-md-4">
-        <div class="card p-3 bg-light shadow-sm">
-          <h4>Order Summary</h4>
-          <hr>
-          <div class="d-flex justify-content-between">
-            <span>Subtotal:</span>
-            <strong>{{ totalPrice | currency:'DT ':'symbol' }}</strong>
-          </div>
-          <div class="d-flex justify-content-between">
-            <span>Delivery:</span>
-            <strong>7 DT</strong>
-          </div>
-          <hr>
-          <div class="d-flex justify-content-between">
-            <span>Total with Delivery:</span>
-            <strong>{{ (totalPrice + 7) | currency:'DT ':'symbol' }}</strong>
-          </div>
-  
-          <!-- Checkout Button -->
-          <button class="btn btn-success mt-3 w-100" (click)="proceedToCheckout()">
-            Place the Order
-          </button>
-  
-          <!-- Continue Shopping Button -->
-          <!-- <button class="btn btn-secondary mt-2 w-100" routerLink="/shop">
-            Continue Shopping
-          </button> -->
+  <div class="row" *ngIf="allCartItems.length > 0; else noProducts">
+    <!-- Colonne gauche : Articles du panier -->
+    <div class="col-md-8">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Produit</th>
+            <th>Quantité</th>
+            <th>Prix</th>
+            <th>Total</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of allCartItems">
+            <td>
+              <div class="d-flex align-items-center">
+                <!-- Section image -->
+                <div class="me-2"> <!-- Ajoute une marge à droite entre l'image et le texte -->
+                  <img [src]="item.product.images[0]" alt="{{ item.product.name }}" style="width: 60px; height: auto;">
+                </div>
+
+                <!-- Section nom du produit -->
+                <div>
+                  {{ item.product.name }}
+                </div>
+              </div>
+            </td>
+            <td>
+              <input type="number" [(ngModel)]="item.quantity" (change)="updateQuantity(item, item.quantity)" [min]="1"
+                [max]="item.product.stock" class="form-control" style="width: 60px;">
+            </td>
+            <td>{{ item.product.price | currency:'DT ':'symbol' }}</td>
+            <td>{{ (item.product.price * item.quantity) | currency:'DT ':'symbol' }}</td>
+            <td>
+              <button class="btn btn-danger" (click)="removeItem(item.product.id)">
+                <i class="fa fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Colonne droite : Informations générales -->
+    <div class="col-md-4">
+      <div class="card p-3 bg-light shadow-sm">
+        <h4>Récapitulatif de la commande</h4>
+        <hr>
+        <div class="d-flex justify-content-between">
+          <span>Sous-total :</span>
+          <strong>{{ totalPrice | currency:'DT ':'symbol' }}</strong>
         </div>
+        <div class="d-flex justify-content-between">
+          <span>Livraison :</span>
+          <strong>7 DT</strong>
+        </div>
+        <hr>
+        <div class="d-flex justify-content-between">
+          <span>Total avec livraison :</span>
+          <strong>{{ (totalPrice + 7) | currency:'DT ':'symbol' }}</strong>
+        </div>
+
+        <!-- Bouton de validation de la commande -->
+        <button class="btn btn-success mt-3 w-100" (click)="proceedToCheckout()">
+          Passer la commande
+        </button>
+
+        <!-- Bouton pour continuer les achats -->
+        <button class="btn btn-secondary mt-2 w-100" routerLink="/">
+          Poursuivre mes achats
+        </button>
       </div>
     </div>
   </div>
-  
+  <!-- Message No Products -->
+  <ng-template #noProducts>
+    <h1 class="text-center text-muted no-products-message">
+      <i class="fa-solid fa-cart-shopping"></i><br>
+      Votre panier est vide !<br>
+      <!-- Bouton pour continuer les achats -->
+      <button class="btn btn-secondary mt-2 w-10" routerLink="/">
+        Poursuivre mes achats
+      </button>
+    </h1>
+  </ng-template>
+</div>
