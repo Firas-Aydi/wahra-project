@@ -205,3 +205,114 @@ p {
 .slider__image:hover {
   filter: brightness(1.1);
 }
+
+
+
+
+
+
+
+.card {
+  flex: 1 0 18.5%;
+  max-width: 18.9%;
+  margin: 0 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  border-radius: 0px;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+.card-img-top {
+  height: 230px;
+  /* width: 230px; */
+  border-radius: 0px;
+  object-fit: cover;
+}
+.stock-badge {
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+  font-size: 0.8rem;
+  font-weight: bold;
+  border-radius: 10px;
+  padding: 5px 10px;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: brightness(0) invert(1);
+}
+
+.card-body {
+  padding: 15px;
+}
+.card-title {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+.card-price {
+  color: #bd4800;
+  font-size: 20px;
+  font-family: "Fira Sans";
+}
+
+@media (max-width: 768px) {
+  .col-md-4 {
+    max-width: 50%;
+  }
+}
+
+@media (max-width: 576px) {
+  .col-md-4 {
+    max-width: 100%;
+  }
+}
+
+.carousel-container {
+  width: 110%;
+  margin-left: -55px;
+  align-items: center;
+  position: relative;
+}
+
+
+
+.carousel-control-prev,
+.carousel-control-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.carousel-control-prev {
+  left: -20px;
+}
+
+.carousel-control-next {
+  right: -20px;
+}

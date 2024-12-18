@@ -1,39 +1,77 @@
-<body>
-    <div class="hero-section">
-        <div class="hero-content">
-            <!-- Texte à gauche -->
-            <div class="text-content">
-                <h1>Boutique de lithothérapie</h1>
-                <h2>et pierres de santé <i class="fas fa-gem" style="transform: rotate(15deg);font-size: 2rem;"></i>
-                </h2>
-                <p>
-                    Créée en ---, Wahra est la première marque tunisienne de bijoux
-                    d'exception en Ambre véritable, minéraux et pierres fines.
-                </p>
-                <p>
-                    Nous fabriquons à la main des bijoux en pierres naturelles à partir de
-                    minéraux importés des quatre coins du monde.
-                </p>
-            </div>
-
-            <!-- Images à droite -->
-            <div class="image-gallery">
-                <!-- <div  class="image-wrapper"> -->
-                    <img style="transform: rotate(-10deg);" src="https://www.123ambre.com/wp-content/themes/ambre3/img/bracelets.jpg"
-                        alt="Bracelet en pierre">
-                <!-- </div> -->
-                <!-- <div  class="image-wrapper"> -->
-                    <img style="transform: rotate(-4deg);" src="https://www.123ambre.com/wp-content/themes/ambre3/img/parure.png" alt="Bijoux en pierre">
-                <!-- </div> -->
-                <!-- <div  class="image-wrapper"> -->
-                    <img style="transform: rotate(4deg);" src="https://www.123ambre.com/wp-content/themes/ambre3/img/clients/eloise-b.jpg"
-                        alt="Enfant avec collier">
-                <!-- </div> -->
-            </div>
+<div class="hero-section">
+    <div class="hero-content">
+        <!-- Texte de la hero section -->
+        <div class="text-content">
+            <h1>Boutique de lithothérapie</h1>
+            <h2>
+                et pierres de santé <i class="fas fa-gem" style="transform: rotate(15deg); font-size: 2rem;"></i>
+            </h2>
+            <p>
+                Créée en ---, Wahra est la première marque tunisienne de bijoux
+                d'exception en Ambre véritable, minéraux et pierres fines.
+            </p>
+            <p>
+                Nous fabriquons à la main des bijoux en pierres naturelles à partir de
+                minéraux importés des quatre coins du monde.
+            </p>
+        </div>
+        <!-- Images -->
+        <div class="image-gallery">
+            <img src="https://www.123ambre.com/wp-content/themes/ambre3/img/bracelets.jpg" alt="Bracelet en pierre"
+                style="transform: rotate(-10deg);" />
+            <img src="https://www.123ambre.com/wp-content/themes/ambre3/img/parure.png" alt="Bijoux en pierre"
+                style="transform: rotate(-4deg);" />
+            <img src="https://www.123ambre.com/wp-content/themes/ambre3/img/clients/eloise-b.jpg"
+                alt="Enfant avec collier" style="transform: rotate(4deg);" />
         </div>
     </div>
+</div>
 
-    <div class="slider" x-data="{start: true, end: false}" style="padding-top: 100px">
+<div class="container mt-5">
+    <div *ngFor="let sousCategorie of produitsParSousCategorie" class="mb-5">
+        <h3 class="sous-categorie-title">{{ sousCategorie.name }}</h3>
+        <div class="carousel-container position-relative">
+            <div class="d-flex justify-content-center">
+                <div class="card mx-2" *ngFor="let produit of getVisibleProducts(sousCategorie.id)"
+                    (click)="viewProductDetails(produit.id)">
+                    <span class="badge position-absolute p-2 text-light stock-badge" [ngClass]="{
+                'bg-success': produit?.stock! > 0,
+                'bg-danger': produit?.stock! === 0
+              }">
+                        {{ produit?.stock! > 0 ? 'En stock' : 'En rupture' }}
+                    </span>
+                    <img [src]="produit.images[0]" class="card-img-top" [alt]="produit.name" />
+                    <div class="card-body">
+                        <p class="card-price" style="color: #bd4800;">
+                            {{ produit.price }} DT
+                        </p>
+                        <h5 class="card-title">{{ produit.name }}</h5>
+                    </div>
+                </div>
+            </div>
+            <!-- Boutons de navigation -->
+            <button (click)="prevSlide(sousCategorie.id)" class="carousel-control-prev"
+                [disabled]="currentIndex[sousCategorie.id] === 0">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button (click)="nextSlide(sousCategorie.id)" class="carousel-control-next" [disabled]="
+            currentIndex[sousCategorie.id] >=
+            (groupedProducts[sousCategorie.id].length || 0) - visibleProducts
+          ">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <p *ngIf="!groupedProducts[sousCategorie.id]?.length" class="text-muted mt-3">
+            Aucun produit disponible pour cette sous-catégorie.
+        </p>
+    </div>
+</div>
+
+
+
+<!-- <div class="slider" x-data="{start: true, end: false}" style="padding-top: 100px">
         <div class="slider__content" x-ref="slider"
             x-on:scroll.debounce="$refs.slider.scrollLeft == 0 ? start = true : start = false; Math.abs(($refs.slider.scrollWidth - $refs.slider.offsetWidth) - $refs.slider.scrollLeft) < 5 ? end = true : end = false;">
 
@@ -116,16 +154,10 @@
                 </div>
             </div>
 
-            <!-- Add more slider items as needed -->
         </div>
 
         <div class="slider__nav" style="display: flex; justify-content: center">
-            <!-- Navigation buttons can go here -->
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.10.2/cdn.js"></script>
-
-    <!-- Chic Style CSS -->
-
-</body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.10.2/cdn.js"></script> -->
