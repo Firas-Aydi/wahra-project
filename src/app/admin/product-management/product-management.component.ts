@@ -27,6 +27,10 @@ export class ProductManagementComponent implements OnInit {
   editingIndex: number | null = null;
   isUploading = false;
 
+  selectedImagePreviews: string[] = [];
+  showConfirmationModal: boolean = false;
+  productToDeleteId: string | null = null;
+
   constructor(
     private productService: ProductService,
     private sousCategorieService: SousCategorieService,
@@ -87,6 +91,24 @@ export class ProductManagementComponent implements OnInit {
   onFileChange(event: any) {
     const files: FileList = event.target.files;
     this.selectedFiles = Array.from(files);
+
+    // Générez les URLs de prévisualisation
+    this.selectedImagePreviews = [];
+    for (const file of this.selectedFiles) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.selectedImagePreviews.push(e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  // Ajoutez une méthode pour supprimer une image sélectionnée
+  removeSelectedImage(index: number): void {
+    if (this.editingIndex !== null) {
+      this.produits[this.editingIndex].images.splice(index, 1);
+      this.selectedImagePreviews.splice(index, 1);
+    }
   }
 
   async uploadFiles(produitId: string): Promise<string[]> {
@@ -112,7 +134,17 @@ export class ProductManagementComponent implements OnInit {
         this.editingIndex === null
           ? this.productService.generateId()
           : this.produits[this.editingIndex].id;
-      const images = await this.uploadFiles(produitId);
+
+      // Téléchargez les nouvelles images
+      const newImages = await this.uploadFiles(produitId);
+
+      // Combinez les anciennes images avec les nouvelles (si en édition)
+      const existingImages =
+        this.editingIndex !== null
+          ? this.produits[this.editingIndex].images || []
+          : [];
+      const images = [...existingImages, ...newImages];
+
       const produit = { ...this.form.value, id: produitId, images };
 
       if (this.editingIndex === null) {
@@ -125,12 +157,19 @@ export class ProductManagementComponent implements OnInit {
     }
   }
 
+
   editProduit(index: number): void {
     this.editingIndex = index;
     const produit = this.produits[index];
     this.form.patchValue(produit);
-    this.selectedFiles = []; // Réinitialiser les fichiers sélectionnés
+
+    // Réinitialisez les fichiers sélectionnés
+    this.selectedFiles = [];
+
+    // Charger les images existantes dans les aperçus
+    this.selectedImagePreviews = [...(produit.images || [])];
   }
+
 
   deleteProduit(id: string): void {
     this.productService.deleteProduit(id).then(() => this.loadProduits());
@@ -141,5 +180,26 @@ export class ProductManagementComponent implements OnInit {
     this.selectedFiles = [];
     this.editingIndex = null;
     this.loadProduits();
+    this.selectedImagePreviews = [];
   }
+
+  openConfirmationModal(productId: string): void {
+    this.showConfirmationModal = true;
+    this.productToDeleteId = productId;
+  }
+
+  closeConfirmationModal(): void {
+    this.showConfirmationModal = false;
+    this.productToDeleteId = null;
+  }
+
+  confirmDelete(): void {
+    if (this.productToDeleteId) {
+      this.productService.deleteProduit(this.productToDeleteId).then(() => {
+        this.loadProduits();
+        this.closeConfirmationModal();
+      });
+    }
+  }
+
 }

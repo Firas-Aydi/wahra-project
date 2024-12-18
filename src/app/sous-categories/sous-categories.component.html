@@ -45,7 +45,7 @@
     <!-- Carrousel pour produitParPierre -->
     <ng-template #produitParPierre>
       <div *ngIf="groupedProducts | keyvalue" class="mb-5">
-        <div *ngFor="let group of groupedProducts | keyvalue">
+        <div *ngFor="let group of groupedProducts | keyvalue" class="mb-5">
           <h3 class="text-center">Pierre : {{ group.key }}</h3>
           <div class="carousel-container position-relative">
             <div class="d-flex justify-content-center">

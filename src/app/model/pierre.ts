@@ -3,6 +3,6 @@ export interface Pierre {
   name: string; // Nom de la pierre (ex : Améthyste)
   description: string;
   bienfaits: string;
-  image: string;
+  images: string[];
   categoryId: string[];
 }

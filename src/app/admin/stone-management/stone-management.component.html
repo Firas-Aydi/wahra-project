@@ -17,9 +17,21 @@
 
             <!-- Image -->
             <div class="col-md-4 mb-3">
-              <label for="image">Image :</label>
-              <input type="file" class="form-control" (change)="onFileSelected($event)" />
+              <label for="productImage">Image :</label>
+              <input type="file" class="form-control" (change)="onFileSelected($event)" id="productImage"
+                accept="image/*" multiple />
               <span *ngIf="isUploading" class="text-success">Téléchargement en cours...</span>
+              <!-- Container for images -->
+              <div style="display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px;">
+                <div *ngFor="let img of form.get('images')?.value" style="position: relative;">
+                  <img [src]="img" alt="Image du produit" class="img-fluid img-thumbnail" style="max-width: 100px;" />
+                  <button type="button" class="btn btn-danger badge position-absolute" (click)="removeImage(img)"
+                    style="width: 20px; height: 20px; padding: 0; border-radius: 50%; align-items: center; justify-content: center; top: 0; right: 0;">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+              </div>
+
             </div>
             <!-- Catégorie -->
             <div class="col-md-4 mb-3">
@@ -48,6 +60,8 @@
           <div class="row">
             <!-- Boutons d'action -->
             <div class="col-12 text-center">
+              <span *ngIf="isUploading" class="text-success">Téléchargement en cours...</span>
+
               <button type="submit" class="btn btn-primary" [disabled]="form.invalid || isUploading">
                 {{ editingIndex === null ? 'Ajouter' : 'Enregistrer' }}
               </button>
@@ -78,12 +92,32 @@
       <td>{{ pierre.name }}</td>
       <td>{{ pierre.description }}</td>
       <td>{{ pierre.bienfaits }}</td>
-      <td><img [src]="pierre.image" alt="Image de la pierre" width="50" /></td>
+      <td>
+        <div style="display: flex; flex-wrap: wrap;">
+          <img *ngFor="let img of pierre.images" [src]="img" alt="Image de la Chambre"
+            class="img-fluid img-thumbnail me-2" style="max-width: 100px; margin-bottom: 5px;">
+        </div>
+      </td>
       <td>{{ getCategoryNames(pierre.categoryId) }}</td>
       <td>
         <button (click)="editPierre(i)">Modifier</button>
-        <button (click)="deletePierre(pierre.id, pierre.image)">Supprimer</button>
+        <button (click)="openConfirmationModal(pierre.id, pierre.images[0] || '')">Supprimer</button>
       </td>
     </tr>
   </tbody>
 </table>
+
+<!-- Modale de confirmation -->
+<ng-template #confirmationModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Confirmation</h4>
+    <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+  </div>
+  <div class="modal-body">
+    <p>Êtes-vous sûr de vouloir supprimer ce produit ?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Annuler</button>
+    <button type="button" class="btn btn-danger" (click)="confirmDelete()">Supprimer</button>
+  </div>
+</ng-template>

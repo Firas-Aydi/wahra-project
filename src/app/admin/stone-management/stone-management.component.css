@@ -25,7 +25,11 @@
   font-weight: 600;
   margin-bottom: 20px;
 }
-
+.img-thumbnail {
+  border-radius: 10px;
+  max-width: 100px;
+  margin: 5px;
+}
 /* Labels des champs */
 form label {
   font-weight: bold;

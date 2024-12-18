@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -12,6 +12,7 @@ import { Categorie } from 'src/app/model/categorie';
 import { Pierre } from 'src/app/model/pierre';
 import { CategorieService } from 'src/app/services/categorie.service';
 import { PierreService } from 'src/app/services/pierre.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-stone-management',
@@ -21,6 +22,8 @@ import { PierreService } from 'src/app/services/pierre.service';
   styleUrls: ['./stone-management.component.css'],
 })
 export class StoneManagementComponent implements OnInit {
+  @ViewChild('confirmationModal') confirmationModal: TemplateRef<any> | null = null;
+
   pierres: Pierre[] = [];
   form: FormGroup;
   editingIndex: number | null = null; // Pour suivre l'édition
@@ -28,16 +31,20 @@ export class StoneManagementComponent implements OnInit {
   isUploading = false;
   categories: Categorie[] = [];
 
+  productToDeleteId: string | null = null; // ID du produit à supprimer
+  productToDeleteImageUrl: string | null = null;
+
   constructor(
     private pierreService: PierreService,
     private categorieService: CategorieService,
+    private modalService: NgbModal,
     private fb: FormBuilder
   ) {
     this.form = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
       bienfaits: ['', Validators.required],
-      image: ['', Validators.required],
+      images: [[]],
       categoryId: this.fb.array([]),
     });
   }
@@ -45,6 +52,7 @@ export class StoneManagementComponent implements OnInit {
   ngOnInit(): void {
     this.loadCategories();
     this.loadPierres();
+    this.form.patchValue({ images: [] });
   }
 
   loadPierres(): void {
@@ -91,17 +99,39 @@ export class StoneManagementComponent implements OnInit {
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0];
-      console.log('Fichier sélectionné :', this.selectedFile.name);
-
-      // Mettre à jour le formulaire avec le nom du fichier temporairement
-      this.form.patchValue({ image: this.selectedFile.name });
-      this.form.get('image')?.updateValueAndValidity(); // Valider le champ
+      const files = Array.from(input.files); // Récupère les fichiers sélectionnés
+      this.isUploading = true;
+  
+      files.forEach((file) => {
+        // Upload chaque fichier dans Firebase Storage
+        this.pierreService.uploadImage(file).subscribe((url) => {
+          const imagesArray = this.form.get('images')?.value || [];
+          imagesArray.push(url); // Ajoute l'URL dans le tableau d'images
+          this.form.patchValue({ images: imagesArray });
+          this.isUploading = false;
+        });
+      });
     }
   }
+  
+  removeImage(imageUrl: string): void {
+    const imagesArray = this.form.get('images')?.value || [];
+    const index = imagesArray.indexOf(imageUrl);
+    if (index > -1) {
+      imagesArray.splice(index, 1); // Supprime l'URL de l'image du tableau
+      this.form.patchValue({ images: imagesArray });
+  
+      // Supprime l'image de Firebase Storage
+      this.pierreService.deleteImage(imageUrl).catch((error) => {
+        console.error('Erreur lors de la suppression de l\'image :', error);
+      });
+    }
+  }
+  
+
 
   saveForm(): void {
-    if (this.form.invalid || !this.form.value.image) {
+    if (this.form.invalid || !this.form.value.images) {
       alert('Veuillez remplir tous les champs et ajouter une image.');
       return;
     }
@@ -120,7 +150,7 @@ export class StoneManagementComponent implements OnInit {
 
   savePierre(): void {
     const formValue = this.form.value;
-
+  
     if (this.editingIndex !== null) {
       const id = this.pierres[this.editingIndex].id;
       this.pierreService.updatePierre(id, formValue).then(() => {
@@ -135,23 +165,42 @@ export class StoneManagementComponent implements OnInit {
       });
     }
   }
-
-  cancelForm(): void {
-    this.form.reset();
-    this.selectedFile = null;
-    this.editingIndex = null;
-  }
-
+  
   editPierre(index: number): void {
     this.editingIndex = index;
     const pierre = this.pierres[index];
     this.form.patchValue(pierre);
   }
-
-  deletePierre(id: string, imageUrl: string): void {
-    this.pierreService.deletePierre(id).then(() => {
-      if (imageUrl) this.pierreService.deleteImage(imageUrl); // Supprime l'image
-      this.loadPierres();
-    });
+  openConfirmationModal(id: string, imageUrl: string) {
+    this.productToDeleteId = id; // Stocke l'ID de la pierre à supprimer
+    this.productToDeleteImageUrl = imageUrl || null; // Stocke l'URL de l'image à supprimer ou null si aucune image
+    this.modalService.open(this.confirmationModal); // Ouvre le modal
   }
+  
+  confirmDelete(): void {
+    if (this.productToDeleteId) {
+      this.pierreService.deletePierre(this.productToDeleteId).then(() => {
+        if (this.productToDeleteImageUrl) {
+          this.pierreService.deleteImage(this.productToDeleteImageUrl).then(() => {
+            console.log('Image supprimée avec succès');
+          }).catch((error) => {
+            console.error('Erreur lors de la suppression de l\'image :', error);
+          });
+        }
+        this.loadPierres(); // Recharge les pierres après suppression
+        this.modalService.dismissAll(); // Ferme le modal
+      }).catch((error) => {
+        console.error('Erreur lors de la suppression de la pierre :', error);
+      });
+    }
+  }
+
+  cancelForm(): void {
+    this.form.reset();
+    this.selectedFile = null;
+    this.editingIndex = null;
+    this.productToDeleteId = null; // Réinitialise l'ID de la pierre à supprimer
+    this.productToDeleteImageUrl = null; // Réinitialise l'URL de l'image à supprimer
+  }
+
 }

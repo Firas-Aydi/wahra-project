@@ -1,51 +1,89 @@
-/* Style général pour la carte produit */
-.product-card {
-    border: none;
-    border-radius: 10px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 230px;
+  border-radius: 0px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Image du produit */
+.card-img-top {
+  height: 230px;
+  /* width: 230px; */
+  border-radius: 0px;
+  object-fit: cover;
+}
+
+/* Badge de stock */
+.stock-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 6px 12px;
+  z-index: 2;
+}
+
+/* Contenu de la carte */
+.card-body {
+  padding: 15px;
+}
+.card-title {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+.card-price {
+  color: #bd4800;
+  font-size: 20px;
+  font-family: "Fira Sans";
+}
+
+/* Message "Pas de produit" */
+.no-products-message {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #666;
+}
+
+/* Mise en page globale */
+/* .container {
+  max-width: 1200px;
+} */
+
+/* .row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+} */
+
+/* .col-md-4 {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+} */
+
+/* Responsive */
+@media (max-width: 992px) {
+  .card {
+    flex: 1 0 calc(33.333% - 20px);
   }
-  .product-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+@media (max-width: 768px) {
+  .card {
+    flex: 1 0 calc(50% - 20px);
   }
-  
-  /* Image du produit */
-  .product-img {
-    height: 200px;
-    object-fit: cover;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+}
+
+@media (max-width: 576px) {
+  .card {
+    flex: 1 0 calc(100% - 20px);
   }
-  
-  /* Badge de stock */
-  .stock-badge {
-    top: 10px;
-    left: 10px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    border-radius: 10px;
-    padding: 5px 10px;
-  }
-  
-  /* Prix */
-  .card-price {
-    color: #bd4800;
-    font-weight: bold;
-    font-size: 1.2rem;
-  }
-  
-  /* Titre */
-  .card-title {
-    font-size: 1.1rem;
-    color: #333;
-    font-weight: 600;
-    margin-top: 10px;
-  }
-  
-  /* Message pas de produit */
-  .no-products-message {
-    font-size: 1.1rem;
-    line-height: 1.6;
-  }
-  
+}
