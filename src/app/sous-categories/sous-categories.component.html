@@ -31,7 +31,7 @@
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
           </button>
-          <button (click)="nextSlide(sousCategory.id)" class="carousel-control-next" [disabled]="
+          <button *ngIf="groupedProducts[sousCategory.id]" (click)="nextSlide(sousCategory.id)" class="carousel-control-next" [disabled]="
               currentIndex[sousCategory.id] >=
               (groupedProducts[sousCategory.id].length || 0) - visibleProducts
             ">

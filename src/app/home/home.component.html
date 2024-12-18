@@ -28,7 +28,7 @@
 </div>
 
 <div class="container mt-5">
-    <div *ngFor="let sousCategorie of produitsParSousCategorie" class="mb-5">
+    <div *ngFor="let sousCategorie of sousCategories" class="mb-5">
         <h3 class="sous-categorie-title">{{ sousCategorie.name }}</h3>
         <div class="carousel-container position-relative">
             <div class="d-flex justify-content-center">
@@ -55,7 +55,7 @@
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
-            <button (click)="nextSlide(sousCategorie.id)" class="carousel-control-next" [disabled]="
+            <button *ngIf="groupedProducts[sousCategorie.id]" (click)="nextSlide(sousCategorie.id)" class="carousel-control-next" [disabled]="
             currentIndex[sousCategorie.id] >=
             (groupedProducts[sousCategorie.id].length || 0) - visibleProducts
           ">

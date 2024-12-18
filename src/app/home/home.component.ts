@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
   sousCategories: SousCategorie[] = [];
-  produitsParSousCategorie: SousCategorie[] = [];
+  // produitsParSousCategorie: SousCategorie[] = [];
   groupedProducts: { [key: string]: Produit[] } = {};
   currentIndex: { [key: string]: number } = {};
   visibleProducts = 5;
@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit {
             }
 
             this.groupedProducts[sousCategorie.id] = produits;
-            this.produitsParSousCategorie.push(sousCategorie);
+            // this.produitsParSousCategorie.push(sousCategorie);
           });
       });
     });

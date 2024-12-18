@@ -23,7 +23,7 @@ export class SousCategoriesComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private sousCategorieService: SousCategorieService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // Écouter les changements de paramètres dans l'URL
@@ -52,10 +52,7 @@ export class SousCategoriesComponent implements OnInit {
       (products) => {
         this.produitParPierre = products;
         this.groupProductsByPierre(products);
-        console.log(
-          'Produits chargés pour produitParPierre :',
-          this.produitParPierre
-        );
+        // console.log('Produits chargés pour produitParPierre :',this.produitParPierre);
       },
       (error) => {
         console.error('Erreur lors du chargement des produits :', error);
