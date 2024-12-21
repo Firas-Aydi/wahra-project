@@ -1,0 +1,37 @@
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Poppins";
+  /* font-size: 16px; */
+  color: #333;
+}
+.main-image-container {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  max-height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* transition: transform 0.3s ease, box-shadow 0.3s ease; */
+}
+/* .main-image-container img:hover {
+  transform: scale(2.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+} */
+.main-image {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: cover;
+}
+
+.description {
+  line-height: 1.6;
+  font-size: 15px;
+  color: #555;
+}
+.error-page p {
+  font-size: 1.2rem;
+  color: #dc3545;
+}

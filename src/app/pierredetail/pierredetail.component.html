@@ -1,10 +1,22 @@
-<div *ngIf="pierre; else notFound">
-    <h1>{{ pierre.name }}</h1>
-    <p>{{ pierre.description }}</p>
-    <img *ngFor="let img of pierre.images" [src]="img" alt="{{ pierre.name }}" class="img-fluid" />
-  </div>
-  
-  <ng-template #notFound>
-    <p class="text-danger">Pierre introuvable.</p>
-  </ng-template>
-  
+<div class="container mt-5">
+    <div *ngIf="pierre; else notFound" class="row align-items-start">
+        <div class="col-md-6 d-flex flex-column">
+            <div class="main-image-container mb-4">
+                <img *ngFor="let img of pierre.images" [src]="img" alt="{{ pierre.name }}"
+                    class="main-image img-fluid" />
+            </div>
+        </div>
+        <div class="col-md-6">
+
+            <h1>{{ pierre.name }}</h1>
+            <p class="description">{{ pierre.description }}</p>
+        </div>
+    </div>
+    <div *ngIf="pierre" class="mt-5">
+        <h2>Vertus et bienfaits :</h2>
+        <p>{{ pierre.bienfaits }}</p>
+    </div>
+    <ng-template #notFound class="error-page text-center mt-5">
+        <p class="text-danger">Pierre introuvable.</p>
+    </ng-template>
+</div>
