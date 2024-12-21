@@ -43,16 +43,18 @@
         <p>{{ pierre.bienfaits }}</p>
         <h2>Pierres utilisés dans ce produit :</h2>
         <div class="pierre-details mt-4 row align-items-center">
-            <div class="col-md-1">
-                <img [src]="pierre.images[0]" alt="{{ pierre.name }}" class="img-fluid rounded" />
-            </div>
-            <div class="col-md-11">
-                <h4>{{ pierre.name }}</h4>
-                <p>
-                    <!-- <strong>Description :</strong> -->
+            <a (click)="viewPierreDetails(pierre.id)" style="cursor: pointer;">
+                <div class="col-md-1">
+                    <img [src]="pierre.images[0]" alt="{{ pierre.name }}" class="img-fluid rounded" />
+                </div>
+                <div class="col-md-11">
+                    <h4>{{ pierre.name }}</h4>
+                    <p>
+                        <!-- <strong>Description :</strong> -->
                     {{ pierre.description }}
                 </p>
             </div>
+        </a>
         </div>
     </div>
 

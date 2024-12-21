@@ -9,7 +9,7 @@ import { AmbrdetailComponent } from './ambrdetail/ambrdetail.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { SousCategoriesComponent } from './sous-categories/sous-categories.component';
 import { ProduitsComponent } from './produits/produits.component';
-import { BienfaitsComponent } from './bienfaits/bienfaits.component';
+import { PierredetailComponent } from './pierredetail/pierredetail.component';
 import { CartManagementComponent } from './admin/cart-management/cart-management.component';
 import { CategoryManagementComponent } from './admin/category-management/category-management.component';
 import { ProductManagementComponent } from './admin/product-management/product-management.component';
@@ -33,7 +33,7 @@ const routes: Routes = [
   { path: 'pierres/:pierreId', component: ProduitsComponent },
   
   { path: 'products/:id', component: ProduitdetailComponent },
-  { path: 'bienfaits/:pierreId', component: BienfaitsComponent },
+  { path: 'pierredetail/:id', component: PierredetailComponent },
   
   { path: 'cart', component: CartComponent },
   { path: 'commande', component: CommandeComponent },

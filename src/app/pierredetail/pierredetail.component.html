@@ -1,0 +1,10 @@
+<div *ngIf="pierre; else notFound">
+    <h1>{{ pierre.name }}</h1>
+    <p>{{ pierre.description }}</p>
+    <img *ngFor="let img of pierre.images" [src]="img" alt="{{ pierre.name }}" class="img-fluid" />
+  </div>
+  
+  <ng-template #notFound>
+    <p class="text-danger">Pierre introuvable.</p>
+  </ng-template>
+  

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Produit } from '../model/produit';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from '../services/cart.service';
 import { ProductService } from '../services/produit.service';
 import { PierreService } from '../services/pierre.service';
@@ -19,6 +19,7 @@ export class ProduitdetailComponent {
   quantityError: string | null = null;
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private produitService: ProductService,
     private pierreService: PierreService,
@@ -100,5 +101,8 @@ export class ProduitdetailComponent {
     ) {
       this.quantityError = 'La quantité ne peut pas être vide.';
     }
+  }
+  viewPierreDetails(pierreId: string): void {
+    this.router.navigate(['/pierredetail', pierreId]);
   }
 }
