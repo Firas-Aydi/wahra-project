@@ -77,5 +77,12 @@ export class ProductService {
       ).subscribe();
     });
   }
-
+  // searchProduits(term: string): Observable<Produit[]> {
+  //   return this.firestore
+  //     .collection<Produit>('produits', (ref) =>
+  //       ref.where('name', '>=', term).where('name', '<=', term + '\uf8ff')
+  //     )
+  //     .valueChanges();
+  // }
+  
 }

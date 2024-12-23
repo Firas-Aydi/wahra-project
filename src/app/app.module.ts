@@ -21,6 +21,7 @@ import { PierredetailComponent } from './pierredetail/pierredetail.component';
 import { ProduitdetailComponent } from './produitdetail/produitdetail.component';
 import { CommandeComponent } from './commande/commande.component';
 import { FooterComponent } from './footer/footer.component';
+import { SearchResultComponent } from './search-result/search-result.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { FooterComponent } from './footer/footer.component';
     PierredetailComponent,
     ProduitdetailComponent,
     CommandeComponent,
-    FooterComponent
+    FooterComponent,
+    SearchResultComponent
   ],
   imports: [
     BrowserModule,

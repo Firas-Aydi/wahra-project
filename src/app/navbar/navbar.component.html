@@ -12,10 +12,12 @@
 
 
     <!-- Barre de recherche -->
-    <div class="search-bar mx-auto">
+    <div class="search-bar mx-auto" *ngIf="userType !== 'admin'">
       <div class="input-group">
-        <input class="search-input" type="search" placeholder="Rechercher un produit..." />
-        <span class="input-group-text"><i class="fa-solid fa-magnifying-glass"></i></span>
+        <input class="search-input" type="search" placeholder="Rechercher un produit..." #searchInput
+          (keyup.enter)="search(searchInput.value)" />
+        <span class="input-group-text" (click)="search(searchInput.value)">
+          <i class="fa-solid fa-magnifying-glass"></i></span>
       </div>
     </div>
 
@@ -52,29 +54,23 @@
 
       <ul class="navbar-nav mx-auto">
         <!-- Boucle sur les catégories -->
-        <ng-container *ngIf="userType !== 'admin'"> 
+        <ng-container *ngIf="userType !== 'admin'">
           <li class="nav-item dropdown position-relative" *ngFor="let category of categories">
-            <a 
-              class="sub-nav-link d-flex align-items-center me-3 ms-3 dropdown-toggle" 
-              id="categoryDropdown{{ category.id }}" 
-              role="button" 
-              aria-expanded="false" 
-              [routerLink]="['/categorie', category.id]"
-              >
+            <a class="sub-nav-link d-flex align-items-center me-3 ms-3 dropdown-toggle"
+              id="categoryDropdown{{ category.id }}" role="button" aria-expanded="false"
+              [routerLink]="['/categorie', category.id]">
               {{ category.name }}
             </a>
-            <ul 
-              *ngIf="category.sousCategories.length > 0 || category.pierres.length > 0" 
-              class="dropdown-menu"
+            <ul *ngIf="category.sousCategories.length > 0 || category.pierres.length > 0" class="dropdown-menu"
               [attr.aria-labelledby]="'categoryDropdown' + category.id">
-              
+
               <!-- Sous-catégories -->
               <li *ngFor="let sousCat of category.sousCategories">
                 <a class="dropdown-item" [routerLink]="['/sous-categorie', sousCat.id]">
                   {{ sousCat.name }}
                 </a>
               </li>
-              
+
               <!-- Pierres -->
               <li *ngFor="let pierre of category.pierres">
                 <a class="dropdown-item" [routerLink]="['/pierres', pierre.id]">
@@ -83,7 +79,7 @@
               </li>
             </ul>
           </li>
-        </ng-container>        
+        </ng-container>
 
         <!-- Lien pour les administrateurs -->
         <li class="nav-item" *ngIf="isUser && userType === 'admin'">

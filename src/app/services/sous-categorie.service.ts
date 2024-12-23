@@ -11,7 +11,7 @@ import { Produit } from '../model/produit';
 export class SousCategorieService {
   private collection = this.firestore.collection<SousCategorie>('sousCategories');
 
-  constructor(private firestore: AngularFirestore) {}
+  constructor(private firestore: AngularFirestore) { }
   getSousCategoriesByIds(ids: string[]): Observable<SousCategorie[]> {
     if (ids.length === 0) {
       return of([]);
@@ -28,7 +28,7 @@ export class SousCategorieService {
       ref.where('id', 'in', ids)
     ).valueChanges({ idField: 'id' });
   }
-  
+
   getSousCategoriesByCategory(categoryId: string): Observable<SousCategorie[]> {
     return this.firestore
       .collection<SousCategorie>('sub-categories', (ref) =>
@@ -81,4 +81,14 @@ export class SousCategorieService {
   deleteSousCategorie(id: string): Promise<void> {
     return this.collection.doc(id).delete();
   }
+  // searchSousCategories(term: string): Observable<SousCategorie[]> {
+  //   return this.firestore
+  //     .collection<SousCategorie>('sousCategories', (ref) =>
+  //       ref
+  //         .orderBy('name')
+  //         .startAt(term)
+  //         .endAt(term + '\uf8ff')
+  //     )
+  //     .valueChanges();
+  // }
 }

@@ -57,4 +57,15 @@ export class PierreService {
   deletePierre(id: string) {
     return this.firestore.collection(this.collectionName).doc(id).delete();
   }
+  // searchPierres(term: string): Observable<Pierre[]> {
+  //   return this.firestore
+  //     .collection<Pierre>('pierres', (ref) =>
+  //       ref
+  //         .orderBy('name')
+  //         .startAt(term)
+  //         .endAt(term + '\uf8ff')
+  //     )
+  //     .valueChanges({ idField: 'id' });
+  // }
+
 }

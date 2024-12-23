@@ -9,21 +9,8 @@ import { Categorie } from '../model/categorie';
 export class CategorieService {
   private categoriesCollection = this.firestore.collection<Categorie>('categories');
 
-  constructor(private firestore: AngularFirestore) {}
+  constructor(private firestore: AngularFirestore) { }
 
-  // getCategories(): Observable<Categorie[]> {
-  //   return this.categoriesCollection.collection<Categorie>(this.collectionName).valueChanges();
-  // }
-
-  // addCategorie(categorie: Categorie) {
-  //   const id = this.firestore.createId();
-  //   categorie.id = id;
-  //   return this.firestore.collection(this.collectionName).doc(id).set(categorie);
-  // }
-
-  // getCategorieById(id: string): Observable<Categorie | undefined> {
-  //   return this.firestore.collection(this.collectionName).doc<Categorie>(id).valueChanges();
-  // }
   getCategories(): Observable<Categorie[]> {
     return this.categoriesCollection.valueChanges({ idField: 'id' });
   }
@@ -40,4 +27,14 @@ export class CategorieService {
   deleteCategorie(id: string): Promise<void> {
     return this.categoriesCollection.doc(id).delete();
   }
+  // searchCategories(term: string): Observable<Categorie[]> {
+  //   return this.firestore
+  //     .collection<Categorie>('categories', (ref) =>
+  //       ref
+  //         .orderBy('name')
+  //         .startAt(term)
+  //         .endAt(term + '\uf8ff')
+  //     )
+  //     .valueChanges({ idField: 'id' });
+  // }
 }

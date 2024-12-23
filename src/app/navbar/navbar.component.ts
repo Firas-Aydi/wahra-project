@@ -161,4 +161,11 @@ export class NavbarComponent implements OnInit {
       navbarCollapse?.classList.add('show'); // Open it if not already open
     }
   }
+
+  search(term: string): void {
+    if (term) {
+      this.route.navigate(['/search', term]); // Passez le terme directement dans l'URL
+    }
+  }
+  
 }

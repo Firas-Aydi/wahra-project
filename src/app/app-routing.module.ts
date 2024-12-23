@@ -18,6 +18,8 @@ import { SubCategoryManagementComponent } from './admin/sub-category-management/
 import { UserManagementComponent } from './admin/user-management/user-management.component';
 import { ProduitdetailComponent } from './produitdetail/produitdetail.component';
 import { CommandeComponent } from './commande/commande.component';
+import { SearchResultComponent } from './search-result/search-result.component';
+
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -37,6 +39,7 @@ const routes: Routes = [
   
   { path: 'cart', component: CartComponent },
   { path: 'commande', component: CommandeComponent },
+  { path: 'search/:term', component: SearchResultComponent },
 
   { path: 'categories-management', component: CategoryManagementComponent },
   { path: 'sub-categories-management', component: SubCategoryManagementComponent },
