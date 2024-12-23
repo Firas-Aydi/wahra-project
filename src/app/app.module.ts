@@ -20,6 +20,7 @@ import { ProduitsComponent } from './produits/produits.component';
 import { PierredetailComponent } from './pierredetail/pierredetail.component';
 import { ProduitdetailComponent } from './produitdetail/produitdetail.component';
 import { CommandeComponent } from './commande/commande.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { CommandeComponent } from './commande/commande.component';
     ProduitsComponent,
     PierredetailComponent,
     ProduitdetailComponent,
-    CommandeComponent
+    CommandeComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

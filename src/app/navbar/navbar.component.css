@@ -17,12 +17,12 @@
 
 .brand-logo {
   width: 60px;
-  height: auto;
+  transition: transform 0.3s ease-in-out;
 }
 
-/* .navbar-brand {
-  margin: 0 auto;
-} */
+.brand-logo:hover {
+  transform: scale(1.1);
+}
 
 .search-bar {
   position: absolute; /* Permet de positionner au centre */

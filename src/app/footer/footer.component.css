@@ -1,0 +1,88 @@
+/* Footer principal */
+footer {
+    background-color: #b69e7c; 
+    font-family: "Harmonia Sans", sans-serif; 
+    padding: 20px 0; /* Ajouter de l'espace à l'intérieur du footer */
+    width: 100%; /* Assurer que le footer occupe toute la largeur */
+    position: relative; /* Position relative pour éviter qu'il ne soit flottant */
+    bottom: 0;
+}
+
+footer h6 {
+    color: white; 
+}
+footer p {
+    color: white; 
+    margin: 0 0 10px; /* Espacement entre les paragraphes */
+    font-size: 14px; /* Taille de police modérée */
+}
+
+footer a {
+    color: white; 
+    transition: color 0.3s ease-in-out;
+}
+
+footer a:hover {
+    color: #fff; /* Change la couleur du lien au survol */
+    text-decoration: none;
+}
+
+footer i {
+    margin-right: 10px; /* Espace entre l'icône et le texte */
+    color: white; 
+    font-size: 18px;
+}
+
+footer .text-center a {
+    font-size: 20px; /* Taille des icônes des réseaux sociaux */
+    margin-right: 15px; /* Espacement entre les icônes */
+    color: #000000; /* Couleur initiale des icônes */
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+footer .text-center a:hover {
+    color: #fff; /* Change la couleur au survol */
+    transform: scale(1.2); /* Effet de zoom au survol */
+}
+
+/* Subfooter */
+.subfooter__item {
+    background-color: #ffffff; /* Couleur légèrement plus sombre pour le subfooter */
+    color: #000000; /* Couleur plus discrète pour le texte */
+    text-align: center;
+    padding: 15px 0;
+    font-size: 13px;
+    font-family: "Harmonia Sans", sans-serif;
+}
+
+.subfooter__item a {
+    color: #000000; /* Lien de copyright */
+    font-weight: bold;
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+
+.subfooter__item a:hover {
+    text-decoration: underline;
+}
+
+.subfooter__item strong {
+    color: #000; /* Accentuation de "Designed by" */
+}
+
+.subfooter__item span {
+    color: #000; /* Accentuation de la marque */
+    margin-right: 5%;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    footer .col-lg-4 {
+        text-align: center; /* Aligne le texte au centre sur petits écrans */
+        margin-bottom: 20px;
+    }
+
+    footer .text-center a {
+        margin: 0 10px; /* Réduit l'espacement des icônes des réseaux sociaux */
+    }
+}
