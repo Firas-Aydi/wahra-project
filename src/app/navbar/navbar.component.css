@@ -4,7 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #bd4800;
+  background-color: #fff;
   padding: 10px 20px;
 }
 
@@ -16,7 +16,7 @@
 }
 
 .brand-logo {
-  width: 60px;
+  width: 90px;
   transition: transform 0.3s ease-in-out;
 }
 
@@ -39,23 +39,23 @@
   width: 90%;
   border: none;
   border-radius: 6px;
-  background-color: #b04200;
+  background-color: #eaccad;
   color: #ffffff;
   padding: 5px;
   font-size: 14px;
 }
 
 .search-input::placeholder {
-  color: #f6ad55;
+  color: #fff;
 }
 .input-group-text {
   color: #ffffff;
   border: none;
-  background-color: #b04200;
+  background-color: #eaccad;
   cursor: pointer;
 }
 .search-input::-webkit-input-placeholder {
-  color: #f6ad55;
+  color: #fff;
 } /* Chrome/Safari */
 .badge {
   font-size: 12px;
@@ -67,7 +67,7 @@
   min-width: 18px;
   display: inline-block;
   text-align: center;
-  background-color: #f6ad55;
+  background-color: #b69e7c;
   color: white;
   position: absolute;
   left: 0px;
@@ -83,24 +83,29 @@
 }
 .nav-link {
   font-size: 16px;
-  font-weight: 300;
+  font-weight: bold;
   color: #ffffff;
   padding: 5px;
   transition: color 0.3s, background-color 0.3s;
 }
 
 .nav-link:hover {
-  color: #f6ad55;
+  color: #b69e7c;
 }
 
 /* Icônes */
 .nav-item i {
   font-size: 18px;
+  color: #eaccad;
+}
+.nav-item i:hover {
+  font-size: 18px;
+  color: #b69e7c;
 }
 
 /* Sous-navbar */
 .sub-navbar {
-  background-color: #b04200;
+  background-color: #eaccad;
   padding: 0px 20px;
 }
 
@@ -119,11 +124,11 @@
   border-radius: 0;
   font-family: inherit;
   font-size: 18px;
-  font-weight: 300;
+  font-weight: 500;
 }
 
 .sub-nav-link:hover {
-  color: #f6ad55;
+  color: #b69e7c;
 }
 
 /* Toggler Button */
@@ -145,7 +150,7 @@
   z-index: 1050;
   display: none;
   min-width: 200px;
-  background-color: #f9f9f9;
+  background-color: #fff;
   border-radius: 0px;
   border: 1px solid #ddd;
 }
@@ -176,7 +181,7 @@
 
 .sub-navbar .dropdown-item:hover {
   /* background-color: #007bff; */
-  color: #f6ad55;
+  color: #b69e7c;
 }
 
 /* Responsive Adjustments */
@@ -210,7 +215,7 @@
   }
 
   .input-group-text {
-    background-color: #b04200;
+    background-color: #eaccad;
     border: none;
     color: #fff;
   }
@@ -226,7 +231,7 @@
     list-style: none; /* Supprime les puces ou styles indésirables */
   }
 
-  .nav-link {
+  /* .nav-link {
     font-size: 16px;
     font-weight: 300;
     color: #ffffff;
@@ -236,7 +241,7 @@
 
   .nav-link:hover {
     color: #c2af6f;
-  }
+  } */
 
   .nav-item i {
     font-size: 18px;
@@ -246,7 +251,7 @@
     width: 100%;
     padding: 10px;
     text-align: center;
-    background-color: #b04200;
+    background-color: #f5e1ce;
   }
 
   .sub-navbar ul {
@@ -257,13 +262,13 @@
   }
 
   .sub-nav-link {
-    font-size: 14px;
+    font-size: 24px;
     color: #fff;
     text-decoration: none;
     padding: 5px;
   }
 
   .sub-nav-link:hover {
-    color: #f6ad55;
+    color: #b69e7c;
   }
 }

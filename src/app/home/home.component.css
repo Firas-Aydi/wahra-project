@@ -316,3 +316,34 @@ p {
 .carousel-control-next {
   right: -20px;
 }
+
+
+/* Style de la flèche */
+.scroll-down {
+  display: block;
+  position: absolute;
+  bottom: 20px; /* Positionnez la flèche en bas du carousel */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem; /* Taille de la flèche */
+  color: #000000; /* Couleur de la flèche */
+  text-decoration: none;
+  animation: bounce 1.5s infinite; /* Animation de rebond */
+  z-index: 10;
+}
+
+.scroll-down:hover {
+  color: #b69e7c; /* Change la couleur de la flèche au survol */
+}
+/* Animation de rebond */
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+      transform: translate(-50%, 0);
+  }
+  40% {
+      transform: translate(-50%, -10px);
+  }
+  60% {
+      transform: translate(-50%, -5px);
+  }
+}
