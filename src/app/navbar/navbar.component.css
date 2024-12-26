@@ -57,6 +57,7 @@
 .search-input::-webkit-input-placeholder {
   color: #fff;
 } /* Chrome/Safari */
+
 .badge {
   font-size: 12px;
   width: auto;

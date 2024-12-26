@@ -81,13 +81,17 @@ export class ProductManagementComponent implements OnInit {
   }
   getSousCategorieName(sousCategoryId: string): string {
     const cat = this.sousCategories.find((cat) => cat.id === sousCategoryId);
-    return cat?.name || 'Non défini';
+    return cat?.name || 'Aucune pierre';
   }
-  getPierreName(pierreId: string): string {
-    const p = this.pierres.find((p) => p.id === pierreId);
-    return p?.name || 'Non défini';
+  // getPierreNames(pierreIds: string[]): string {
+  //   return pierreIds.map(id => this.pierres.find(p => p.id === id)?.name || 'Aucune pierre').join(', ');
+  // }
+  getPierreNames(pierreIds: string[] | null): string {
+    if (!pierreIds || !Array.isArray(pierreIds)) { 
+      return 'Aucune pierre'; 
+    }
+    return pierreIds.map(id => this.pierres.find(p => p.id === id)?.name || 'Aucune pierre').join(', ');
   }
-
   onFileChange(event: any) {
     const files: FileList = event.target.files;
     this.selectedFiles = Array.from(files);
@@ -130,29 +134,20 @@ export class ProductManagementComponent implements OnInit {
 
   async addProduit() {
     if (this.form.valid) {
-      const produitId =
-        this.editingIndex === null
-          ? this.productService.generateId()
-          : this.produits[this.editingIndex].id;
-
-      // Téléchargez les nouvelles images
+      const produitId = this.editingIndex === null
+        ? this.productService.generateId()
+        : this.produits[this.editingIndex].id;
+  
       const newImages = await this.uploadFiles(produitId);
-
-      // Combinez les anciennes images avec les nouvelles (si en édition)
-      const existingImages =
-        this.editingIndex !== null
-          ? this.produits[this.editingIndex].images || []
-          : [];
+      const existingImages = this.editingIndex !== null ? this.produits[this.editingIndex].images || [] : [];
       const images = [...existingImages, ...newImages];
-
-      const produit = { ...this.form.value, id: produitId, images };
-
+  
+      const produit: Produit = { ...this.form.value, id: produitId, images };
+  
       if (this.editingIndex === null) {
         this.productService.addProduit(produit).then(() => this.resetForm());
       } else {
-        this.productService
-          .updateProduit(produitId, produit)
-          .then(() => this.resetForm());
+        this.productService.updateProduit(produitId, produit).then(() => this.resetForm());
       }
     }
   }
@@ -161,12 +156,8 @@ export class ProductManagementComponent implements OnInit {
   editProduit(index: number): void {
     this.editingIndex = index;
     const produit = this.produits[index];
-    this.form.patchValue(produit);
-
-    // Réinitialisez les fichiers sélectionnés
+    this.form.patchValue({ ...produit, pierreId: produit.pierreId || [] }); // Assurez-vous d'envoyer un tableau
     this.selectedFiles = [];
-
-    // Charger les images existantes dans les aperçus
     this.selectedImagePreviews = [...(produit.images || [])];
   }
 

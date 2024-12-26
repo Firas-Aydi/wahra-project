@@ -90,8 +90,7 @@ export class SousCategoriesComponent implements OnInit {
     const pierreIds = Array.from(
       new Set(
         products
-          .map((produit) => produit.pierreId)
-          .filter((id): id is string => !!id)
+        .flatMap((produit) => produit.pierreId || [])
       )
     );
 
@@ -105,12 +104,15 @@ export class SousCategoriesComponent implements OnInit {
           {}
         ); // Le type explicite corrige l'erreur ici
 
+        // Regrouper les produits par nom de pierre
         this.groupedProducts = products.reduce((acc, produit) => {
-          const pierreName = pierreMap[produit.pierreId!] || 'Inconnue';
-          if (!acc[pierreName]) {
-            acc[pierreName] = [];
-          }
-          acc[pierreName].push(produit);
+          const pierreNames = produit.pierreId?.map(id => pierreMap[id]) || ['Inconnue'];
+          pierreNames.forEach(pierreName => {
+            if (!acc[pierreName]) {
+              acc[pierreName] = [];
+            }
+            acc[pierreName].push(produit);
+          });
           return acc;
         }, {} as { [key: string]: Produit[] });
       },
@@ -118,7 +120,7 @@ export class SousCategoriesComponent implements OnInit {
         console.error('Erreur lors du chargement des pierres :', error);
       }
     );
-  }
+}
 
   getVisibleProducts(sousCategoryId: string): Produit[] {
     const currentIndex = this.currentIndex[sousCategoryId] || 0;

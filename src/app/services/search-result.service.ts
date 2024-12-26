@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, combineLatest, of } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
-import { Categorie } from '../model/categorie';
-import { SousCategorie } from '../model/sous-categorie';
-import { Pierre } from '../model/pierre';
+// import { Categorie } from '../model/categorie';
+// import { SousCategorie } from '../model/sous-categorie';
+// import { Pierre } from '../model/pierre';
 import { Produit } from '../model/produit';
 import { CategorieService } from './categorie.service';
 import { SousCategorieService } from './sous-categorie.service';
@@ -46,7 +46,7 @@ export class SearchService {
           return of(produits);
         }
 
-        const categoryIds = categories.map(c => c.id);
+        // const categoryIds = categories.map(c => c.id);
         const sousCategoryIds = sousCategories.map(sc => sc.id);
         const pierreIds = pierres.map(p => p.id);
 
@@ -55,10 +55,9 @@ export class SearchService {
             allProduits.filter(
               prod =>
                 (prod.sousCategoryId && sousCategoryIds.includes(prod.sousCategoryId)) ||
-                (prod.pierreId && pierreIds.includes(prod.pierreId))
-            )
+                (prod.pierreId && pierreIds.some(pierreId => pierreIds.includes(pierreId)))
           )
-        );
+        ));
       })
     );
   }

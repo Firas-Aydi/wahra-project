@@ -13,7 +13,9 @@ import { Pierre } from '../model/pierre';
 })
 export class ProduitdetailComponent {
   produit: Produit | null = null;
-  pierre: Pierre | null = null; // Détails de la pierre associée
+  pierres: Pierre[] = []; // Détails de la pierre associée
+  pierresUniques: Map<string, Pierre> = new Map();
+
   selectedImage: string = '';
   quantity: number = 1;
   quantityError: string | null = null;
@@ -24,11 +26,12 @@ export class ProduitdetailComponent {
     private produitService: ProductService,
     private pierreService: PierreService,
     private cartService: CartService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const produitId = this.route.snapshot.paramMap.get('id');
     this.loadProduitDetails(produitId);
+    // this.pierres = Array.from(this.pierresUniques.values()); 
   }
 
   loadProduitDetails(produitId: string | null) {
@@ -38,8 +41,8 @@ export class ProduitdetailComponent {
           if (data) {
             this.produit = data;
             this.selectedImage = this.produit.images[0];
-            if (this.produit.pierreId) {
-              this.loadPierreDetails(this.produit.pierreId);
+            if (this.produit.pierreId && this.produit.pierreId.length > 0) {
+              this.loadPierresDetails(this.produit.pierreId);
             }
           } else {
             console.error('Aucun produit trouvé avec cet ID.');
@@ -54,19 +57,30 @@ export class ProduitdetailComponent {
     }
   }
 
-  loadPierreDetails(pierreId: string) {
-    this.pierreService.getPierreById(pierreId).subscribe(
-      (data) => {
-        if (data) {
-          this.pierre = data;
-        } else {
-          console.error('Aucune pierre trouvée avec cet ID.');
-        }
-      },
-      (error) => {
-        console.error('Erreur lors de la récupération de la pierre :', error);
+  loadPierresDetails(pierreIds: string[]) {
+    const fetchedPierreIds = new Set<string>();
+
+    pierreIds.forEach((id) => {
+      if (!fetchedPierreIds.has(id)) {
+        fetchedPierreIds.add(id);
+        this.pierreService.getPierreById(id).subscribe(
+          (data) => {
+            if (data) {
+              this.pierresUniques.set(data.id, data); // Add to Map
+            } else {
+              console.warn(`Aucune pierre trouvée avec l'ID : ${id}`);
+            }
+          },
+          (error) => {
+            console.error(`Erreur lors de la récupération de la pierre (ID: ${id}) :`, error);
+          }
+        );
       }
-    );
+    });
+    console.log('this.pierresUniques: ', this.pierresUniques)
+    // Convert Map values to an array for easier use in the template
+    // this.pierres = Array.from(this.pierresUniques.values()); 
+    // console.log('this.pierres: ',this.pierres)
   }
 
   selectImage(image: string) {

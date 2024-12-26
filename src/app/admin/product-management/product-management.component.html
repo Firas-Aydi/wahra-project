@@ -27,16 +27,17 @@
             </div>
 
             <div class="col-md-6 mb-3">
-              <label>Pierre associée:</label>
-              <select class="form-select" formControlName="pierreId">
-                <option></option>
+              <label>Pierres associées:</label>
+              <select class="form-select" formControlName="pierreId" multiple>
+                <option [value]=""></option>
                 <option *ngFor="let pierre of pierres" [value]="pierre.id">{{ pierre.name }}</option>
               </select>
             </div>
+
             <div class="col-md-6 mb-3">
               <label for="productImage">Images:</label>
               <input type="file" id="productImage" class="form-control" multiple (change)="onFileChange($event)" />
-              
+
               <!-- Aperçus des images existantes -->
               <div *ngIf="selectedImagePreviews.length > 0" class="mt-3">
                 <div style="display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px;">
@@ -50,11 +51,11 @@
                   </div>
                 </div>
               </div>
-              
+
               <!-- Indicateur de téléchargement -->
               <div *ngIf="isUploading" class="text-success mt-2">Téléchargement en cours...</div>
             </div>
-            
+
 
 
             <div class="col-md-6 mb-3">
@@ -98,11 +99,11 @@
       <td>{{ produit.price | currency:'DT'}}</td>
       <td>{{ produit.stock }}</td>
       <td>{{ getSousCategorieName(produit.sousCategoryId) }}</td>
-      <td>{{ getPierreName(produit.pierreId!) }}</td>
+      <td>{{ produit.pierreId ? getPierreNames(produit.pierreId) : 'Aucune pierre' }}</td>
       <td>
         <ng-container *ngIf="produit.images?.length; else noImage">
-          <img *ngFor="let image of produit.images" [src]="image" alt="Image"
-          class="img-fluid img-thumbnail me-2" width="50" height="50" />
+          <img *ngFor="let image of produit.images" [src]="image" alt="Image" class="img-fluid img-thumbnail me-2"
+            width="50" height="50" />
         </ng-container>
         <ng-template #noImage>Aucune image</ng-template>
       </td>
@@ -114,7 +115,8 @@
   </tbody>
 </table>
 
-<div class="modal" [class.show]="showConfirmationModal" tabindex="-1" style="display: block;" *ngIf="showConfirmationModal">
+<div class="modal" [class.show]="showConfirmationModal" tabindex="-1" style="display: block;"
+  *ngIf="showConfirmationModal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">

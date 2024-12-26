@@ -38,21 +38,23 @@
     </div>
 
     <!-- Détails de la pierre associée -->
-    <div *ngIf="pierre" class="mt-5">
+    <div *ngIf="pierresUniques.size > 0" class="mt-5">
         <h2>Vertus et bienfaits :</h2>
-        <p>{{ pierre.bienfaits }}</p>
+        <p *ngFor="let bienfaits of pierresUniques | keyvalue">
+            {{ bienfaits.value.bienfaits }}
+        </p>
         <h2>Pierres utilisés dans ce produit :</h2>
-        <div class="pierre-details mt-4 row align-items-center" (click)="viewPierreDetails(pierre.id)" style="cursor: pointer;">
-                <div class="col-md-1">
-                    <img [src]="pierre.images[0]" alt="{{ pierre.name }}" class="img-fluid rounded" />
-                </div>
-                <div class="col-md-11">
-                    <h4>{{ pierre.name }}</h4>
-                    <p>
-                        <!-- <strong>Description :</strong> -->
-                        {{ pierre.description }}
-                    </p>
-                </div>
+        <div *ngFor="let pierre of pierresUniques | keyvalue" class="pierre-details mt-4 row align-items-center"
+            (click)="viewPierreDetails(pierre.value.id)" style="cursor: pointer;">
+            <div class="col-md-1">
+                <img [src]="pierre.value.images[0]" alt="{{ pierre.value.name }}" class="img-fluid rounded" />
+            </div>
+            <div class="col-md-11">
+                <h4>{{ pierre.value.name }}</h4>
+                <p>
+                    {{ pierre.value.description }}
+                </p>
+            </div>
         </div>
     </div>
 
