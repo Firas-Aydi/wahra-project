@@ -1,14 +1,18 @@
 <nav class="navbar navbar-expand-lg custom-navbar">
   <div class="container-fluid">
     <!-- Logo centré -->
-    <a class="navbar-brand" routerLink="">
-      <img src="assets/wahra1.jpeg" alt="Logo" class="brand-logo">
-    </a>
+    <div class="logo-container">
+      <a class="navbar-brand" routerLink="">
+        <img src="assets/wahra1.jpeg" alt="Logo" class="brand-logo">
+      </a>
+    </div>
     <!-- Toggler Button -->
-    <button id="navbarToggler" class="navbar-toggler" type="button" (click)="toggleNavbar()">
+    <button class="navbar-toggler me-auto" type="button" data-bs-toggle="collapse" data-bs-target="navbarSmall"
+      aria-controls="navbarSmall" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
       <span *ngIf="!isNavbarOpen"><i class="fas fa-bars"></i></span>
       <span *ngIf="isNavbarOpen"><i class="fas fa-times"></i></span>
     </button>
+
 
 
     <!-- Barre de recherche -->
@@ -16,8 +20,8 @@
       <div class="input-group">
         <input class="search-input" type="search" placeholder="Rechercher un produit..." #searchInput
           (keyup.enter)="search(searchInput.value)" />
-        <span class="input-group-text" (click)="search(searchInput.value)">
-          <i class="fa-solid fa-magnifying-glass"></i></span>
+        <!-- <span class="input-group-text" (click)="search(searchInput.value)">
+          <i class="fa-solid fa-magnifying-glass"></i></span> -->
       </div>
     </div>
 
@@ -30,7 +34,7 @@
         </a>
       </li>
       <li class="nav-item" *ngIf="isUser && userType === 'admin'">
-        <a class="nav-link chic-link position-relative" aria-current="page" routerLink="carts-management">
+        <a class="nav-link position-relative" aria-current="page" routerLink="carts-management">
           <i class="fa-regular fa-bell"></i>
           <span class="badge">{{ commandeItemCount }}</span>
         </a>
@@ -50,7 +54,7 @@
 
 <nav class="sub-navbar navbar-expand-lg custom-navbar">
   <div class="container-fluid d-flex justify-content-between align-items-center">
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse" id="navbarSmall">
 
       <ul class="navbar-nav mx-auto">
         <!-- Boucle sur les catégories -->

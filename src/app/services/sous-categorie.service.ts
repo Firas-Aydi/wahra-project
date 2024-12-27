@@ -64,7 +64,7 @@ export class SousCategorieService {
             return of([]);
           }
           return this.firestore.collection<Produit>('produits', ref =>
-            ref.where('pierreId', 'in', pierreIds)
+            ref.where('pierreId', 'array-contains-any', pierreIds)
           ).valueChanges({ idField: 'id' });
         })
       );

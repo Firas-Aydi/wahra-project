@@ -24,19 +24,19 @@
         </div>
     </div>
 </div> -->
+
+
 <section class="banner">
     <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
         <div class="carousel-item active">
           <img src="assets/Bracelets en Pierre.jpg" class="d-block w-100" alt="Pack Karina">
-  
         </div>
         <div class="carousel-item">
           <img src="assets/pierre2.jpg" class="d-block w-100" alt="Pack Karina">
-  
         </div>
       </div>
-      <!-- <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+            <!-- <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       </button>
       <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
@@ -47,137 +47,40 @@
       </a>
     </div>
   </section>
-<div id="scroll" class="container mt-5">
+  
+  <div id="scroll" class="container mt-5">
     <div *ngFor="let sousCategorie of sousCategories" class="mb-5">
-        <h3 class="sous-categorie-title">{{ sousCategorie.name }}</h3>
-        <div class="carousel-container position-relative">
-            <div class="d-flex justify-content-center">
-                <div class="card mx-2" *ngFor="let produit of getVisibleProducts(sousCategorie.id)"
-                    (click)="viewProductDetails(produit.id)">
-                    <span class="badge position-absolute p-2 text-light stock-badge" [ngClass]="{
-                'bg-success': produit?.stock! > 0,
-                'bg-danger': produit?.stock! === 0
-              }">
-                        {{ produit?.stock! > 0 ? 'En stock' : 'En rupture' }}
-                    </span>
-                    <img [src]="produit.images[0]" class="card-img-top" [alt]="produit.name" />
-                    <div class="card-body">
-                        <p class="card-price" style="color: #bd4800;">
-                            {{ produit.price }} DT
-                        </p>
-                        <h5 class="card-title">{{ produit.name }}</h5>
-                    </div>
-                </div>
+      <h3 class="sous-categorie-title">{{ sousCategorie.name }}</h3>
+      <div class="carousel-container position-relative">
+        <div class="d-flex justify-content-center">
+          <div class="card mx-2" *ngFor="let produit of getVisibleProducts(sousCategorie.id)" (click)="viewProductDetails(produit.id)">
+            <span class="badge position-absolute p-2 text-light stock-badge" [ngClass]="{
+                  'bg-success': produit?.stock! > 0,
+                  'bg-danger': produit?.stock! === 0
+                }">
+              {{ produit?.stock! > 0 ? 'En stock' : 'En rupture' }}
+            </span>
+            <img [src]="produit.images[0]" class="card-img-top" [alt]="produit.name" />
+            <div class="card-body">
+              <p class="card-price" style="color: #bd4800;">
+                {{ produit.price }} DT
+              </p>
+              <h5 class="card-title">{{ produit.name }}</h5>
             </div>
-            <!-- Boutons de navigation -->
-            <button (click)="prevSlide(sousCategorie.id)" class="carousel-control-prev"
-                [disabled]="currentIndex[sousCategorie.id] === 0">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button *ngIf="groupedProducts[sousCategorie.id]" (click)="nextSlide(sousCategorie.id)" class="carousel-control-next" [disabled]="
-            currentIndex[sousCategorie.id] >=
-            (groupedProducts[sousCategorie.id].length || 0) - visibleProducts
-          ">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
+          </div>
         </div>
-        <p *ngIf="!groupedProducts[sousCategorie.id]?.length" class="text-muted mt-3">
-            Aucun produit disponible pour cette sous-catégorie.
-        </p>
+        <button (click)="prevSlide(sousCategorie.id)" class="carousel-control-prev" [disabled]="currentIndex[sousCategorie.id] === 0">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button *ngIf="groupedProducts[sousCategorie.id]" (click)="nextSlide(sousCategorie.id)" class="carousel-control-next" [disabled]="currentIndex[sousCategorie.id] >= (groupedProducts[sousCategorie.id].length || 0) - visibleProducts">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+      <p *ngIf="!groupedProducts[sousCategorie.id]?.length" class="text-muted mt-3">
+        Aucun produit disponible pour cette sous-catégorie.
+      </p>
     </div>
-</div>
-
-
-
-<!-- <div class="slider" x-data="{start: true, end: false}" style="padding-top: 100px">
-        <div class="slider__content" x-ref="slider"
-            x-on:scroll.debounce="$refs.slider.scrollLeft == 0 ? start = true : start = false; Math.abs(($refs.slider.scrollWidth - $refs.slider.offsetWidth) - $refs.slider.scrollLeft) < 5 ? end = true : end = false;">
-
-            <div class="slider__item">
-                <img class="slider__image" src="assets/ambre1.jpg" alt="Image" />
-                <div class="slider__info">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio blanditiis amet eligendi a,
-                        quibusdam culpa non, consectetur cumque placeat ullam officia laboriosam maxime impedit quia
-                        repellendus dolores autem quos nam?</p>
-                </div>
-            </div>
-
-            <div class="slider__item">
-                <img class="slider__image" src="assets/Bijoux en Argent.jpg" alt="Image" />
-                <div class="slider__info">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio blanditiis amet eligendi a,
-                        quibusdam culpa non, consectetur cumque placeat ullam officia laboriosam maxime impedit quia
-                        repellendus dolores autem quos nam?</p>
-                </div>
-            </div>
-
-            <div class="slider__item">
-                <img class="slider__image" src="assets/Bijoux en Pierre.jpg" alt="Image" />
-                <div class="slider__info">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio blanditiis amet eligendi a,
-                        quibusdam culpa non, consectetur cumque placeat ullam officia laboriosam maxime impedit quia
-                        repellendus dolores autem quos nam?</p>
-                </div>
-            </div>
-            <div class="slider__item">
-                <img class="slider__image" src="assets/ambre1.jpg" alt="Image" />
-                <div class="slider__info">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio blanditiis amet eligendi a,
-                        quibusdam culpa non, consectetur cumque placeat ullam officia laboriosam maxime impedit quia
-                        repellendus dolores autem quos nam?</p>
-                </div>
-            </div>
-
-            <div class="slider__item">
-                <img class="slider__image" src="assets/Bijoux en Argent.jpg" alt="Image" />
-                <div class="slider__info">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio blanditiis amet eligendi a,
-                        quibusdam culpa non, consectetur cumque placeat ullam officia laboriosam maxime impedit quia
-                        repellendus dolores autem quos nam?</p>
-                </div>
-            </div>
-
-            <div class="slider__item">
-                <img class="slider__image" src="assets/Bijoux en Pierre.jpg" alt="Image" />
-                <div class="slider__info">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio blanditiis amet eligendi a,
-                        quibusdam culpa non, consectetur cumque placeat ullam officia laboriosam maxime impedit quia
-                        repellendus dolores autem quos nam?</p>
-                </div>
-            </div>
-            <div class="slider__item">
-                <img class="slider__image" src="assets/ambre1.jpg" alt="Image" />
-                <div class="slider__info">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio blanditiis amet eligendi a,
-                        quibusdam culpa non, consectetur cumque placeat ullam officia laboriosam maxime impedit quia
-                        repellendus dolores autem quos nam?</p>
-                </div>
-            </div>
-
-            <div class="slider__item">
-                <img class="slider__image" src="assets/Bijoux en Argent.jpg" alt="Image" />
-                <div class="slider__info">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio blanditiis amet eligendi a,
-                        quibusdam culpa non, consectetur cumque placeat ullam officia laboriosam maxime impedit quia
-                        repellendus dolores autem quos nam?</p>
-                </div>
-            </div>
-
-            <div class="slider__item">
-                <img class="slider__image" src="assets/Bijoux en Pierre.jpg" alt="Image" />
-                <div class="slider__info">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio blanditiis amet eligendi a,
-                        quibusdam culpa non, consectetur cumque placeat ullam officia laboriosam maxime impedit quia
-                        repellendus dolores autem quos nam?</p>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="slider__nav" style="display: flex; justify-content: center">
-        </div>
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.10.2/cdn.js"></script> -->
+  </div>
+  

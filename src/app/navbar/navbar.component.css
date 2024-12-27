@@ -1,4 +1,19 @@
-/* General Navbar Styling */
+/* Toggler Button */
+.navbar-toggler {
+  border: none;
+  /* background: transparent; */
+  font-size: 20px;
+  color: #b69e7c;
+  position: absolute;
+  left: 10px;}
+
+/* .navbar-toggler:focus {
+  outline: none;
+} */
+
+
+
+
 .navbar {
   position: relative; /* Nécessaire pour centrer un élément enfant avec position absolue */
   display: flex;
@@ -39,7 +54,7 @@
   width: 90%;
   border: none;
   border-radius: 6px;
-  background-color: #eaccad;
+  background-color: #b69e7c;
   color: #ffffff;
   padding: 5px;
   font-size: 14px;
@@ -51,7 +66,7 @@
 .input-group-text {
   color: #ffffff;
   border: none;
-  background-color: #eaccad;
+  background-color: #b69e7c;
   cursor: pointer;
 }
 .search-input::-webkit-input-placeholder {
@@ -97,7 +112,7 @@
 /* Icônes */
 .nav-item i {
   font-size: 18px;
-  color: #eaccad;
+  color: #b69e7c;
 }
 .nav-item i:hover {
   font-size: 18px;
@@ -106,7 +121,8 @@
 
 /* Sous-navbar */
 .sub-navbar {
-  background-color: #eaccad;
+  /* background-color: #eaccad; */
+  background-color: #b69e7c;
   padding: 0px 20px;
 }
 
@@ -125,24 +141,14 @@
   border-radius: 0;
   font-family: inherit;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 300;
 }
 
-.sub-nav-link:hover {
+/* .sub-nav-link:hover {
   color: #b69e7c;
-}
+} */
 
-/* Toggler Button */
-.navbar-toggler {
-  border: none;
-  background: transparent;
-  font-size: 20px;
-  color: #fff;
-}
 
-.navbar-toggler:focus {
-  outline: none;
-}
 
 .dropdown-menu {
   position: absolute;
@@ -186,37 +192,58 @@
 }
 
 /* Responsive Adjustments */
-@media (max-width: 768px) {
-  /* Conteneur principal */
-  .navbar .container-fluid {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    /* flex-wrap: wrap; */
-  }
+@media (max-width: 991px) {
 
-  /* Logo centré */
-  .navbar-brand {
-    margin: 10px; /* Ajoute un espace autour du logo */
+  .navbar {
+    position: relative;
     display: flex;
     justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    padding: 30px 20px;
   }
-
+  
+  /* .navbar .container-fluid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; 
+  } */
+  /* Logo centré */
+  .logo-container {
+    display: flex;
+    justify-content: left;
+    position: absolute;
+    margin-left: auto;
+  }
+  /* .brand-logo {
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .brand-logo:hover {
+    transform: scale(1.1);
+  } */
   /* Barre de recherche */
   .search-bar {
     width: 100%;
-    margin: 60px ;
+    margin: 50px ;
     /* display: flex;
     justify-content: center; */
   }
-
+  
   .search-input {
-    width: 93%;
+    border-radius: 0%;
+    width: 100%;
     font-size: 14px; /* Réduit légèrement la taille de la police */
   }
 
   .input-group-text {
-    background-color: #eaccad;
+    background-color: #b69e7c;
     border: none;
     color: #fff;
   }
@@ -232,17 +259,6 @@
     list-style: none; /* Supprime les puces ou styles indésirables */
   }
 
-  /* .nav-link {
-    font-size: 16px;
-    font-weight: 300;
-    color: #ffffff;
-    padding: 5px;
-    transition: color 0.3s, background-color 0.3s;
-  }
-
-  .nav-link:hover {
-    color: #c2af6f;
-  } */
 
   .nav-item i {
     font-size: 18px;
@@ -252,7 +268,7 @@
     width: 100%;
     padding: 10px;
     text-align: center;
-    background-color: #f5e1ce;
+    background-color: #b69e7c;
   }
 
   .sub-navbar ul {

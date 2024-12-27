@@ -11,23 +11,25 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class SearchResultComponent {
   produits: Produit[] = [];
   isLoading: boolean = false;
-
-  constructor(private searchService: SearchService,
+term=''
+  constructor(
+    private searchService: SearchService,
     private router: Router,
     private route: ActivatedRoute
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      const term = params['term'];  // Assurez-vous que le paramètre est bien 'term' dans l'URL
+      const term = params['term'];
       if (term) {
+        this.term=term
         this.search(term);
       }
     });
   }
 
   search(term: string): void {
-    console.log('term: ', term)
+    console.log('term: ',term)
     if (!term.trim()) return;
 
     this.isLoading = true;
@@ -35,20 +37,21 @@ export class SearchResultComponent {
       produits => {
         this.produits = produits;
         this.isLoading = false;
+        console.log('Produits trouvés :', this.produits);
       },
-      () => {
+      error => {
+        console.error('Erreur lors de la recherche :', error);
         this.produits = [];
         this.isLoading = false;
       }
     );
   }
-  viewProductDetails(produitId: string | undefined) {
+
+  viewProductDetails(produitId: string | undefined): void {
     if (produitId) {
       this.router.navigate(['/products', produitId]);
     } else {
-      console.error(
-        'produit ID is undefined. Cannot navigate to produit details.'
-      );
+      console.error('Produit ID est indéfini. Impossible de naviguer vers les détails.');
     }
   }
 }

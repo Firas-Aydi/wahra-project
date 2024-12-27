@@ -1,8 +1,9 @@
 <div class="container mt-4">
   <div *ngIf="products.length > 0; else noProducts">
-    <div class="row">
-        <div class="col-lg-3 col-md-6 mb-4" *ngFor="let produit of products">
-        <div class="card h-100 d-flex flex-column" (click)="viewProductDetails(produit.id)">
+    <!-- <div class="row">
+        <div class="col-lg-3 col-md-6 mb-4"> -->
+          <div class="cards-container">
+            <div class="card"  *ngFor="let produit of products" (click)="viewProductDetails(produit.id)">
           <!-- Badge Stock -->
           <span class="badge position-absolute p-2 text-light stock-badge" [ngClass]="{
               'bg-success': produit?.stock! > 0,
@@ -20,7 +21,8 @@
         </div>
       </div>
     </div>
-  </div>
+  <!-- </div>
+  </div> -->
 
   <!-- Message No Products -->
   <ng-template #noProducts>

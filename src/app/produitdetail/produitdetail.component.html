@@ -22,7 +22,7 @@
                 [ngClass]="{ 'bg-success': produit.stock! > 0, 'bg-danger': produit.stock! === 0 }">
                 {{ produit.stock! > 0 ? 'En stock' : 'En rupture' }}
             </span>
-            <p class="price"><strong>{{ produit.price }} TND</strong></p>
+            <p class="price"><strong>{{ produit.price }} DT</strong></p>
             <hr />
             <div class="input-group mb-3 quantity-input">
                 <span class="input-group-text quantity">Quantité :</span>
@@ -30,7 +30,7 @@
                     [disabled]="produit.stock === 0" (input)="validateQuantity()" />
             </div>
             <div *ngIf="quantityError" class="text-danger">{{ quantityError }}</div>
-            <button [disabled]="produit.stock === 0" class="btn btn-primary custom-btn"
+            <button [disabled]="produit.stock === 0" class="btn custom-btn"
                 (click)="addToCart(produit, quantity)">
                 <i class="fa-solid fa-cart-shopping"></i> Ajouter au panier
             </button>
@@ -40,7 +40,7 @@
     <!-- Détails de la pierre associée -->
     <div *ngIf="pierresUniques.size > 0" class="mt-5">
         <h2>Vertus et bienfaits :</h2>
-        <p *ngFor="let bienfaits of pierresUniques | keyvalue">
+        <p class="description" *ngFor="let bienfaits of pierresUniques | keyvalue">
             {{ bienfaits.value.bienfaits }}
         </p>
         <h2>Pierres utilisés dans ce produit :</h2>
@@ -51,7 +51,7 @@
             </div>
             <div class="col-md-11">
                 <h4>{{ pierre.value.name }}</h4>
-                <p>
+                <p class="description">
                     {{ pierre.value.description }}
                 </p>
             </div>

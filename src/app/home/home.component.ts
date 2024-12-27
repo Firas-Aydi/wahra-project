@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { SousCategorieService } from '../services/sous-categorie.service';
 import { ProductService } from '../services/produit.service';
 import { SousCategorie } from '../model/sous-categorie';
@@ -25,7 +25,29 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadSousCategoriesWithProducts();
+    this.updateVisibleProducts();
   }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event): void {
+    this.updateVisibleProducts();
+  }
+
+  updateVisibleProducts(): void {
+    const width = window.innerWidth;
+    if (width <= 576) {
+      this.visibleProducts = 1; // 1 produit par ligne sur mobile
+    } else if (width <= 768) {
+      this.visibleProducts = 2; // 2 produits par ligne sur petite tablette
+    } else if (width <= 992) {
+      this.visibleProducts = 3; // 3 produits par ligne sur tablette
+    } else if (width <= 1200) {
+      this.visibleProducts = 4; // 4 produits par ligne sur grand écran
+    } else {
+      this.visibleProducts = 5; // 5 produits par ligne sur bureau
+    }
+  }
+  
 
   loadSousCategoriesWithProducts(): void {
     this.sousCategorieService.getSousCategories().subscribe((sousCategories) => {

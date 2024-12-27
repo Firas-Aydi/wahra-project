@@ -150,8 +150,14 @@ export class NavbarComponent implements OnInit {
       });
     this.toggleNavbar();
   }
+
+  search(term: string): void {
+    if (term) {
+      this.route.navigate(['/search', term]); // Passez le terme directement dans l'URL
+    }
+  }
   toggleNavbar() {
-    const navbarCollapse = document.getElementById('navbarSupportedContent');
+    const navbarCollapse = document.getElementById('navbarSmall');
 
     // Toggle the navbar open/close state
     this.isNavbarOpen = !this.isNavbarOpen;
@@ -160,12 +166,5 @@ export class NavbarComponent implements OnInit {
     } else {
       navbarCollapse?.classList.add('show'); // Open it if not already open
     }
-  }
-
-  search(term: string): void {
-    if (term) {
-      this.route.navigate(['/search', term]); // Passez le terme directement dans l'URL
-    }
-  }
-  
+  }  
 }
