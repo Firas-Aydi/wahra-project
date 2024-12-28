@@ -156,15 +156,24 @@ export class NavbarComponent implements OnInit {
       this.route.navigate(['/search', term]); // Passez le terme directement dans l'URL
     }
   }
-  toggleNavbar() {
-    const navbarCollapse = document.getElementById('navbarSmall');
+  // toggleNavbar() {
+  //   const navbarCollapse = document.getElementById('navbarSmall');
 
-    // Toggle the navbar open/close state
+  //   // Toggle the navbar open/close state
+  //   this.isNavbarOpen = !this.isNavbarOpen;
+  //   if (navbarCollapse?.classList.contains('show')) {
+  //     navbarCollapse.classList.remove('show'); // Collapse it
+  //   } else {
+  //     navbarCollapse?.classList.add('show'); // Open it if not already open
+  //   }
+  // }  
+  toggleNavbar() {
     this.isNavbarOpen = !this.isNavbarOpen;
-    if (navbarCollapse?.classList.contains('show')) {
-      navbarCollapse.classList.remove('show'); // Collapse it
-    } else {
-      navbarCollapse?.classList.add('show'); // Open it if not already open
-    }
-  }  
+  }
+
+  toggleSubMenu(category: any, event: Event): void {
+    event.preventDefault(); // Empêche la navigation lors du clic sur la flèche
+    category.isOpen = !category.isOpen;
+  }
+  
 }
