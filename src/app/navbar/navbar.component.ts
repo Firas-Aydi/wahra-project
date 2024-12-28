@@ -168,6 +168,7 @@ export class NavbarComponent implements OnInit {
     } else {
       navbarCollapse?.classList.add('show'); // Open it if not already open
     }
+    this.isDropdownOpen = null
   }
   toggleDropdown(categoryId: string): void {
     // Si la catégorie cliquée est déjà ouverte, la fermer
