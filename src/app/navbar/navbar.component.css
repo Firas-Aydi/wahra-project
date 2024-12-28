@@ -300,37 +300,159 @@
 .sidebar {
   position: fixed;
   top: 0;
-  left: -300px;
-  width: 300px;
+  left: -400px;
+  width: 400px;
   height: 100%;
   background-color: #ffffff;
   overflow-y: auto;
-  transition: left 0.3s ease;
-  padding-top: 20px;
+  transition: left 0.3s ease-in-out;
+  padding: 20px 15px;
   z-index: 1050;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+  border-right: 1px solid #ddd;
 }
 
 .sidebar.open {
   left: 0;
 }
 
+.sidebar .navbar-toggler {
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #8e6f53;
+  cursor: pointer;
+}
+
 .sidebar .navbar-nav {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  padding: 10px;
+  gap: 20px;
+  padding: 0;
+}
+
+.sidebar .nav-item {
+  list-style: none;
 }
 
 .sidebar .nav-link {
-  color: #b69e7c;
-  font-size: 16px;
-  font-weight: bold;
+  color: #8e6f53;
+  font-size: 18px;
+  font-weight: 500;
   text-decoration: none;
   padding: 10px;
-  transition: background-color 0.3s ease;
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .sidebar .nav-link:hover {
   background-color: #8e6f53;
-  color: #fff;
+  color: #ffffff;
+}
+
+.sidebar .dropdown-arrow {
+  margin-left: auto;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.sidebar .dropdown-arrow.fa-chevron-up {
+  transform: rotate(180deg);
+}
+
+/* .sidebar .dropdown-menu {
+  padding-left: 20px;
+  margin-top: 10px;
+  list-style: none;
+}
+
+.sidebar .dropdown-menu .dropdown-item {
+  padding: 5px 10px;
+  font-size: 16px;
+  color: #8e6f53;
+  text-decoration: none;
+}
+
+.sidebar .dropdown-menu .dropdown-item:hover {
+  color: #ffffff;
+  background-color: #8e6f53;
+} */
+.dropdown-toggle-btn:focus {
+  outline: none;
+}
+/* Links Styling */
+.nav-link {
+  font-size: 16px;
+  font-weight: 500;
+  color: #000000;
+  padding: 5px 20px;
+  margin: auto 10px;
+  transition: color 0.3s, background-color 0.3s, transform 0.3s ease-in-out;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  color: #375778;
+}
+/* Styles pour le lien dropdown */
+.nav-link.chic-link {
+  position: relative;
+}
+
+/* Styles pour la flèche */
+.dropdown-arrow {
+  transition: transform 0.3s ease;
+}
+.dropdown-arrow.rotate {
+  transform: rotate(180deg);
+}
+
+
+/* Positionnement et style du menu dropdown */
+.nav-item.dropdown {
+  position: relative; /* Positionnement relatif pour centrer le menu */
+}
+/* Styles pour les grands écrans */
+/* @media (min-width: 992px) { */
+  .dropdown-menu {
+    display: block; /* Permettre à l'animation de s'appliquer */
+    opacity: 0; /* Initialement invisible */
+    visibility: hidden; /* Pour éviter les interactions avant l'affichage */
+    transform: translateY(-20px); /* Position de départ légèrement en dessous */
+    background-color: #ffffff; /* Fond blanc pour le dropdown */
+    border: 1px solid #e1e1e1; /* Bordure grise claire */
+    border-radius: 5px; /* Coins légèrement arrondis */
+    /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); */
+    padding: 10px 0; /* Espacement interne */
+    z-index: 1000; /* S'assurer que le dropdown est au-dessus des autres éléments */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Animation douce */
+  }
+  .nav-item.dropdown:hover .dropdown-menu {
+    opacity: 1; /* Complètement visible */
+    visibility: visible; /* Permettre les interactions */
+    transform: translateY(0); /* Retour à la position normale */
+    position: absolute; /* Position absolue pour garder le dropdown sous le lien parent */
+    top: 100%; /* Alignement sous le lien parent */
+    left: 0; /* Alignement à gauche */
+  }
+/* } */
+
+/* Styles des éléments du menu dropdown */
+.dropdown-item {
+  font-size: 14px;
+  color: #2c3e50;
+  padding: 10px 20px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.dropdown-item:hover {
+  background-color: #f1f1f1;
+  color: #3498db;
+  border-radius: 5px;
+}
+
+.dropdown-item:not(:last-child) {
+  border-bottom: 1px solid #e1e1e1;
 }

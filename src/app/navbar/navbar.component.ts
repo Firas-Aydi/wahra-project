@@ -24,7 +24,9 @@ interface UserData {
 export class NavbarComponent implements OnInit {
   isUser: boolean = false;
   userType: string = ''; // Ajoutez une propriété pour stocker le type d'utilisateur
-  isNavbarOpen = false;
+  isNavbarOpen = true;
+  isDropdownOpen: string | null = null;
+  
   categories: any[] = []; // Liste des catégories avec sous-catégories
   // sousCategories: any[] = [];
   pierres: any[] = [];
@@ -156,24 +158,30 @@ export class NavbarComponent implements OnInit {
       this.route.navigate(['/search', term]); // Passez le terme directement dans l'URL
     }
   }
-  // toggleNavbar() {
-  //   const navbarCollapse = document.getElementById('navbarSmall');
-
-  //   // Toggle the navbar open/close state
-  //   this.isNavbarOpen = !this.isNavbarOpen;
-  //   if (navbarCollapse?.classList.contains('show')) {
-  //     navbarCollapse.classList.remove('show'); // Collapse it
-  //   } else {
-  //     navbarCollapse?.classList.add('show'); // Open it if not already open
-  //   }
-  // }  
   toggleNavbar() {
-    this.isNavbarOpen = !this.isNavbarOpen;
-  }
+    const navbarCollapse = document.getElementById('navbarSmall');
 
-  toggleSubMenu(category: any, event: Event): void {
-    event.preventDefault(); // Empêche la navigation lors du clic sur la flèche
-    category.isOpen = !category.isOpen;
+    // Toggle the navbar open/close state
+    this.isNavbarOpen = !this.isNavbarOpen;
+    if (navbarCollapse?.classList.contains('show')) {
+      navbarCollapse.classList.remove('show'); // Collapse it
+    } else {
+      navbarCollapse?.classList.add('show'); // Open it if not already open
+    }
   }
+  toggleDropdown(categoryId: string): void {
+    // Si la catégorie cliquée est déjà ouverte, la fermer
+    this.isDropdownOpen = this.isDropdownOpen === categoryId ? null : categoryId;
+  }
+  
+  // toggleSubMenu(category: any, event: Event): void {
+  //   event.preventDefault(); // Empêche la navigation par défaut
+  //   category.isOpen = !category.isOpen;
+  // }
+  
+  // toggleNavbar(): void {
+  //   this.isNavbarOpen = !this.isNavbarOpen;
+  // }
+  
   
 }
