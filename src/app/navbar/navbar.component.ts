@@ -150,7 +150,7 @@ export class NavbarComponent implements OnInit {
       .catch(() => {
         // console.log('error');
       });
-    this.toggleNavbar();
+    // this.toggleNavbar();
   }
 
   search(term: string): void {

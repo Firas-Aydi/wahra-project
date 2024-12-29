@@ -53,8 +53,9 @@
             <div class="col-md-6 mb-3">
               <label for="benefits">Bienfaits :</label>
               <textarea id="bienfaits" class="form-control" formControlName="bienfaits"
-                placeholder="Bienfaits"></textarea>
+                placeholder="Bienfaits (séparés par des retours à la ligne)"></textarea>
             </div>
+
           </div>
 
           <div class="row">
@@ -91,7 +92,13 @@
     <tr *ngFor="let pierre of pierres; let i = index">
       <td>{{ pierre.name }}</td>
       <td>{{ pierre.description }}</td>
-      <td>{{ pierre.bienfaits }}</td>
+      <td>
+        <ul>
+          <li *ngFor="let bienfait of pierre.bienfaits?.split('\n')">
+            {{ bienfait }}
+          </li>
+        </ul>
+      </td>
       <td>
         <div style="display: flex; flex-wrap: wrap;">
           <img *ngFor="let img of pierre.images" [src]="img" alt="Image de la Chambre"

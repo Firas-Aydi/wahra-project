@@ -4,7 +4,7 @@
             <div class="main-image-container mb-4">
                 <img [src]="selectedImage" alt="{{ produit.name }}" class="main-image img-fluid" />
             </div>
-            <div class="thumbnails-container d-flex justify-content-center gap-2">
+            <div class="thumbnails-container d-flex justify-content-center gap-2 mb-5">
                 <img *ngFor="let image of produit.images" [src]="image" alt="{{ produit.name }}" class="thumbnail-image"
                     (click)="selectImage(image)" [class.active]="image === selectedImage" />
             </div>
@@ -30,8 +30,7 @@
                     [disabled]="produit.stock === 0" (input)="validateQuantity()" />
             </div>
             <div *ngIf="quantityError" class="text-danger">{{ quantityError }}</div>
-            <button [disabled]="produit.stock === 0" class="btn custom-btn"
-                (click)="addToCart(produit, quantity)">
+            <button [disabled]="produit.stock === 0" class="btn custom-btn" (click)="addToCart(produit, quantity)">
                 <i class="fa-solid fa-cart-shopping"></i> Ajouter au panier
             </button>
         </div>
@@ -40,9 +39,20 @@
     <!-- Détails de la pierre associée -->
     <div *ngIf="pierresUniques.size > 0" class="mt-5">
         <h2>Vertus et bienfaits :</h2>
-        <p class="description" *ngFor="let bienfaits of pierresUniques | keyvalue">
-            {{ bienfaits.value.bienfaits }}
-        </p>
+        <!-- <p class="description" *ngFor="let bienfaits of pierresUniques | keyvalue">
+            <li *ngFor="let bienfait of bienfaits.value.bienfaits?.split('\n')">
+                {{ bienfait }}
+            </li>
+        </p> -->
+        <div class="description" *ngFor="let bienfaits of pierresUniques | keyvalue">
+            <h5 class="bienfait-title">{{ bienfaits.value.name }}</h5>
+            <ul class="bienfait-list">
+                <li *ngFor="let bienfait of bienfaits.value.bienfaits?.split('\n')" class="bienfait-item">
+                    {{ bienfait }}
+                </li>
+            </ul>
+        </div>
+
         <h2>Pierres utilisés dans ce produit :</h2>
         <div *ngFor="let pierre of pierresUniques | keyvalue" class="pierre-details mt-4 row align-items-center"
             (click)="viewPierreDetails(pierre.value.id)" style="cursor: pointer;">

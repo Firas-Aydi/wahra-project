@@ -180,7 +180,7 @@ export class SousCategoriesComponent implements OnInit {
   getVisibleProductsForPierre(pierreId: string): Produit[] {
     // console.log('groupedProducts: ',this.groupedProducts)
     // console.log('groupedProducts[pierreId]: ',this.groupedProducts[pierreId])
-    console.log('groupedProducts[pierreId][0].id: ',this.groupedProducts[pierreId][0].id)
+    // console.log('groupedProducts[pierreId][0].id: ',this.groupedProducts[pierreId][0].id)
     const currentIndex = this.carouselIndexes[pierreId] || 0;
     const products = this.groupedProducts[pierreId] || [];
     return products.slice(currentIndex, currentIndex + this.visibleProducts);

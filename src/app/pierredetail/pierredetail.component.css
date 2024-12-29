@@ -26,10 +26,38 @@ h4 {
   object-fit: cover;
 }
 
+/* Description */
 .description {
-  line-height: 1.6;
-  font-size: 15px;
-  color: #555;
+  font-family: "Poppins";
+  line-height: 1.4;
+  font-size: 16px;
+}
+
+/* .description {
+  margin-bottom: 20px; 
+  padding: 10px;
+  background-color: #f9f9f9; 
+  border: 1px solid #ddd; 
+  border-radius: 8px;
+} */
+
+.bienfait-title {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333; /* Titre en couleur sombre */
+}
+
+.bienfait-list {
+  list-style-type: disc; /* Puces standards */
+  padding-left: 30px; /* Indentation des listes */
+  margin-bottom: 30px;
+}
+
+.bienfait-item {
+  font-size: 16px;
+  line-height: 1.5; /* Espacement entre les lignes */
+  margin-bottom: 5px; /* Espacement entre les items */
 }
 .error-page p {
   font-size: 1.2rem;

@@ -56,8 +56,35 @@ h4 {
   font-family: "Poppins";
   line-height: 1.4;
   font-size: 16px;
-  /* color: #555; */
 }
+
+/* .description {
+  margin-bottom: 20px; 
+  padding: 10px;
+  background-color: #f9f9f9; 
+  border: 1px solid #ddd; 
+  border-radius: 8px;
+} */
+
+.bienfait-title {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333; /* Titre en couleur sombre */
+}
+
+.bienfait-list {
+  list-style-type: disc; /* Puces standards */
+  padding-left: 30px; /* Indentation des listes */
+  margin-bottom: 30px;
+}
+
+.bienfait-item {
+  font-size: 16px;
+  line-height: 1.5; /* Espacement entre les lignes */
+  margin-bottom: 5px; /* Espacement entre les items */
+}
+
 
 /* Prix */
 .price {
@@ -72,21 +99,7 @@ h4 {
   font-size: 14px;
   font-weight: 500;
 }
-/* Bouton personnalisé */
-/* .custom-btn {
-  background-color: #007bff;
-  border: none;
-  font-size: 15px;
-  font-weight: 500;
-  padding: 10px 20px;
-  border-radius: 25px;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-}
 
-.custom-btn:hover {
-  background-color: #0056b3;
-  transform: scale(1.02);
-} */
 
 .custom-btn {
   background-color: #ffffff; /* A vibrant green */
@@ -127,6 +140,7 @@ h4 {
   font-size: 1.2rem;
   color: #dc3545;
 }
+
 
 .pierre-details {
   /* background: #f9f9f9; */

@@ -14,7 +14,20 @@
     </div>
     <div *ngIf="pierre" class="mt-5">
         <h2>Vertus et bienfaits :</h2>
-        <p>{{ pierre.bienfaits }}</p>
+        <!-- <p>{{ pierre.bienfaits }}</p> -->
+        <!-- <p class="description" >
+            <li *ngFor="let bienfait of pierre.bienfaits?.split('\n')">
+                {{ bienfait }}
+            </li>
+        </p> -->
+        <div class="description">
+            <!-- <h5 class="bienfait-title">{{ pierre.name }}</h5> -->
+            <ul class="bienfait-list">
+                <li *ngFor="let bienfait of pierre.bienfaits?.split('\n')" class="bienfait-item">
+                    {{ bienfait }}
+                </li>
+            </ul>
+        </div>
     </div>
     <ng-template #notFound class="error-page text-center mt-5">
         <p class="text-danger">Pierre introuvable.</p>
