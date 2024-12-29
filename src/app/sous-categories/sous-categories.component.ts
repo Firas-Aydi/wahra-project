@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { SousCategorieService } from '../services/sous-categorie.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Produit } from '../model/produit';
@@ -35,6 +35,28 @@ export class SousCategoriesComponent implements OnInit {
       }
     });
   }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event): void {
+    this.updateVisibleProducts();
+  }
+
+  updateVisibleProducts(): void {
+    const width = window.innerWidth;
+    if (width <= 576) {
+      this.visibleProducts = 1; // 1 produit par ligne sur mobile
+    } else if (width <= 768) {
+      this.visibleProducts = 2; // 2 produits par ligne sur petite tablette
+    } else if (width <= 992) {
+      this.visibleProducts = 3; // 3 produits par ligne sur tablette
+    } else if (width <= 1200) {
+      this.visibleProducts = 4; // 4 produits par ligne sur grand écran
+    } else {
+      this.visibleProducts = 5; // 5 produits par ligne sur bureau
+    }
+  }
+
+
   loadProductsByCategorySousCategorie(categoryId: string): void {
     this.sousCategorieService
       .getProductsByCategorySousCategorie(categoryId)
@@ -88,26 +110,20 @@ export class SousCategoriesComponent implements OnInit {
   }
   groupProductsByPierre(products: Produit[]): void {
     const pierreIds = Array.from(
-      new Set(
-        products
-        .flatMap((produit) => produit.pierreId || [])
-      )
+      new Set(products.flatMap((produit) => produit.pierreId || []))
     );
-
+  
     this.sousCategorieService.getPierresByIds(pierreIds).subscribe(
       (pierres) => {
-        const pierreMap = pierres.reduce(
-          (acc: { [key: string]: string }, pierre) => {
-            acc[pierre.id] = pierre.name;
-            return acc;
-          },
-          {}
-        ); // Le type explicite corrige l'erreur ici
-
+        const pierreMap = pierres.reduce((acc: { [key: string]: string }, pierre) => {
+          acc[pierre.id] = pierre.name;
+          return acc;
+        }, {});
+  
         // Regrouper les produits par nom de pierre
         this.groupedProducts = products.reduce((acc, produit) => {
-          const pierreNames = produit.pierreId?.map(id => pierreMap[id]) || ['Inconnue'];
-          pierreNames.forEach(pierreName => {
+          const pierreNames = produit.pierreId?.map((id) => pierreMap[id]) || ['Inconnue'];
+          pierreNames.forEach((pierreName) => {
             if (!acc[pierreName]) {
               acc[pierreName] = [];
             }
@@ -115,17 +131,25 @@ export class SousCategoriesComponent implements OnInit {
           });
           return acc;
         }, {} as { [key: string]: Produit[] });
+  
+        // Initialiser les index pour chaque pierre
+        Object.keys(this.groupedProducts).forEach((pierreName) => {
+          this.carouselIndexes[pierreName] = 0;
+        });
+  
+        console.log('Grouped products by Pierre:', this.groupedProducts);
       },
       (error) => {
         console.error('Erreur lors du chargement des pierres :', error);
       }
     );
-}
+  }
+  
 
   getVisibleProducts(sousCategoryId: string): Produit[] {
     const currentIndex = this.currentIndex[sousCategoryId] || 0;
     const products = this.groupedProducts[sousCategoryId] || [];
-    return products.slice(currentIndex, currentIndex + 5);
+    return products.slice(currentIndex, currentIndex + this.visibleProducts);
   }
   prevSlide(sousCategoryId: string): void {
     if (this.currentIndex[sousCategoryId] > 0) {
@@ -134,7 +158,7 @@ export class SousCategoriesComponent implements OnInit {
   }
 
   nextSlide(sousCategoryId: string): void {
-    const maxIndex = (this.groupedProducts[sousCategoryId]?.length || 0) - 5;
+    const maxIndex = (this.groupedProducts[sousCategoryId]?.length || 0) - this.visibleProducts;
     if (this.currentIndex[sousCategoryId] < maxIndex) {
       this.currentIndex[sousCategoryId]++;
     }
@@ -147,14 +171,16 @@ export class SousCategoriesComponent implements OnInit {
   }
 
   nextSlideForPierre(pierreId: string): void {
-    const maxIndex =
-      (this.groupedProducts[pierreId]?.length || 0) - this.visibleProducts;
+    const maxIndex = (this.groupedProducts[pierreId]?.length || 0) - this.visibleProducts;
     if (this.carouselIndexes[pierreId] < maxIndex) {
       this.carouselIndexes[pierreId]++;
     }
   }
 
   getVisibleProductsForPierre(pierreId: string): Produit[] {
+    // console.log('groupedProducts: ',this.groupedProducts)
+    // console.log('groupedProducts[pierreId]: ',this.groupedProducts[pierreId])
+    console.log('groupedProducts[pierreId][0].id: ',this.groupedProducts[pierreId][0].id)
     const currentIndex = this.carouselIndexes[pierreId] || 0;
     const products = this.groupedProducts[pierreId] || [];
     return products.slice(currentIndex, currentIndex + this.visibleProducts);

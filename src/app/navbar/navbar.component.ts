@@ -24,9 +24,9 @@ interface UserData {
 export class NavbarComponent implements OnInit {
   isUser: boolean = false;
   userType: string = ''; // Ajoutez une propriété pour stocker le type d'utilisateur
-  isNavbarOpen = true;
+  isNavbarOpen = false;
   isDropdownOpen: string | null = null;
-  
+
   categories: any[] = []; // Liste des catégories avec sous-catégories
   // sousCategories: any[] = [];
   pierres: any[] = [];
@@ -79,13 +79,13 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.loadCategories();
 
-     // Abonnez-vous au nombre de commandes en attente
-     this.pendingCommandeSubscription = this.commandeService
-     .getPendingCommandesCount()
-     .subscribe((count) => {
-       this.commandeItemCount = count;
-     });
-     
+    // Abonnez-vous au nombre de commandes en attente
+    this.pendingCommandeSubscription = this.commandeService
+      .getPendingCommandesCount()
+      .subscribe((count) => {
+        this.commandeItemCount = count;
+      });
+
     // Charger le compteur du panier depuis localStorage
     const savedCartCount = localStorage.getItem('wahracartItemCount');
     this.cartItemCount = savedCartCount ? +savedCartCount : 0;
@@ -174,15 +174,11 @@ export class NavbarComponent implements OnInit {
     // Si la catégorie cliquée est déjà ouverte, la fermer
     this.isDropdownOpen = this.isDropdownOpen === categoryId ? null : categoryId;
   }
-  
-  // toggleSubMenu(category: any, event: Event): void {
-  //   event.preventDefault(); // Empêche la navigation par défaut
-  //   category.isOpen = !category.isOpen;
-  // }
-  
-  // toggleNavbar(): void {
-  //   this.isNavbarOpen = !this.isNavbarOpen;
-  // }
-  
-  
+
+  closeDropdown() {
+  this.isNavbarOpen = false;
+  this.isDropdownOpen = null
+  }
+
+
 }
