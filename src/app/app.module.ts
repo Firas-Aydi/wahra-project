@@ -7,6 +7,7 @@ import { environment } from '../environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -22,6 +23,9 @@ import { ProduitdetailComponent } from './produitdetail/produitdetail.component'
 import { CommandeComponent } from './commande/commande.component';
 import { FooterComponent } from './footer/footer.component';
 import { SearchResultComponent } from './search-result/search-result.component';
+import { ConsultationComponent } from './consultation/consultation.component';
+import { NewsManagementComponent } from './admin/news-management/news-management.component';
+import { UniquePiecesManagementComponent } from './admin/unique-pieces-management/unique-pieces-management.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +44,10 @@ import { SearchResultComponent } from './search-result/search-result.component';
     ProduitdetailComponent,
     CommandeComponent,
     FooterComponent,
-    SearchResultComponent
+    SearchResultComponent,
+    ConsultationComponent,
+    NewsManagementComponent,
+    UniquePiecesManagementComponent
   ],
   imports: [
     BrowserModule,

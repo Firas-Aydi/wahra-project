@@ -19,11 +19,16 @@ import { UserManagementComponent } from './admin/user-management/user-management
 import { ProduitdetailComponent } from './produitdetail/produitdetail.component';
 import { CommandeComponent } from './commande/commande.component';
 import { SearchResultComponent } from './search-result/search-result.component';
+import { ConsultationComponent } from './consultation/consultation.component';
+import { ConsultationManagementComponent } from './admin/consultation-management/consultation-management.component';
+import { NewsManagementComponent } from './admin/news-management/news-management.component';
+import { UniquePiecesManagementComponent } from './admin/unique-pieces-management/unique-pieces-management.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
+  { path: 'consultation', component: ConsultationComponent },
   
   { path: 'manageAmbre', component: manageAmbreComponent },
   { path: 'ambre', component: AmbreComponent },
@@ -47,6 +52,9 @@ const routes: Routes = [
   { path: 'stones-management', component: StoneManagementComponent },
   { path: 'users-management', component: UserManagementComponent },
   { path: 'carts-management', component: CartManagementComponent },
+  { path: 'consultations-management', component: ConsultationManagementComponent },
+  { path: 'news-management', component: NewsManagementComponent },
+  { path: 'unique-pieces-management', component: UniquePiecesManagementComponent },
   
 ];
 

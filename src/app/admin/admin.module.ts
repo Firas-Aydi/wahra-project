@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
@@ -9,18 +10,19 @@ import { SubCategoryManagementComponent } from './sub-category-management/sub-ca
 import { StoneManagementComponent } from './stone-management/stone-management.component';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { CartManagementComponent } from './cart-management/cart-management.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ConsultationManagementComponent } from './consultation-management/consultation-management.component';
 
 
 @NgModule({
   declarations: [
     AdminDashboardComponent,
-    CategoryManagementComponent,
-    ProductManagementComponent,
-    SubCategoryManagementComponent,
-    StoneManagementComponent,
+    // CategoryManagementComponent,
+    // ProductManagementComponent,
+    // SubCategoryManagementComponent,
+    // StoneManagementComponent,
     UserManagementComponent,
-    CartManagementComponent
+    // CartManagementComponent,
+    // ConsultationManagementComponent
   ],
   imports: [
     CommonModule,

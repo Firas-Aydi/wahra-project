@@ -1,0 +1,150 @@
+<div class="container mt-5">
+    <!-- Liste des consultations -->
+    <h3 class="text-center mb-4">Liste des Rendez-vous</h3>
+
+    <div *ngIf="loading" class="text-center">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Chargement...</span>
+        </div>
+    </div>
+
+    <div *ngIf="!loading">
+        <table class="table table-striped table-bordered text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Heures</th>
+                    <th *ngFor="let day of days">{{ day }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let hour of hours">
+                    <td>{{ hour }}</td>
+                    <td *ngFor="let day of days">
+                        <div *ngIf="getConsultation(day, hour); else emptySlot">
+                            <div class="bg-primary text-white rounded">
+                                <strong>{{ getConsultation(day, hour)?.clientName }}</strong><br />
+                                <small>{{ getConsultation(day, hour)?.duration }} min</small>
+                            </div>
+                        </div>
+                        <ng-template #emptySlot>
+                            <span class="text-muted">Libre</span>
+                        </ng-template>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 class="text-center mb-4">Prendre Rendez-vous</h2>
+
+    <!-- Formulaire de consultation -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form [formGroup]="consultationForm" (ngSubmit)="addConsultation()">
+                <!-- Messages de succès ou d'erreur -->
+                <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+                <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+                <div *ngIf="consultationForm.invalid && consultationForm.touched" class="alert alert-warning">
+                    <ul>
+                        <li *ngIf="formControls['clientName'].invalid">- Le nom est obligatoire et doit contenir au
+                            moins 2 caractères.</li>
+                        <li *ngIf="formControls['email'].invalid">- Veuillez entrer une adresse email valide.</li>
+                        <li *ngIf="formControls['phone'].invalid">- Le numéro de téléphone doit contenir 8 chiffres.</li>
+                        <li *ngIf="formControls['appointmentDate'].invalid">- La date est obligatoire et ne doit pas
+                            être dans le passé.</li>
+                        <li *ngIf="formControls['appointmentTime'].invalid">- L'heure est obligatoire et doit être entre
+                            8h et 17h.</li>
+                        <li *ngIf="formControls['duration'].invalid">- La durée doit être comprise entre 15 et 60
+                            minutes.</li>
+                    </ul>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="clientName" class="form-label">Nom du client</label>
+                        <input type="text" id="clientName" class="form-control" formControlName="clientName"
+                            placeholder="Votre nom" />
+                        <div *ngIf="formControls['clientName'].touched && formControls['clientName'].invalid"
+                            class="text-danger small">
+                            <span *ngIf="formControls['clientName'].errors?.['required']">Le nom est requis.</span>
+                            <span *ngIf="formControls['clientName'].errors?.['minlength']">Le nom doit contenir au moins
+                                2 caractères.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" id="email" class="form-control" formControlName="email"
+                            placeholder="Votre email" />
+                        <div *ngIf="formControls['email'].touched && formControls['email'].invalid"
+                            class="text-danger small">
+                            Veuillez entrer une adresse email valide.
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="phone" class="form-label">Téléphone</label>
+                        <input type="text" id="phone" class="form-control" formControlName="phone"
+                            placeholder="Votre numéro de téléphone" />
+                        <div *ngIf="formControls['phone'].touched && formControls['phone'].invalid"
+                            class="text-danger small">
+                            Veuillez entrer un numéro valide (8 chiffres).
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label for="appointmentDate" class="form-label">Date du rendez-vous</label>
+                        <input type="date" id="appointmentDate" class="form-control"
+                            formControlName="appointmentDate" />
+                        <div *ngIf="formControls['appointmentDate'].touched && formControls['appointmentDate'].invalid"
+                            class="text-danger small">
+                            <span *ngIf="formControls['appointmentDate'].errors?.['required']">La date est
+                                requise.</span>
+                            <span *ngIf="formControls['appointmentDate'].errors?.['pastDate']">La date ne peut pas être
+                                dans le passé.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <!-- <label for="appointmentTime" class="form-label">Heure du rendez-vous</label>
+                        <input type="time" id="appointmentTime" class="form-control"
+                            formControlName="appointmentTime" />
+                        <div *ngIf="formControls['appointmentTime'].touched && formControls['appointmentTime'].errors"
+                            class="text-danger small">
+                            <span *ngIf="formControls['appointmentTime'].errors?.['required']">L'heure est
+                                requise.</span>
+                            <span *ngIf="formControls['appointmentTime'].errors?.['outsideWorkingHours']">L'heure doit
+                                être entre 8h et 17h.</span>
+                        </div> -->
+                        <label for="appointmentTime" class="form-label">Heure du rendez-vous</label>
+                        <select id="appointmentTime" class="form-control" formControlName="appointmentTime">
+                            <option *ngFor="let hour of hours" [value]="hour">{{ hour }}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label for="duration" class="form-label">Durée (minutes)</label>
+                        <input type="number" id="duration" class="form-control" formControlName="duration"
+                            placeholder="Durée de la consultation" />
+                        <div *ngIf="formControls['duration'].touched && formControls['duration'].errors"
+                            class="text-danger small">
+                            <span *ngIf="formControls['duration'].errors?.['required']">
+                                La durée est requise.</span>
+                            <span *ngIf="formControls['duration'].errors?.['min']">
+                                La durée doit être au moins de 15 minutes.</span>
+                            <span *ngIf="formControls['duration'].errors?.['max']">
+                                La durée ne peut pas dépasser 60 minutes.</span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="notes" class="form-label">Notes (optionnel)</label>
+                    <textarea id="notes" class="form-control" formControlName="notes" rows="3"
+                        placeholder="Notes supplémentaires"></textarea>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary" [disabled]="consultationForm.invalid">Envoyer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
