@@ -6,7 +6,8 @@ h4 {
   /* font-size: 16px; */
   color: #333;
 }
-.main-image-container {
+/* Container pour l'image ou la vidéo principale */
+/* .main-media-container {
   border: 1px solid #ddd;
   border-radius: 8px;
   overflow: hidden;
@@ -14,35 +15,71 @@ h4 {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* transition: transform 0.3s ease, box-shadow 0.3s ease; */
-}
-/* .main-image-container img:hover {
-  transform: scale(2.05);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  background-color: #f8f8f8;
 } */
-.main-image {
+
+.main-image,
+.main-video {
   max-height: 100%;
   max-width: 100%;
   object-fit: cover;
+  border-radius: 4px;
 }
 
-/* Thumbnails */
-.thumbnails-container img {
+/* Thumbnails pour les images et vidéos */
+.thumbnails-container img,
+.thumbnails-container video {
   width: 60px;
   height: 60px;
   object-fit: cover;
   border: 1px solid transparent;
   border-radius: 4px;
   cursor: pointer;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
 }
-.thumbnails-container img:hover {
+
+/* Effets au survol des miniatures */
+.thumbnails-container img:hover,
+.thumbnails-container video:hover {
   opacity: 0.8;
   transform: scale(1.1);
 }
-.thumbnail-image.active {
+
+/* Style pour l'élément actif */
+.thumbnail-image.active,
+.thumbnail-video.active {
   border: 2px solid #007bff;
 }
+
+/* Ajouter une icône de lecture sur les vidéos */
+.thumbnails-container video {
+  position: relative;
+}
+
+.thumbnails-container video::after {
+  content: "▶";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+  color: white;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  padding: 4px;
+  pointer-events: none;
+}
+
+/* Ajouter un fond différent pour les vidéos en tant que miniature active */
+.thumbnail-video.active {
+  border-color: #28a745; /* Couleur différente pour distinguer vidéo active */
+}
+
+/* Compatibilité pour les vidéos */
+.main-video {
+  background-color: #000; /* Fond noir pour les vidéos */
+}
+
 
 /* Produit Title */
 .produit-title {

@@ -1,12 +1,17 @@
 <div class="container mt-5">
     <div *ngIf="produit" class="row align-items-start">
         <div class="col-md-6 d-flex flex-column">
-            <div class="main-image-container mb-4">
-                <img [src]="selectedImage" alt="{{ produit.name }}" class="main-image img-fluid" />
+            <div class="main-media-container mb-4">
+                <img *ngIf="selectedMediaType === 'image'" [src]="selectedImage" alt="{{ produit.name }}"
+                    class="main-image img-fluid" />
+                <video *ngIf="selectedMediaType === 'video'" [src]="selectedVideo" controls
+                    class="main-video img-fluid"></video>
             </div>
             <div class="thumbnails-container d-flex justify-content-center gap-2 mb-5">
                 <img *ngFor="let image of produit.images" [src]="image" alt="{{ produit.name }}" class="thumbnail-image"
                     (click)="selectImage(image)" [class.active]="image === selectedImage" />
+                <video *ngFor="let video of produit.videos" [src]="video" class="thumbnail-video"
+                    (click)="selectVideo(video)" [class.active]="video === selectedVideo"></video>
             </div>
         </div>
 

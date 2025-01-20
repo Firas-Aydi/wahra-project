@@ -17,6 +17,9 @@ export class ProduitdetailComponent {
   pierresUniques: Map<string, Pierre> = new Map();
 
   selectedImage: string = '';
+  selectedVideo: string = '';
+  selectedMediaType: 'image' | 'video' = 'image'; // Pour gérer le type de média actuellement affiché
+
   quantity: number = 1;
   quantityError: string | null = null;
 
@@ -41,6 +44,7 @@ export class ProduitdetailComponent {
           if (data) {
             this.produit = data;
             this.selectedImage = this.produit.images[0];
+            this.selectedMediaType = 'image'; // Par défaut, affiche la première image
             if (this.produit.pierreId && this.produit.pierreId.length > 0) {
               this.loadPierresDetails(this.produit.pierreId);
             }
@@ -85,8 +89,13 @@ export class ProduitdetailComponent {
 
   selectImage(image: string) {
     this.selectedImage = image;
+    this.selectedMediaType = 'image';
   }
-
+  selectVideo(video: string) {
+    this.selectedVideo = video;
+    this.selectedMediaType = 'video';
+  }
+  
   addToCart(produit: Produit, quantity: number) {
     if (produit && quantity > 0) {
       this.cartService.addToCart(produit, quantity);

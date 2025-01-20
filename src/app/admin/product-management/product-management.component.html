@@ -35,7 +35,7 @@
               </select>
             </div>
 
-            <div class="col-md-6 mb-3">
+            <div class="col-md-4 mb-3">
               <label for="productImage">Images:</label>
               <input type="file" id="productImage" class="form-control" multiple (change)="onFileChange($event)" />
 
@@ -56,10 +56,27 @@
               <!-- Indicateur de téléchargement -->
               <div *ngIf="isUploading" class="text-success mt-2">Téléchargement en cours...</div>
             </div>
+            <div class="col-md-4 mb-3">
+              <label for="productVideos">Vidéos:</label>
+              <input type="file" id="productVideos" class="form-control" accept="video/*" multiple
+                (change)="onVideoFileChange($event)" />
+
+              <!-- Aperçus des vidéos existantes -->
+              <div *ngIf="selectedVideoPreviews.length > 0" class="selected-videos-container">
+                <div *ngFor="let videoPreview of selectedVideoPreviews; let i = index" class="position-relative">
+                  <video [src]="videoPreview" controls class="video-thumbnail"></video>
+                  <button type="button" class="btn btn-danger badge position-absolute"                  (click)="removeSelectedVideo(i)"
+                    style="width: 20px; height: 20px; padding: 0; border-radius: 50%; align-items: center; justify-content: center; top: 0; right: 0;">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+              </div>
+
+            </div>
 
 
 
-            <div class="col-md-6 mb-3">
+            <div class="col-md-4 mb-3">
               <label>Description:</label>
               <textarea class="form-control" formControlName="description" placeholder="Description"></textarea>
             </div>
@@ -107,6 +124,12 @@
             width="50" height="50" />
         </ng-container>
         <ng-template #noImage>Aucune image</ng-template>
+        <ng-container *ngIf="produit.videos?.length; else noVideo">
+          <video *ngFor="let video of produit.videos" [src]="video" alt="Vidéo" class="img-fluid img-thumbnail"
+            style="width: 50px;"></video>
+
+        </ng-container>
+        <ng-template #noVideo></ng-template>
       </td>
       <td>
         <button (click)="editProduit(i)">Modifier</button>

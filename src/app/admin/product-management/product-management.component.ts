@@ -31,6 +31,9 @@ export class ProductManagementComponent implements OnInit {
   showConfirmationModal: boolean = false;
   productToDeleteId: string | null = null;
 
+  selectedVideoPreviews: string[] = [];
+  selectedVideoFiles: File[] = [];
+
   constructor(
     private productService: ProductService,
     private sousCategorieService: SousCategorieService,
@@ -45,6 +48,7 @@ export class ProductManagementComponent implements OnInit {
       sousCategoryId: ['', Validators.required],
       pierreId: [''],
       images: [[]],
+      videos: [[]],
     });
   }
 
@@ -87,8 +91,8 @@ export class ProductManagementComponent implements OnInit {
   //   return pierreIds.map(id => this.pierres.find(p => p.id === id)?.name || 'Aucune pierre').join(', ');
   // }
   getPierreNames(pierreIds: string[] | null): string {
-    if (!pierreIds || !Array.isArray(pierreIds)) { 
-      return 'Aucune pierre'; 
+    if (!pierreIds || !Array.isArray(pierreIds)) {
+      return 'Aucune pierre';
     }
     return pierreIds.map(id => this.pierres.find(p => p.id === id)?.name || 'Aucune pierre').join(', ');
   }
@@ -137,13 +141,18 @@ export class ProductManagementComponent implements OnInit {
       const produitId = this.editingIndex === null
         ? this.productService.generateId()
         : this.produits[this.editingIndex].id;
-  
+
       const newImages = await this.uploadFiles(produitId);
+      const newVideos = await this.uploadVideoFiles(produitId); // Upload des vidéos
+
       const existingImages = this.editingIndex !== null ? this.produits[this.editingIndex].images || [] : [];
+      const existingVideos = this.editingIndex !== null ? this.produits[this.editingIndex].videos || [] : [];
+
       const images = [...existingImages, ...newImages];
-  
-      const produit: Produit = { ...this.form.value, id: produitId, images };
-  
+      const videos = [...existingVideos, ...newVideos]; // Combinez les vidéos existantes et nouvelles
+
+      const produit: Produit = { ...this.form.value, id: produitId, images, videos };
+
       if (this.editingIndex === null) {
         this.productService.addProduit(produit).then(() => this.resetForm());
       } else {
@@ -153,12 +162,14 @@ export class ProductManagementComponent implements OnInit {
   }
 
 
+
   editProduit(index: number): void {
     this.editingIndex = index;
     const produit = this.produits[index];
     this.form.patchValue({ ...produit, pierreId: produit.pierreId || [] }); // Assurez-vous d'envoyer un tableau
     this.selectedFiles = [];
     this.selectedImagePreviews = [...(produit.images || [])];
+    this.selectedVideoPreviews = [...(produit.videos || [])];
   }
 
 
@@ -170,6 +181,8 @@ export class ProductManagementComponent implements OnInit {
     this.form.reset();
     this.selectedFiles = [];
     this.editingIndex = null;
+    this.selectedVideoPreviews = [];
+    this.selectedVideoFiles= [];
     this.loadProduits();
     this.selectedImagePreviews = [];
   }
@@ -191,6 +204,47 @@ export class ProductManagementComponent implements OnInit {
         this.closeConfirmationModal();
       });
     }
+  }
+
+
+
+  onVideoFileChange(event: any): void {
+    const files: FileList = event.target.files;
+    this.selectedVideoFiles = Array.from(files);
+
+    // Générez les URLs de prévisualisation pour les vidéos
+    this.selectedVideoPreviews = [];
+    for (const file of this.selectedVideoFiles) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.selectedVideoPreviews.push(e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  removeSelectedVideo(index: number): void {
+    if (this.editingIndex !== null) {
+      this.produits[this.editingIndex].videos.splice(index, 1);
+      this.selectedVideoPreviews.splice(index, 1);
+    }
+  }
+
+  async uploadVideoFiles(produitId: string): Promise<string[]> {
+    this.isUploading = true;
+    const urls: string[] = [];
+    for (const file of this.selectedVideoFiles) {
+      const url = await new Promise<string>((resolve) =>
+        this.productService
+          .uploadImage(file, produitId) // Utilisez la même logique que pour les images
+          .subscribe((downloadUrl) => {
+            resolve(downloadUrl);
+          })
+      );
+      urls.push(url);
+    }
+    this.isUploading = false;
+    return urls;
   }
 
 }
