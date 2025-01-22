@@ -146,7 +146,7 @@
                                 être entre 8h et 17h.</span>
                         </div> -->
                         <label for="appointmentTime" class="form-label">Heure du rendez-vous</label>
-                        <select id="appointmentTime" class="form-control" formControlName="appointmentTime">
+                        <select id="appointmentTime" class="form-control form-select" formControlName="appointmentTime">
                             <option *ngFor="let hour of hours" [value]="hour">{{ hour }}</option>
                         </select>
 

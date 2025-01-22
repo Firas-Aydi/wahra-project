@@ -23,11 +23,15 @@ import { ConsultationComponent } from './consultation/consultation.component';
 import { ConsultationManagementComponent } from './admin/consultation-management/consultation-management.component';
 import { NewsManagementComponent } from './admin/news-management/news-management.component';
 import { UniquePiecesManagementComponent } from './admin/unique-pieces-management/unique-pieces-management.component';
+import { NewsComponent } from './news/news.component';
+import { PieceUniqueComponent } from './piece-unique/piece-unique.component';
+import { PieceUniqueDetailComponent } from './piece-unique-detail/piece-unique-detail.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
+  { path: 'news', component: NewsComponent },
   { path: 'consultation', component: ConsultationComponent },
   
   { path: 'manageAmbre', component: manageAmbreComponent },
@@ -42,6 +46,9 @@ const routes: Routes = [
   { path: 'products/:id', component: ProduitdetailComponent },
   { path: 'pierredetail/:id', component: PierredetailComponent },
   
+  { path: 'unique-pieces/:id', component: PieceUniqueDetailComponent },
+  { path: 'unique-pieces', component: PieceUniqueComponent },
+
   { path: 'cart', component: CartComponent },
   { path: 'commande', component: CommandeComponent },
   { path: 'search/:term', component: SearchResultComponent },

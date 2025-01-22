@@ -29,28 +29,90 @@
 <section class="banner">
   <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
+      <!-- Image 1 -->
       <div class="carousel-item active">
-        <img src="assets/Bracelets en Pierre.jpg" class="d-block w-100" alt="Pack Karina">
+        <img src="assets/Bracelets en Pierre.jpg" class="d-block w-100" alt="Bracelets en Pierre">
       </div>
+      <!-- Image 2 -->
       <div class="carousel-item">
-        <img src="assets/pierre2.jpg" class="d-block w-100" alt="Pack Karina">
+        <img src="assets/pierre2.jpg" class="d-block w-100" alt="Pierre Naturelle">
+      </div>
+      <!-- Vidéo -->
+      <div class="carousel-item">
+        <video class="d-block w-100 h-100" autoplay loop muted>
+          <source src="assets/wahra2.mp4" type="video/mp4">
+          Votre navigateur ne supporte pas la lecture des vidéos.
+        </video>
       </div>
     </div>
-    <!-- <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      </button> -->
+
+    <!-- Navigation -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#bannerCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Précédent</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#bannerCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Suivant</span>
+    </button>
+
+    <!-- Bouton de défilement -->
     <a (click)="scrollToSection()" class="scroll-down">
       <i class="fas fa-chevron-down"></i>
     </a>
   </div>
 </section>
 
+<div class="container mt-5 mb-5">
+  <div *ngIf="uniquePieces.length > 0">
+    <h3 class="sous-categorie-title text-center" style="font-family: 'Poppins', sans-serif;">
+      Nos Pièces Uniques
+    </h3>
+
+    <div class="cards-container d-flex flex-wrap justify-content-center">
+      <div class="card unique-piece-card position-relative m-3 shadow" *ngFor="let produit of uniquePieces"
+        (click)="viewUniquePieceDetails(produit.id)">
+        <!-- Badge Stock -->
+        <span class="badge position-absolute card-badge">
+          {{ produit.name }}
+        </span>
+        <!-- Image -->
+        <img [src]="produit.images[0]" class="card-img-top" [alt]="produit.name" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="Description text-white d-flex align-items-center justify-content-center text-center">
+  <!-- Texte sur toute la largeur -->
+  <div class="content-container p-4 ">
+    <h1 class="mb-4" style="font-family: 'Poppins'; font-size: 2.5rem;">
+      Un mélange parfait entre bijouterie et lithothérapie
+    </h1>
+    <p class="fs-5 mx-auto" style="max-width: 100%; font-family: 'Poppins'; line-height: 1.6; font-size: 20px; font-weight: 400;">
+      À travers son savoir-faire, l'Atelier Jeppeto met à l'honneur les bijoux en pierres naturelles.
+      <br><br>
+      Spécialiste du bracelet en pierre naturelle depuis 2018, l'atelier propose une gamme de bracelets classiques en pierres 6mm ainsi qu'une gamme de luxe 8mm.
+      <br><br>
+      Qu'ils soient destinés aux hommes ou aux femmes, tous nos bracelets, bagues et pendentifs en pierres sont disponibles en plusieurs tailles afin de s'adapter et répondre parfaitement à vos attentes.
+      <br><br>
+      Nous sélectionnons uniquement des pierres de qualité supérieure provenant des quatre coins du monde, notamment des États-Unis et du Brésil. Certains de nos minéraux sont aussi issus de gisements spécifiques comme le lapis-lazuli d'Afghanistan ou le larimar de République dominicaine.
+      <br><br>
+      Chaque bijou est soigneusement assemblé à la main dans notre Atelier Provençal, présenté dans un écrin élégant et accompagné de sa carte descriptive.
+      <br><br>
+      Que vous soyez à la recherche d'un bracelet en pierre naturelle de qualité afin de profiter de ses vertus en lithothérapie ou simplement à la recherche d'un bracelet durable, au design sobre et élégant et aux couleurs éclatantes, l'Atelier Jeppeto est là pour vous aider à trouver le bracelet parfait.
+      <br><br>
+      <strong>Alors, prêt pour l'aventure ?</strong>
+    </p>
+  </div>
+</div>
+
+
+
+
 <div id="scroll" class="container mt-5">
   <div *ngFor="let sousCategorie of sousCategories" class="mb-5">
-    <h3 class="sous-categorie-title">{{ sousCategorie.name }}</h3>
+    <h3 class="sous-categorie-title text-center" style="font-family: 'Poppins';">{{ sousCategorie.name }}</h3>
     <div class="carousel-container position-relative">
       <div class="d-flex justify-content-center">
         <div class="card mx-2" *ngFor="let produit of getVisibleProducts(sousCategorie.id)"

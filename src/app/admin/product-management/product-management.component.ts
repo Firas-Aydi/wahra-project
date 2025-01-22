@@ -46,6 +46,7 @@ export class ProductManagementComponent implements OnInit {
       price: [0, [Validators.required, Validators.min(0)]],
       stock: [0, [Validators.required, Validators.min(0)]],
       sousCategoryId: ['', Validators.required],
+      categoryId: [''],
       pierreId: [''],
       images: [[]],
       videos: [[]],
@@ -141,18 +142,25 @@ export class ProductManagementComponent implements OnInit {
       const produitId = this.editingIndex === null
         ? this.productService.generateId()
         : this.produits[this.editingIndex].id;
-
+  
       const newImages = await this.uploadFiles(produitId);
-      const newVideos = await this.uploadVideoFiles(produitId); // Upload des vidéos
-
+      const newVideos = await this.uploadVideoFiles(produitId);
+  
       const existingImages = this.editingIndex !== null ? this.produits[this.editingIndex].images || [] : [];
       const existingVideos = this.editingIndex !== null ? this.produits[this.editingIndex].videos || [] : [];
-
+  
       const images = [...existingImages, ...newImages];
-      const videos = [...existingVideos, ...newVideos]; // Combinez les vidéos existantes et nouvelles
-
-      const produit: Produit = { ...this.form.value, id: produitId, images, videos };
-
+      const videos = [...existingVideos, ...newVideos];
+  
+      const produit: Produit = {
+        ...this.form.value,
+        id: produitId,
+        images,
+        videos,
+        createdAt: this.editingIndex === null ? new Date() : this.produits[this.editingIndex].createdAt,
+        updatedAt: new Date()
+      };
+  
       if (this.editingIndex === null) {
         this.productService.addProduit(produit).then(() => this.resetForm());
       } else {
@@ -160,9 +168,7 @@ export class ProductManagementComponent implements OnInit {
       }
     }
   }
-
-
-
+  
   editProduit(index: number): void {
     this.editingIndex = index;
     const produit = this.produits[index];
@@ -246,5 +252,11 @@ export class ProductManagementComponent implements OnInit {
     this.isUploading = false;
     return urls;
   }
-
+  toggleNouveautes(event: Event): void {
+    const isChecked = (event.target as HTMLInputElement).checked;
+    this.form.patchValue({
+      categoryId: isChecked ? 'xTbMiPrHVtXUZoNUAd6H' : ''
+    });
+  }
+  
 }

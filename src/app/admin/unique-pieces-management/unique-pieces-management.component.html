@@ -1,1 +1,158 @@
-<p>unique-pieces-management works!</p>
+<div class="container">
+    <h2>Gestion des Pièces Uniques</h2>
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-0 shadow p-4">
+                <!-- Formulaire de gestion -->
+                <form [formGroup]="form" (ngSubmit)="addProduit()">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label>Nom:</label>
+                            <input class="form-control" formControlName="name" placeholder="Nom du produit" />
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label>Prix:</label>
+                            <input type="number" class="form-control" formControlName="price" />
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label>Stock:</label>
+                            <input type="number" class="form-control" formControlName="stock" />
+                        </div>
+
+
+                        <div class="col-md-4 mb-3">
+                            <label>Pierres associées:</label>
+                            <select class="form-select" formControlName="pierreId" multiple>
+                                <option [value]=""></option>
+                                <option *ngFor="let pierre of pierres" [value]="pierre.id">{{ pierre.name }}</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label>Description:</label>
+                            <textarea class="form-control" formControlName="description"
+                                placeholder="Description"></textarea>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="productImage">Images:</label>
+                            <input type="file" id="productImage" class="form-control" multiple
+                                (change)="onFileChange($event)" />
+
+                            <!-- Aperçus des images existantes -->
+                            <div *ngIf="selectedImagePreviews.length > 0" class="mt-3">
+                                <div style="display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px;">
+                                    <div *ngFor="let imagePreview of selectedImagePreviews; let i = index"
+                                        class="position-relative">
+                                        <img [src]="imagePreview" alt="Aperçu" class="img-fluid img-thumbnail" />
+                                        <button type="button" class="btn btn-danger badge position-absolute"
+                                            (click)="removeSelectedImage(i)"
+                                            style="width: 20px; height: 20px; padding: 0; border-radius: 50%; align-items: center; justify-content: center; top: 0; right: 0;">
+                                            <i class="fa-solid fa-xmark"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Indicateur de téléchargement -->
+                            <div *ngIf="isUploading" class="text-success mt-2">Téléchargement en cours...</div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="productVideos">Vidéos:</label>
+                            <input type="file" id="productVideos" class="form-control" accept="video/*" multiple
+                                (change)="onVideoFileChange($event)" />
+
+                            <!-- Aperçus des vidéos existantes -->
+                            <div *ngIf="selectedVideoPreviews.length > 0" class="selected-videos-container">
+                                <div *ngFor="let videoPreview of selectedVideoPreviews; let i = index"
+                                    class="position-relative">
+                                    <video [src]="videoPreview" controls class="video-thumbnail"></video>
+                                    <button type="button" class="btn btn-danger badge position-absolute"
+                                        (click)="removeSelectedVideo(i)"
+                                        style="width: 20px; height: 20px; padding: 0; border-radius: 50%; align-items: center; justify-content: center; top: 0; right: 0;">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary me-2" [disabled]="form.invalid || isUploading">
+                                {{ editingIndex === null ? 'Ajouter' : 'Enregistrer' }}
+                            </button>
+                            <button type="button" class="btn btn-secondary" (click)="resetForm()">Annuler</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tableau des produits -->
+<table>
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Description</th>
+            <th>Prix</th>
+            <th>Stock</th>
+            <th>Pierre associée</th>
+            <th>Images</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let produit of uniquePieces; let i = index">
+            <td>{{ produit.name }}</td>
+            <td>{{ produit.description }}</td>
+            <td>{{ produit.price | currency:'DT'}}</td>
+            <td>{{ produit.stock }}</td>
+            <td>{{ produit.pierreId ? getPierreNames(produit.pierreId) : 'Aucune pierre' }}</td>
+            <td>
+                <ng-container *ngIf="produit.images?.length; else noImage">
+                    <img *ngFor="let image of produit.images" [src]="image" alt="Image"
+                        class="img-fluid img-thumbnail me-2" width="50" height="50" />
+                </ng-container>
+                <ng-template #noImage>Aucune image</ng-template>
+                <ng-container *ngIf="produit.videos?.length; else noVideo">
+                    <video *ngFor="let video of produit.videos" [src]="video" alt="Vidéo"
+                        class="img-fluid img-thumbnail me-2" width="50"></video>
+                </ng-container>
+                <ng-template #noVideo></ng-template>
+            </td>
+            <td>
+                <button (click)="editProduit(i)"><i class="fa-solid fa-pen" style="font-size: 12px;"></i></button>
+                <button (click)="openConfirmationModal(produit.id)"><i class="fa-regular fa-trash-can"
+                        style="font-size: 12px;"></i></button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="modal" [class.show]="showConfirmationModal" tabindex="-1" style="display: block;"
+    *ngIf="showConfirmationModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmation</h5>
+                <button type="button" class="btn-close" (click)="closeConfirmationModal()"></button>
+            </div>
+            <div class="modal-body">
+                <p>Êtes-vous sûr de vouloir supprimer ce produit ? Cette action est irréversible.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeConfirmationModal()">Annuler</button>
+                <button type="button" class="btn btn-danger" (click)="confirmDelete()">Confirmer</button>
+            </div>
+        </div>
+    </div>
+</div>

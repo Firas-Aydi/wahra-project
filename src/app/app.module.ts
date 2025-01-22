@@ -26,6 +26,9 @@ import { SearchResultComponent } from './search-result/search-result.component';
 import { ConsultationComponent } from './consultation/consultation.component';
 import { NewsManagementComponent } from './admin/news-management/news-management.component';
 import { UniquePiecesManagementComponent } from './admin/unique-pieces-management/unique-pieces-management.component';
+import { NewsComponent } from './news/news.component';
+import { PieceUniqueComponent } from './piece-unique/piece-unique.component';
+import { PieceUniqueDetailComponent } from './piece-unique-detail/piece-unique-detail.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +50,10 @@ import { UniquePiecesManagementComponent } from './admin/unique-pieces-managemen
     SearchResultComponent,
     ConsultationComponent,
     NewsManagementComponent,
-    UniquePiecesManagementComponent
+    UniquePiecesManagementComponent,
+    NewsComponent,
+    PieceUniqueComponent,
+    PieceUniqueDetailComponent
   ],
   imports: [
     BrowserModule,

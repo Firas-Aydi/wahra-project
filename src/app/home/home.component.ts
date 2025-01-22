@@ -4,6 +4,8 @@ import { ProductService } from '../services/produit.service';
 import { SousCategorie } from '../model/sous-categorie';
 import { Produit } from '../model/produit';
 import { Router } from '@angular/router';
+import { UniquePieceService } from '../services/unique-piece.service';
+import { UniquePiece } from '../model/unique-piece';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +14,7 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
   sousCategories: SousCategorie[] = [];
-  // produitsParSousCategorie: SousCategorie[] = [];
+  uniquePieces: UniquePiece[] = [];
   groupedProducts: { [key: string]: Produit[] } = {};
   currentIndex: { [key: string]: number } = {};
   visibleProducts = 5;
@@ -20,11 +22,13 @@ export class HomeComponent implements OnInit {
   constructor(
     private sousCategorieService: SousCategorieService,
     private productService: ProductService,
+    private uniquePieceService: UniquePieceService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadSousCategoriesWithProducts();
+    this.loadUniquePieces();
     this.updateVisibleProducts();
   }
 
@@ -47,7 +51,17 @@ export class HomeComponent implements OnInit {
       this.visibleProducts = 5; // 5 produits par ligne sur bureau
     }
   }
-  
+
+  loadUniquePieces(): void {
+    this.uniquePieceService.getAllUniquePieces().subscribe(
+      (pieces) => {
+        this.uniquePieces = pieces;
+      },
+      (error) => {
+        console.error('Error loading unique pieces:', error);
+      }
+    );
+  }
 
   loadSousCategoriesWithProducts(): void {
     this.sousCategorieService.getSousCategories().subscribe((sousCategories) => {
@@ -99,6 +113,16 @@ export class HomeComponent implements OnInit {
       );
     }
   }
+  viewUniquePieceDetails(produitId: string | undefined) {
+    if (produitId) {
+      this.router.navigate(['/unique-pieces', produitId]);
+    } else {
+      console.error(
+        'produit ID is undefined. Cannot navigate to produit details.'
+      );
+    }
+  }
+  
   scrollToSection(): void {
     // Descend la page de manière douce jusqu'à une section spécifique
     const targetElement = document.getElementById('scroll'); // ID de la section cible

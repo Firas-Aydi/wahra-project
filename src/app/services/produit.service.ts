@@ -45,6 +45,14 @@ export class ProductService {
       .valueChanges({ idField: 'id' });
   }
   
+  getNouveautes(): Observable<Produit[]> {
+    return this.firestore
+      .collection<Produit>(this.collectionName, ref =>
+        ref.where('categoryId', '==', 'xTbMiPrHVtXUZoNUAd6H')
+      )
+      .valueChanges({ idField: 'id' });
+  }
+  
   addProduit(produit: Produit): Promise<void> {
     const id = this.generateId()
     produit.id = id;

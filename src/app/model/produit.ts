@@ -4,9 +4,10 @@ export interface Produit {
   description: string;
   price: number;
   stock: number;
-  images: string[]; // Liste des URLs des images
-  videos: string[]; // Liste des URLs des vidéos
+  images: string[];
+  videos: string[];
   sousCategoryId: string;
+  categoryId?: string; // Peut inclure la valeur pour Nouveautés
   pierreId?: string[];
   createdAt: Date;
   updatedAt: Date;

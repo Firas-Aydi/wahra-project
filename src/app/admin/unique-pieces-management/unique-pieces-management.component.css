@@ -1,0 +1,223 @@
+/* Conteneur principal */
+.container {
+    margin: 20px auto;
+    max-width: 1200px; 
+  }
+  
+  /* Titre principal */
+  .container h2 {
+    text-align: center;
+    color: #333;
+    font-size: 2rem;
+    /* margin-bottom: 20px; */
+    font-weight: 600;
+  }
+  
+  /* Carte pour le formulaire */
+  .card {
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card h4 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  .img-thumbnail {
+    border-radius: 10px;
+    max-width: 100px;
+    margin: 5px;
+  }
+  /* Labels des champs */
+  form label {
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 5px;
+    display: block; /* Pour garantir une bonne séparation */
+  }
+  
+  /* Champs de formulaire */
+  form input[type="text"],
+  form input[type="file"],
+  form select,
+  form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    width: 100%;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  
+  form input:focus,
+  form select:focus,
+  form textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+    outline: none;
+  }
+  
+  form textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  /* Boutons du formulaire */
+  form button {
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  form .btn-primary {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  form .btn-primary:hover:not(:disabled) {
+    background-color: #0056b3;
+    transform: scale(1.02);
+  }
+  
+  form .btn-secondary {
+    background-color: #6c757d;
+    color: white;
+  }
+  
+  form .btn-secondary:hover {
+    background-color: #5a6268;
+  }
+  
+  /* Texte d'indication */
+  .text-success {
+    font-size: 0.9rem;
+    margin-top: 5px;
+    display: block;
+  }
+  
+  /* Tableau des pierres */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  table thead {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  table th,
+  table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  
+  table tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  table img{
+    border-radius: 4px;
+    max-height: 50px;
+  }
+  
+  /* Boutons d'action dans le tableau */
+  table button {
+    padding: 5px 10px;
+    margin: 1px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s;
+  }
+  
+  table button:first-child {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  table button:first-child:hover {
+    background-color: #0056b3;
+  }
+  
+  table button:last-child {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  table button:last-child:hover {
+    background-color: #c82333;
+  }
+  
+  /* Style responsive pour le tableau */
+  @media (max-width: 768px) {
+    table {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+  }
+  
+  
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1050;
+  }
+  
+  .modal-dialog {
+    max-width: 500px;
+    margin: auto;
+  }
+  
+  .modal.show {
+    display: flex;
+  }
+  
+  
+  /* Conteneur des vidéos */
+  .selected-videos-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  /* Miniatures des vidéos */
+  .selected-videos-container video {
+    max-width: 130px;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .selected-videos-container video {
+      max-width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+  
