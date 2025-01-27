@@ -26,11 +26,14 @@ import { UniquePiecesManagementComponent } from './admin/unique-pieces-managemen
 import { NewsComponent } from './news/news.component';
 import { PieceUniqueComponent } from './piece-unique/piece-unique.component';
 import { PieceUniqueDetailComponent } from './piece-unique-detail/piece-unique-detail.component';
+import { ProposComponent } from './propos/propos.component';
+import { AvisManagementComponent } from './admin/avis-management/avis-management.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomeComponent },
+  { path: 'propos', component: ProposComponent },
   { path: 'news', component: NewsComponent },
   { path: 'consultation', component: ConsultationComponent },
   
@@ -62,6 +65,7 @@ const routes: Routes = [
   { path: 'consultations-management', component: ConsultationManagementComponent },
   { path: 'news-management', component: NewsManagementComponent },
   { path: 'unique-pieces-management', component: UniquePiecesManagementComponent },
+  { path: 'avis-management', component: AvisManagementComponent },
   
 ];
 

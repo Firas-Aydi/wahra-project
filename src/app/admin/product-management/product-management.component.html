@@ -4,7 +4,7 @@
     <div class="col-12">
       <div class="card border-0 shadow p-4">
         <!-- Formulaire de gestion -->
-        <form [formGroup]="form" (ngSubmit)="addProduit()">
+        <form [formGroup]="form" (ngSubmit)="saveForm()">
           <div class="row">
             <div class="col-md-4 mb-3">
               <label>Nom:</label>
@@ -42,15 +42,14 @@
 
             <div class="col-md-4 mb-3">
               <label for="productImage">Images:</label>
-              <input type="file" id="productImage" class="form-control" multiple (change)="onFileChange($event)" />
-
+              <input type="file" class="form-control" (change)="onFileSelected($event)" id="productImage"
+                accept="image/*" multiple />
               <!-- Aperçus des images existantes -->
-              <div *ngIf="selectedImagePreviews.length > 0" class="mt-3">
+              <div class="mt-3">
                 <div style="display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px;">
-                  <div *ngFor="let imagePreview of selectedImagePreviews; let i = index" class="position-relative">
-                    <img [src]="imagePreview" alt="Aperçu" class="img-fluid img-thumbnail" />
-                    <button type="button" class="btn btn-danger badge position-absolute"
-                      (click)="removeSelectedImage(i)"
+                  <div *ngFor="let img of form.get('images')?.value" class="position-relative">
+                    <img [src]="img" alt="Aperçu" class="img-fluid img-thumbnail" />
+                    <button type="button" class="btn btn-danger badge position-absolute" (click)="removeImage(img)"
                       style="width: 20px; height: 20px; padding: 0; border-radius: 50%; align-items: center; justify-content: center; top: 0; right: 0;">
                       <i class="fa-solid fa-xmark"></i>
                     </button>
@@ -58,46 +57,43 @@
                 </div>
               </div>
 
-              <!-- Indicateur de téléchargement -->
-              <div *ngIf="isUploading" class="text-success mt-2">Téléchargement en cours...</div>
             </div>
+
             <div class="col-md-4 mb-3">
               <label for="productVideos">Vidéos:</label>
               <input type="file" id="productVideos" class="form-control" accept="video/*" multiple
                 (change)="onVideoFileChange($event)" />
 
               <!-- Aperçus des vidéos existantes -->
-              <div *ngIf="selectedVideoPreviews.length > 0" class="selected-videos-container">
-                <div *ngFor="let videoPreview of selectedVideoPreviews; let i = index" class="position-relative">
-                  <video [src]="videoPreview" controls class="video-thumbnail"></video>
-                  <button type="button" class="btn btn-danger badge position-absolute" (click)="removeSelectedVideo(i)"
+              <div class="selected-videos-container">
+                <div *ngFor="let vid of form.get('videos')?.value" class="position-relative">
+                  <video [src]="vid" controls class="video-thumbnail"></video>
+                  <button type="button" class="btn btn-danger badge position-absolute"
+                    (click)="removeSelectedVideo(vid)"
                     style="width: 20px; height: 20px; padding: 0; border-radius: 50%; align-items: center; justify-content: center; top: 0; right: 0;">
                     <i class="fa-solid fa-xmark"></i>
                   </button>
                 </div>
               </div>
-
             </div>
             <!-- Catégorie -->
             <div class="col-md-4 mb-3">
               <label for="categoryId">Nouveauté:</label>
               <div>
-                <input
-                  id="categoryId"
-                  type="checkbox"
-                  [checked]="form.value.categoryId === 'xTbMiPrHVtXUZoNUAd6H'"
-                  (change)="toggleNouveautes($event)"
-                />
+                <input id="categoryId" type="checkbox" [checked]="form.value.categoryId === 'xTbMiPrHVtXUZoNUAd6H'"
+                  (change)="toggleNouveautes($event)" />
                 Nouveau
               </div>
             </div>
-            
+
           </div>
 
 
 
 
           <div class="row">
+            <!-- Indicateur de téléchargement -->
+            <div *ngIf="isUploading" class="text-success mt-2">Téléchargement en cours...</div>
             <div class="col-12 d-flex justify-content-center">
               <button type="submit" class="btn btn-primary me-2" [disabled]="form.invalid || isUploading">
                 {{ editingIndex === null ? 'Ajouter' : 'Enregistrer' }}
@@ -148,7 +144,8 @@
       </td>
       <td>
         <button (click)="editProduit(i)"><i class="fa-solid fa-pen" style="font-size: 12px;"></i></button>
-        <button (click)="openConfirmationModal(produit.id)"><i class="fa-regular fa-trash-can" style="font-size: 12px;"></i></button>
+        <button (click)="openConfirmationModal(produit.id)"><i class="fa-regular fa-trash-can"
+            style="font-size: 12px;"></i></button>
       </td>
     </tr>
   </tbody>

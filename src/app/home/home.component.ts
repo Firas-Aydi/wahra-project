@@ -103,7 +103,33 @@ export class HomeComponent implements OnInit {
       this.currentIndex[sousCategoryId]++;
     }
   }
-
+  // prevSlide(sousCategoryId: string): void {
+  //   if (this.currentIndex[sousCategoryId] > 0) {
+  //     this.currentIndex[sousCategoryId]--;
+  //     this.animateCarousel(sousCategoryId);
+  //   }
+  // }
+  
+  // nextSlide(sousCategoryId: string): void {
+  //   const maxIndex =
+  //     (this.groupedProducts[sousCategoryId]?.length || 0) - this.visibleProducts;
+  //   if (this.currentIndex[sousCategoryId] < maxIndex) {
+  //     this.currentIndex[sousCategoryId]++;
+  //     this.animateCarousel(sousCategoryId);
+  //   }
+  // }
+  
+  // animateCarousel(sousCategoryId: string): void {
+  //   const container = document.querySelector(
+  //     `.carousel-container[data-category-id="${sousCategoryId}"] .d-flex`
+  //   ) as HTMLElement;
+  
+  //   if (container) {
+  //     const itemWidth = container.querySelector('.card')?.clientWidth || 0; // Largeur d'un produit
+  //     const offset = -this.currentIndex[sousCategoryId] * (itemWidth - 180); // 16 = margin entre cartes
+  //     container.style.transform = `translateX(${offset}px)`;
+  //   }
+  // }
   viewProductDetails(produitId: string | undefined): void {
     if (produitId) {
       this.router.navigate(['/products', produitId]);

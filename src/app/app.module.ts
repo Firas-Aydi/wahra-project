@@ -29,6 +29,7 @@ import { UniquePiecesManagementComponent } from './admin/unique-pieces-managemen
 import { NewsComponent } from './news/news.component';
 import { PieceUniqueComponent } from './piece-unique/piece-unique.component';
 import { PieceUniqueDetailComponent } from './piece-unique-detail/piece-unique-detail.component';
+import { ProposComponent } from './propos/propos.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { PieceUniqueDetailComponent } from './piece-unique-detail/piece-unique-d
     UniquePiecesManagementComponent,
     NewsComponent,
     PieceUniqueComponent,
-    PieceUniqueDetailComponent
+    PieceUniqueDetailComponent,
+    ProposComponent
   ],
   imports: [
     BrowserModule,

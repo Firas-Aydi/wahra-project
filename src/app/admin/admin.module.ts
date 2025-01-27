@@ -11,6 +11,7 @@ import { StoneManagementComponent } from './stone-management/stone-management.co
 import { UserManagementComponent } from './user-management/user-management.component';
 import { CartManagementComponent } from './cart-management/cart-management.component';
 import { ConsultationManagementComponent } from './consultation-management/consultation-management.component';
+import { AvisManagementComponent } from './avis-management/avis-management.component';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { ConsultationManagementComponent } from './consultation-management/consu
     // SubCategoryManagementComponent,
     // StoneManagementComponent,
     UserManagementComponent,
+    AvisManagementComponent,
     // CartManagementComponent,
     // ConsultationManagementComponent
   ],

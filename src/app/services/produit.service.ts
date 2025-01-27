@@ -70,8 +70,8 @@ export class ProductService {
     return this.firestore.collection(this.collectionName).doc(id).delete();
   }
 
-  uploadImage(file: File, produitId: string): Observable<string> {
-    const filePath = `produits/${produitId}/${file.name}`;
+  uploadImage(file: File): Observable<string> {
+    const filePath = `produits/${file.name}`;
     const fileRef = this.storage.ref(filePath);
     const uploadTask = this.storage.upload(filePath, file);
 
@@ -86,12 +86,8 @@ export class ProductService {
       ).subscribe();
     });
   }
-  // searchProduits(term: string): Observable<Produit[]> {
-  //   return this.firestore
-  //     .collection<Produit>('produits', (ref) =>
-  //       ref.where('name', '>=', term).where('name', '<=', term + '\uf8ff')
-  //     )
-  //     .valueChanges();
-  // }
+  deleteImage(imageUrl: string): Promise<void> {
+    return this.storage.storage.refFromURL(imageUrl).delete();
+  }
   
 }

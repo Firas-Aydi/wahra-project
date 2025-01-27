@@ -1,0 +1,25 @@
+.container {
+  /* background-color: #fdfdfd; 
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;  */
+  padding: 30px; /* Espacement intérieur */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Légère ombre */
+}
+
+h3 {
+  font-weight: bolder;
+  font-size: 33px;
+  color: #b69e7c; /* Couleur dorée pour les titres */
+}
+
+p {
+  color: #333; /* Couleur du texte pour une meilleure lisibilité */
+}
+
+.text-justify {
+  text-align: justify; /* Justifie le texte */
+}
+
+b {
+  color: #a08662; /* Accent doré pour les mots importants */
+}

@@ -102,6 +102,10 @@
             <a (click)="closeDropdown()" class="sub-nav-link d-flex align-items-center me-3 ms-3"
               routerLink="/consultation">Consultation</a>
           </li>
+          <li class="nav-item dropdown position-relative" *ngIf="userType !== 'admin'">
+            <a (click)="closeDropdown()" class="sub-nav-link d-flex align-items-center me-3 ms-3" routerLink="/propos">À
+              propos de nous</a>
+          </li>
         </ng-container>
 
         <!-- Lien pour les administrateurs -->
@@ -125,6 +129,9 @@
         <li class="nav-item" *ngIf="isUser && userType === 'admin'">
           <a class="sub-nav-link d-flex align-items-center me-3 ms-3"
             routerLink="/consultations-management">Consultations</a>
+        </li>
+        <li class="nav-item" *ngIf="isUser && userType === 'admin'">
+          <a class="sub-nav-link d-flex align-items-center me-3 ms-3" routerLink="/avis-management">Avis</a>
         </li>
         <!-- <li class="nav-item" *ngIf="isUser && userType === 'admin'">
           <a class="sub-nav-link" routerLink="/users-management">Utilisateurs</a>
@@ -202,10 +209,13 @@
       <a (click)="closeDropdown()" class="nav-link" routerLink="/stones-management">Pierres</a>
     </li>
     <li class="nav-item" *ngIf="isUser && userType === 'admin'">
-      <a class="sub-nav-link" routerLink="/unique-pieces-management">Pièces Uniques</a>
+      <a (click)="closeDropdown()" class="nav-link" routerLink="/unique-pieces-management">Pièces Uniques</a>
     </li>
     <li class="nav-item" *ngIf="isUser && userType === 'admin'">
       <a (click)="closeDropdown()" class="nav-link" routerLink="/consultations-management">Consultations</a>
+    </li>
+    <li class="nav-item" *ngIf="isUser && userType === 'admin'">
+      <a (click)="closeDropdown()" class="nav-link" routerLink="/avis-management">Avis</a>
     </li>
   </ul>
 

@@ -197,7 +197,7 @@ p {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Couleur noire avec 50% d'opacité */
+  background-color: rgba(0, 0, 0, 0.3); /* Couleur noire avec 50% d'opacité */
   z-index: 1; /* Mettre cette couche en dessous du texte */
 }
 .Description * {
@@ -207,14 +207,38 @@ p {
 /* .content-container {
   max-width: 900px;
 } */
-
+.Avis {
+  background-image: url("src/assets/avis-img.jpg");
+  background-size: cover; /* S'assure que l'image remplit le conteneur */
+  background-position: center; /* Centre l'image d'arrière-plan */
+  /* background-repeat: no-repeat; */
+  /* height: 100vh;  */
+  width: 100%; /* Occupe toute la largeur */
+  margin: 0;
+  padding: 0;
+  position: relative; /* Permet d'assurer que le texte est bien positionné */
+}
+.Avis::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Couleur noire avec 50% d'opacité */
+  z-index: 1; /* Mettre cette couche en dessous du texte */
+}
+.Avis * {
+  position: relative;
+  z-index: 2; /* Assure que le contenu est au-dessus de l'overlay */
+}
 
 .cards-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px; /* Espacement entre les cartes */
-  /* justify-content: space-between;  */
+  gap: 20px; 
 }
+
 
 /* Carte */
 .card {
@@ -268,7 +292,11 @@ p {
   height: 100vh;
 }
 
-
+/* .carousel-container .d-flex {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  will-change: transform; 
+} */
 
 
 
@@ -336,13 +364,17 @@ p {
   padding: 15px;
 }
 .card-title {
-  font-size: 1rem;
-  line-height: 1.5rem;
+  font-size: 18px;
+  line-height: 1.2rem;
+  font-family: 'Poppins',sans-serif;
 }
 .card-price {
-  color: #bd4800;
+  color: #8a7455;
   font-size: 20px;
   font-family: "Fira Sans";
+}
+.card-body {
+  padding: 15px;
 }
 
 .carousel-container {

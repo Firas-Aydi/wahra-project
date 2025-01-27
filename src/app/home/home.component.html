@@ -65,7 +65,7 @@
 
 <div class="container mt-5 mb-5">
   <div *ngIf="uniquePieces.length > 0">
-    <h3 class="sous-categorie-title text-center" style="font-family: 'Poppins', sans-serif;">
+    <h3 class="sous-categorie-title text-center" style="font-family: 'Poppins';">
       Nos Pièces Uniques
     </h3>
 
@@ -73,11 +73,14 @@
       <div class="card unique-piece-card position-relative m-3 shadow" *ngFor="let produit of uniquePieces"
         (click)="viewUniquePieceDetails(produit.id)">
         <!-- Badge Stock -->
-        <span class="badge position-absolute card-badge">
+        <!-- <span class="badge position-absolute card-badge">
           {{ produit.name }}
-        </span>
+        </span> -->
         <!-- Image -->
         <img [src]="produit.images[0]" class="card-img-top" [alt]="produit.name" />
+        <div class="card-body">
+          <h5 class="card-title">{{ produit.name }}</h5>
+        </div>
       </div>
     </div>
   </div>
@@ -106,13 +109,20 @@
     </p>
   </div>
 </div>
-
+<div class="Avis text-white d-flex align-items-center justify-content-center text-center mt-5">
+  <!-- Texte sur toute la largeur -->
+  <div class="content-container p-4 ">
+    <h1 class="mb-4" style="font-family: 'Poppins'; font-size: 2.5rem;">
+      Les avis de nos clients
+    </h1>  
+</div>
+</div>
 
 
 
 <div id="scroll" class="container mt-5">
   <div *ngFor="let sousCategorie of sousCategories" class="mb-5">
-    <h3 class="sous-categorie-title text-center" style="font-family: 'Poppins';">{{ sousCategorie.name }}</h3>
+    <h3 class="sous-categorie-title text-center mb-4" style="font-family: 'Poppins';">{{ sousCategorie.name }}</h3>
     <div class="carousel-container position-relative">
       <div class="d-flex justify-content-center">
         <div class="card mx-2" *ngFor="let produit of getVisibleProducts(sousCategorie.id)"
@@ -125,7 +135,7 @@
           </span>
           <img [src]="produit.images[0]" class="card-img-top" [alt]="produit.name" />
           <div class="card-body">
-            <p class="card-price" style="color: #bd4800;">
+            <p class="card-price">
               {{ produit.price }} DT
             </p>
             <h5 class="card-title">{{ produit.name }}</h5>
@@ -149,3 +159,40 @@
     </p>
   </div>
 </div>
+
+
+<!-- <div id="scroll" class="container mt-5">
+  <div *ngFor="let sousCategorie of sousCategories" class="mb-5">
+    <h3 class="sous-categorie-title text-center mb-4" style="font-family: 'Poppins';">{{ sousCategorie.name }}</h3>
+    <div class="carousel-container position-relative" [attr.data-category-id]="sousCategorie.id">
+      <div class="d-flex">
+        <div class="card mx-2" *ngFor="let produit of getVisibleProducts(sousCategorie.id)"
+          (click)="viewProductDetails(produit.id)">
+          <span class="badge position-absolute p-2 text-light stock-badge" [ngClass]="{
+                  'bg-success': produit?.stock! > 0,
+                  'bg-danger': produit?.stock! === 0
+                }">
+            {{ produit?.stock! > 0 ? 'En stock' : 'En rupture' }}
+          </span>
+          <img [src]="produit.images[0]" class="card-img-top" [alt]="produit.name" />
+          <div class="card-body">
+            <p class="card-price">
+              {{ produit.price }} DT
+            </p>
+            <h5 class="card-title">{{ produit.name }}</h5>
+          </div>
+        </div>
+      </div>
+      <button (click)="prevSlide(sousCategorie.id)" class="carousel-control-prev"
+        [disabled]="currentIndex[sousCategorie.id] === 0">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button (click)="nextSlide(sousCategorie.id)" class="carousel-control-next"
+        [disabled]="currentIndex[sousCategorie.id] >= (groupedProducts[sousCategorie.id].length || 0) - visibleProducts">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+</div> -->

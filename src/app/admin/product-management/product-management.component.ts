@@ -10,6 +10,7 @@ import { ProductService } from 'src/app/services/produit.service';
 import { SousCategorieService } from 'src/app/services/sous-categorie.service';
 import { PierreService } from 'src/app/services/pierre.service';
 import { CommonModule } from '@angular/common';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-product-management',
@@ -27,6 +28,7 @@ export class ProductManagementComponent implements OnInit {
   editingIndex: number | null = null;
   isUploading = false;
 
+  selectedFile: File | null = null;
   selectedImagePreviews: string[] = [];
   showConfirmationModal: boolean = false;
   productToDeleteId: string | null = null;
@@ -97,78 +99,111 @@ export class ProductManagementComponent implements OnInit {
     }
     return pierreIds.map(id => this.pierres.find(p => p.id === id)?.name || 'Aucune pierre').join(', ');
   }
-  onFileChange(event: any) {
-    const files: FileList = event.target.files;
-    this.selectedFiles = Array.from(files);
+  // onFileChange(event: any) {
+  //   const files: FileList = event.target.files;
+  //   this.selectedFiles = Array.from(files);
 
-    // Générez les URLs de prévisualisation
-    this.selectedImagePreviews = [];
-    for (const file of this.selectedFiles) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.selectedImagePreviews.push(e.target.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  }
+  //   // Générez les URLs de prévisualisation
+  //   this.selectedImagePreviews = [];
+  //   for (const file of this.selectedFiles) {
+  //     const reader = new FileReader();
+  //     reader.onload = (e: any) => {
+  //       this.selectedImagePreviews.push(e.target.result);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // }
 
   // Ajoutez une méthode pour supprimer une image sélectionnée
-  removeSelectedImage(index: number): void {
-    if (this.editingIndex !== null) {
-      this.produits[this.editingIndex].images.splice(index, 1);
-      this.selectedImagePreviews.splice(index, 1);
+  removeImage(imageUrl: string): void {
+    const imagesArray = this.form.get('images')?.value || [];
+    const index = imagesArray.indexOf(imageUrl);
+    if (index > -1) {
+      imagesArray.splice(index, 1); // Supprime l'URL de l'image du tableau
+      this.form.patchValue({ images: imagesArray });
+
+      // Supprime l'image de Firebase Storage
+      this.productService.deleteImage(imageUrl).catch((error) => {
+        console.error('Erreur lors de la suppression de l\'image :', error);
+      });
     }
   }
 
-  async uploadFiles(produitId: string): Promise<string[]> {
-    this.isUploading = true;
-    const urls: string[] = [];
-    for (const file of this.selectedFiles) {
-      const url = await new Promise<string>((resolve) =>
-        this.productService
-          .uploadImage(file, produitId)
-          .subscribe((downloadUrl) => {
-            resolve(downloadUrl);
-          })
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      const files = Array.from(input.files); // Récupérer tous les fichiers sélectionnés
+      this.isUploading = true;
+
+      const uploadObservables = files.map((file) =>
+        this.productService.uploadImage(file)
       );
-      urls.push(url);
+
+      // Traiter tous les fichiers en parallèle
+      forkJoin(uploadObservables).subscribe(
+        (urls) => {
+          const imagesArray = this.form.get('images')?.value || [];
+          this.form.patchValue({ images: [...imagesArray, ...urls] });
+          this.isUploading = false;
+        },
+        (error) => {
+          console.error('Erreur lors de l\'upload :', error);
+          this.isUploading = false;
+        }
+      );
     }
-    this.isUploading = false;
-    return urls;
   }
 
-  async addProduit() {
-    if (this.form.valid) {
-      const produitId = this.editingIndex === null
-        ? this.productService.generateId()
-        : this.produits[this.editingIndex].id;
-  
-      const newImages = await this.uploadFiles(produitId);
-      const newVideos = await this.uploadVideoFiles(produitId);
-  
-      const existingImages = this.editingIndex !== null ? this.produits[this.editingIndex].images || [] : [];
-      const existingVideos = this.editingIndex !== null ? this.produits[this.editingIndex].videos || [] : [];
-  
-      const images = [...existingImages, ...newImages];
-      const videos = [...existingVideos, ...newVideos];
-  
-      const produit: Produit = {
-        ...this.form.value,
-        id: produitId,
-        images,
-        videos,
-        createdAt: this.editingIndex === null ? new Date() : this.produits[this.editingIndex].createdAt,
-        updatedAt: new Date()
-      };
-  
-      if (this.editingIndex === null) {
-        this.productService.addProduit(produit).then(() => this.resetForm());
-      } else {
-        this.productService.updateProduit(produitId, produit).then(() => this.resetForm());
-      }
-    }
-  }
-  
+  // async uploadFiles(produitId: string): Promise<string[]> {
+  //   this.isUploading = true;
+  //   const urls: string[] = [];
+  //   for (const file of this.selectedFiles) {
+  //     const url = await new Promise<string>((resolve) =>
+  //       this.productService
+  //         .uploadImage(file, produitId)
+  //         .subscribe((downloadUrl) => {
+  //           resolve(downloadUrl);
+  //         })
+  //     );
+  //     urls.push(url);
+  //   }
+  //   this.isUploading = false;
+  //   return urls;
+  // }
+
+  // async addProduit() {
+  //   if (this.form.valid) {
+  //     const produitId = this.editingIndex === null
+  //       ? this.productService.generateId()
+  //       : this.produits[this.editingIndex].id;
+
+  //     const newImages = await this.uploadFiles(produitId);
+  //     const newVideos = await this.uploadVideoFiles(produitId);
+
+  //     const existingImages = this.editingIndex !== null ? this.produits[this.editingIndex].images || [] : [];
+  //     const existingVideos = this.editingIndex !== null ? this.produits[this.editingIndex].videos || [] : [];
+
+  //     const images = [...existingImages, ...newImages];
+  //     const videos = [...existingVideos, ...newVideos];
+
+  //     const produit: Produit = {
+  //       ...this.form.value,
+  //       id: produitId,
+  //       images,
+  //       videos,
+  //       createdAt: this.editingIndex === null ? new Date() : this.produits[this.editingIndex].createdAt,
+  //       updatedAt: new Date()
+  //     };
+
+  //     if (this.editingIndex === null) {
+  //       this.productService.addProduit(produit).then(() => this.resetForm());
+  //     } else {
+  //       this.productService.updateProduit(produitId, produit).then(() => this.resetForm());
+  //     }
+  //   }
+  // }
+
   editProduit(index: number): void {
     this.editingIndex = index;
     const produit = this.produits[index];
@@ -178,6 +213,41 @@ export class ProductManagementComponent implements OnInit {
     this.selectedVideoPreviews = [...(produit.videos || [])];
   }
 
+  saveForm(): void {
+    if (this.form.invalid || !this.form.value.images) {
+      alert('Veuillez remplir tous les champs et ajouter une image.');
+      return;
+    }
+
+    if (this.selectedFile) {
+      this.isUploading = true;
+      this.productService.uploadImage(this.selectedFile).subscribe((url) => {
+        this.isUploading = false;
+        this.form.patchValue({ image: url });
+        this.saveProduit();
+      });
+    } else {
+      this.saveProduit();
+    }
+  }
+
+  saveProduit(): void {
+    const formValue = this.form.value;
+
+    if (this.editingIndex !== null) {
+      const id = this.produits[this.editingIndex].id;
+      this.productService.updateProduit(id, formValue).then(() => {
+        this.produits[this.editingIndex!] = { ...formValue, id };
+        this.resetForm();
+      });
+    } else {
+      const newProduit: Produit = { ...formValue, id: '' };
+      this.productService.addProduit(newProduit).then(() => {
+        this.loadProduits();
+        this.resetForm();
+      });
+    }
+  }
 
   deleteProduit(id: string): void {
     this.productService.deleteProduit(id).then(() => this.loadProduits());
@@ -188,7 +258,7 @@ export class ProductManagementComponent implements OnInit {
     this.selectedFiles = [];
     this.editingIndex = null;
     this.selectedVideoPreviews = [];
-    this.selectedVideoFiles= [];
+    this.selectedVideoFiles = [];
     this.loadProduits();
     this.selectedImagePreviews = [];
   }
@@ -215,48 +285,64 @@ export class ProductManagementComponent implements OnInit {
 
 
   onVideoFileChange(event: any): void {
-    const files: FileList = event.target.files;
-    this.selectedVideoFiles = Array.from(files);
-
-    // Générez les URLs de prévisualisation pour les vidéos
-    this.selectedVideoPreviews = [];
-    for (const file of this.selectedVideoFiles) {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.selectedVideoPreviews.push(e.target.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  }
-
-  removeSelectedVideo(index: number): void {
-    if (this.editingIndex !== null) {
-      this.produits[this.editingIndex].videos.splice(index, 1);
-      this.selectedVideoPreviews.splice(index, 1);
-    }
-  }
-
-  async uploadVideoFiles(produitId: string): Promise<string[]> {
-    this.isUploading = true;
-    const urls: string[] = [];
-    for (const file of this.selectedVideoFiles) {
-      const url = await new Promise<string>((resolve) =>
-        this.productService
-          .uploadImage(file, produitId) // Utilisez la même logique que pour les images
-          .subscribe((downloadUrl) => {
-            resolve(downloadUrl);
-          })
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const files = Array.from(input.files);
+      this.isUploading = true;
+      const uploadObservables = files.map((file) =>
+        this.productService.uploadImage(file)
       );
-      urls.push(url);
+
+      // Traiter tous les fichiers en parallèle
+      forkJoin(uploadObservables).subscribe(
+        (urls) => {
+          const videosArray = this.form.get('videos')?.value || [];
+          this.form.patchValue({ videos: [...videosArray, ...urls] });
+          this.isUploading = false;
+        },
+        (error) => {
+          console.error('Erreur lors de l\'upload :', error);
+          this.isUploading = false;
+        }
+      );
     }
-    this.isUploading = false;
-    return urls;
   }
+
+  removeSelectedVideo(videoUrl: string): void {
+    const videosArray = this.form.get('videos')?.value || [];
+    const index = videosArray.indexOf(videoUrl);
+    if (index > -1) {
+      videosArray.splice(index, 1); // Supprime l'URL de l'image du tableau
+      this.form.patchValue({ videos: videosArray });
+
+      // Supprime l'image de Firebase Storage
+      this.productService.deleteImage(videoUrl).catch((error) => {
+        console.error('Erreur lors de la suppression de le vidéo :', error);
+      });
+    }
+  }
+
+  // async uploadVideoFiles(produitId: string): Promise<string[]> {
+  //   this.isUploading = true;
+  //   const urls: string[] = [];
+  //   for (const file of this.selectedVideoFiles) {
+  //     const url = await new Promise<string>((resolve) =>
+  //       this.productService
+  //         .uploadImage(file) // Utilisez la même logique que pour les images
+  //         .subscribe((downloadUrl) => {
+  //           resolve(downloadUrl);
+  //         })
+  //     );
+  //     urls.push(url);
+  //   }
+  //   this.isUploading = false;
+  //   return urls;
+  // }
   toggleNouveautes(event: Event): void {
     const isChecked = (event.target as HTMLInputElement).checked;
     this.form.patchValue({
       categoryId: isChecked ? 'xTbMiPrHVtXUZoNUAd6H' : ''
     });
   }
-  
+
 }
