@@ -15,7 +15,7 @@
                             <input type="file" id="productVideos" class="form-control" accept="video/*" multiple
                                 (change)="onVideoFileChange($event)" />
 
-                            <!-- Aperçus des vidéos existantes -->
+                            <!-- Aperçu des vidéos -->
                             <div class="selected-videos-container">
                                 <div *ngFor="let vid of form.get('videos')?.value" class="position-relative">
                                     <video [src]="vid" controls class="video-thumbnail"></video>
@@ -27,20 +27,41 @@
                                 </div>
                             </div>
                         </div>
-                        <dir class="col-md-4">
-                            <!-- Indicateur de téléchargement -->
-                             <br>
-                            <div *ngIf="isUploading" class="text-success mt-2">Téléchargement en cours...</div>
-                        </dir>
 
-                        <div class="row">
-                            <div class="col-12 d-flex justify-content-center">
-                                <button type="submit" class="btn btn-primary me-2"
-                                    [disabled]="form.invalid || isUploading">
-                                    {{ editingIndex === null ? 'Ajouter' : 'Enregistrer' }}
-                                </button>
-                                <button type="button" class="btn btn-secondary" (click)="resetForm()">Annuler</button>
+                        <div class="col-md-4 mb-3">
+                            <label for="productImages">Images:</label>
+                            <input type="file" id="productImages" class="form-control" accept="image/*" multiple
+                                (change)="onFileSelected($event)" />
+
+                            <!-- Aperçu des images -->
+                            <div class="selected-images-container">
+                                <div *ngFor="let img of form.get('images')?.value" class="position-relative">
+                                    <img [src]="img" alt="Image" class="img-thumbnail" style="width: 50px;" />
+                                    <button type="button" class="btn btn-danger badge position-absolute"
+                                        (click)="removeImage(img)"
+                                        style="width: 20px; height: 20px; padding: 0; border-radius: 50%; align-items: center; justify-content: center; top: 0; right: 0;">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </button>
+                                </div>
                             </div>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label>Étoiles:</label>
+                            <input type="number" class="form-control" formControlName="etoiles" min="1" max="5">
+                        </div>
+
+                        <div class="col-md-4">
+                            <br>
+                            <div *ngIf="isUploading" class="text-success mt-2">Téléchargement en cours...</div>
+                        </div>
+
+                        <div class="col-12 d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary me-2"
+                                [disabled]="form.invalid || isUploading">
+                                {{ editingIndex === null ? 'Ajouter' : 'Enregistrer' }}
+                            </button>
+                            <button type="button" class="btn btn-secondary" (click)="resetForm()">Annuler</button>
                         </div>
                     </div>
                 </form>
@@ -48,23 +69,38 @@
         </div>
     </div>
 </div>
-<!-- Tableau des catégories -->
+
+<!-- Tableau des avis -->
 <table>
     <thead>
         <tr>
             <th>Avis</th>
+            <th>Vidéos</th>
+            <th>Images</th>
+            <th>Étoiles</th>
             <th>Actions</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let avis of avis; let i = index">
-            <td>{{ avis.avis }}-
+            <td>{{ avis.avis }}</td>
+            <td>
                 <ng-container *ngIf="avis.videos?.length; else noVideo">
-                    <video *ngFor="let video of avis.videos" [src]="video" alt="Vidéo" class="img-fluid img-thumbnail"
+                    <video *ngFor="let video of avis.videos" [src]="video" class="img-fluid img-thumbnail"
                         style="width: 50px;"></video>
-
                 </ng-container>
-                <ng-template #noVideo></ng-template>
+                <ng-template #noVideo>-</ng-template>
+            </td>
+            <td>
+                <ng-container *ngIf="avis.images?.length; else noImage">
+                    <img *ngFor="let image of avis.images" [src]="image" class="img-fluid img-thumbnail"
+                        style="width: 50px;">
+                </ng-container>
+                <ng-template #noImage>-</ng-template>
+            </td>
+            <td>
+                <i *ngFor="let _ of [].constructor(avis.etoiles); let j = index"
+                    class="fa-solid fa-star text-warning"></i>
             </td>
             <td>
                 <button (click)="editAvis(i)"><i class="fa-solid fa-pen" style="font-size: 12px;"></i></button>
@@ -74,22 +110,3 @@
         </tr>
     </tbody>
 </table>
-
-<div class="modal" [class.show]="showConfirmationModal" tabindex="-1" style="display: block;"
-    *ngIf="showConfirmationModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Confirmation</h5>
-                <button type="button" class="btn-close" (click)="closeConfirmationModal()"></button>
-            </div>
-            <div class="modal-body">
-                <p>Êtes-vous sûr de vouloir supprimer ce produit ? Cette action est irréversible.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" (click)="closeConfirmationModal()">Annuler</button>
-                <button type="button" class="btn btn-danger" (click)="confirmDelete()">Confirmer</button>
-            </div>
-        </div>
-    </div>
-</div>

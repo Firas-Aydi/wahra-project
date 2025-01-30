@@ -1,186 +1,9 @@
 /* Conteneur principal */
-/* .hero-section {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #b04200;
-  padding: 20px;
-  color: #fff;
-}
-
-.hero-content {
-  display: flex;
-  flex-wrap: wrap;
-  max-width: 1200px;
-  margin: 0;
-}
-
-.text-content {
-  text-align: left;
-  padding-right: 20px;
-  flex: 1;
-  max-width: 42rem;
-}
-
-.text-content h1 {
-  font-size: 3rem;
+h1{
   font-weight: 700;
-  margin-bottom: 10px;
-  font-family: Recoleta;
 }
-
-.text-content h2 {
-  font-family: Recoleta;
-  font-size: 3rem;
-  font-weight: 500;
-  color: #f2bd59;
-  margin-bottom: 20px;
-}
-
-.text-content p {
-  font-size: 1.125rem;
-  line-height: 1.8;
-  margin-bottom: 15px;
-  color: #ffffff;
-  font-family: inherit;
-}
-
-.image-gallery {
-  display: flex;
-  justify-content: flex-end;
-  gap: 20px;
-  position: relative;
-  
-}
-
-.image-gallery img {
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  position: relative;
-  padding: 10px;
-  bottom: -30px;
-  background: #fff;
-  width: 170px;
-  height: auto;
-  
-}
-
-@media (max-width: 768px) {
-  .hero-section {
-  flex-direction: column;
-    text-align: center;
-  }
-
-  .text-content {
-    width: 100%;
-    margin-bottom: 20px;
-  }
-
-  .image-gallery {
-    justify-content: center;
-    max-width: 100%;
-  }
-
-  .image-gallery img {
-    max-height: auto;
-  }
-} */
-
-/* .slider {
-  overflow: hidden;
-  width: 100%;
-}
-
-.slider__content {
-  display: flex;
-  gap: 30px;
-  overflow-x: scroll;
-  scroll-behavior: smooth;
-  padding: 20px;
-  background-color: #fff;
-}
-
-.slider__item {
-  min-width: 300px;
-  flex-shrink: 0;
-  position: relative;
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  max-width: 400px;
-  width: 100%;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.slider__item:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
-}
-
-.slider__image {
-  width: 100%;
-  height: auto;
-  border-bottom: 1px solid #eee;
-}
-
-.slider__info {
-  padding: 20px;
-  font-size: 1.1rem;
-  color: #333;
-  background-color: #fafafa;
-}
-
-p {
-  line-height: 1.8;
-  color: #555;
-  font-family: "Lora", serif;
-}
-
-@media (max-width: 768px) {
-  .slider__item {
-    min-width: 250px;
-  }
-
-  .slider__info {
-    padding: 15px;
-  }
-}
-
-@media (max-width: 768px) {
-  .slider__item {
-    min-width: 200px;
-  }
-
-  .slider__info {
-    padding: 10px;
-  }
-}
-
-.slider__content::-webkit-scrollbar {
-  height: 12px;
-}
-
-.slider__content::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, #8e44ad, #3498db);
-  border-radius: 10px;
-}
-
-.slider__content::-webkit-scrollbar-track {
-  background: #eaeaea;
-}
-
-.slider__image,
-.slider__info {
-  transition: all 0.3s ease;
-}
-
-.slider__image:hover {
-  filter: brightness(1.1);
-} */
-
 .Description {
-  background-image: url("src/assets/wahra3.jpg");
+  background-image: url("src/assets/description5.jpeg");
   background-size: cover; /* S'assure que l'image remplit le conteneur */
   background-position: center; /* Centre l'image d'arrière-plan */
   /* background-repeat: no-repeat; */
@@ -197,8 +20,8 @@ p {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.3); /* Couleur noire avec 50% d'opacité */
-  z-index: 1; /* Mettre cette couche en dessous du texte */
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 1;
 }
 .Description * {
   position: relative;
@@ -208,8 +31,11 @@ p {
   max-width: 900px;
 } */
 .Avis {
-  background-image: url("src/assets/avis-img.jpg");
-  background-size: cover; /* S'assure que l'image remplit le conteneur */
+  background-image: url("src/assets/avis.jpeg");
+  /* background-color: #deb887; */
+  /* background-color: #e7ddb3; */
+  /* background-color: #e4d5b7; */
+  /* background-size: cover; */
   background-position: center; /* Centre l'image d'arrière-plan */
   /* background-repeat: no-repeat; */
   /* height: 100vh;  */
@@ -218,28 +44,69 @@ p {
   padding: 0;
   position: relative; /* Permet d'assurer que le texte est bien positionné */
 }
-.Avis::before {
+/* .Avis::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Couleur noire avec 50% d'opacité */
-  z-index: 1; /* Mettre cette couche en dessous du texte */
-}
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+} */
 .Avis * {
   position: relative;
   z-index: 2; /* Assure que le contenu est au-dessus de l'overlay */
 }
+.Avis-card {
+  font-weight: 500;
+  border: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  padding: 10px;
+}
+
+.Avis-card-title {
+  
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.2rem;
+}
+
+.Avis-card-subtitle {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+}
+.Avis-card-text {
+  color: rgb(182, 158, 124);
+}
+
+.Avis-custom-btn {
+  background-color: #b69e7c; 
+  color: #fff; 
+  /* border: 1px solid #bb8249; */
+  padding: 10px 10px; 
+  font-family: 'arial';
+  font-size: 16px; 
+  /* font-weight: 500; */
+  border-radius: 50px; 
+  transition: background-color 0.3s, transform 0.2s; 
+}
+
+.Avis-custom-btn:hover {
+  background-color: #ccc;
+}
+
+.Avis-custom-btn:focus {
+  outline: none; 
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2); 
+}
+
+
 
 .cards-container {
   display: flex;
   flex-wrap: wrap;
   gap: 20px; 
 }
-
-
 /* Carte */
 .card {
   flex: 1 0 calc(20% - 0px); /* 20% de la largeur moins les marges */
@@ -369,9 +236,10 @@ p {
   font-family: 'Poppins',sans-serif;
 }
 .card-price {
-  color: #8a7455;
+  color: #bb8249;
   font-size: 20px;
   font-family: "Fira Sans";
+  font-weight: bold;
 }
 .card-body {
   padding: 15px;

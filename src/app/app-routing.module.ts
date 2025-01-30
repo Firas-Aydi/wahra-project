@@ -28,6 +28,7 @@ import { PieceUniqueComponent } from './piece-unique/piece-unique.component';
 import { PieceUniqueDetailComponent } from './piece-unique-detail/piece-unique-detail.component';
 import { ProposComponent } from './propos/propos.component';
 import { AvisManagementComponent } from './admin/avis-management/avis-management.component';
+import { AvisComponent } from './avis/avis.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -36,6 +37,7 @@ const routes: Routes = [
   { path: 'propos', component: ProposComponent },
   { path: 'news', component: NewsComponent },
   { path: 'consultation', component: ConsultationComponent },
+  { path: 'avis', component: AvisComponent },
   
   { path: 'manageAmbre', component: manageAmbreComponent },
   { path: 'ambre', component: AmbreComponent },

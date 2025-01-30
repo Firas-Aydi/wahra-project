@@ -90,7 +90,7 @@ h4 {
 
 /* Description */
 .description {
-  font-family: "Poppins";
+  font-family: "arial";
   line-height: 1.4;
   font-size: 16px;
 }
@@ -129,7 +129,7 @@ h4 {
   line-height: 1.6;
   font-size: 28px;
   /* color: #b69e7c; */
-  color: #bd4800;
+  color: #bb8249;
   
 }
 .stock-badge {

@@ -6,6 +6,8 @@ import { Produit } from '../model/produit';
 import { Router } from '@angular/router';
 import { UniquePieceService } from '../services/unique-piece.service';
 import { UniquePiece } from '../model/unique-piece';
+import { AvisService } from '../services/avis.service';
+import { Avis } from '../model/avis';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +18,7 @@ export class HomeComponent implements OnInit {
   sousCategories: SousCategorie[] = [];
   uniquePieces: UniquePiece[] = [];
   groupedProducts: { [key: string]: Produit[] } = {};
+  avis: Avis[] = [];
   currentIndex: { [key: string]: number } = {};
   visibleProducts = 5;
 
@@ -23,6 +26,7 @@ export class HomeComponent implements OnInit {
     private sousCategorieService: SousCategorieService,
     private productService: ProductService,
     private uniquePieceService: UniquePieceService,
+    private avisService: AvisService,
     private router: Router
   ) { }
 
@@ -30,6 +34,7 @@ export class HomeComponent implements OnInit {
     this.loadSousCategoriesWithProducts();
     this.loadUniquePieces();
     this.updateVisibleProducts();
+    this.loadAvis();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -82,7 +87,38 @@ export class HomeComponent implements OnInit {
       });
     });
   }
-
+  // Récupérer tous les avis
+  loadAvis(): void {
+    this.avisService.getAvis().subscribe((avis) => {
+      this.avis = avis
+        .map((avisItem) => ({
+          ...avisItem,
+          updatedAt: this.parseDate(avisItem.updatedAt),
+          createdAt: this.parseDate(avisItem.createdAt),
+        }))
+        .sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime())
+        .slice(0, 3);
+    });
+  }
+  
+  private parseDate(date: any): Date {
+    if (date instanceof Date && !isNaN(date.getTime())) {
+      return date; // Déjà une date valide
+    }
+  
+    if (date && typeof date.toDate === 'function') {
+      return date.toDate(); // Convertir Firestore Timestamp en Date
+    }
+  
+    const parsedDate = new Date(date);
+    if (!isNaN(parsedDate.getTime())) {
+      return parsedDate; // Convertir string ou autre en Date
+    }
+  
+    console.warn('Date invalide détectée :', date);
+    return new Date(0); // Retourner une date par défaut (1er janvier 1970)
+  }
+  
   getVisibleProducts(sousCategoryId: string): Produit[] {
     const currentIndex = this.currentIndex[sousCategoryId] || 0;
     const products = this.groupedProducts[sousCategoryId] || [];
@@ -109,7 +145,7 @@ export class HomeComponent implements OnInit {
   //     this.animateCarousel(sousCategoryId);
   //   }
   // }
-  
+
   // nextSlide(sousCategoryId: string): void {
   //   const maxIndex =
   //     (this.groupedProducts[sousCategoryId]?.length || 0) - this.visibleProducts;
@@ -118,12 +154,12 @@ export class HomeComponent implements OnInit {
   //     this.animateCarousel(sousCategoryId);
   //   }
   // }
-  
+
   // animateCarousel(sousCategoryId: string): void {
   //   const container = document.querySelector(
   //     `.carousel-container[data-category-id="${sousCategoryId}"] .d-flex`
   //   ) as HTMLElement;
-  
+
   //   if (container) {
   //     const itemWidth = container.querySelector('.card')?.clientWidth || 0; // Largeur d'un produit
   //     const offset = -this.currentIndex[sousCategoryId] * (itemWidth - 180); // 16 = margin entre cartes
@@ -148,7 +184,7 @@ export class HomeComponent implements OnInit {
       );
     }
   }
-  
+
   scrollToSection(): void {
     // Descend la page de manière douce jusqu'à une section spécifique
     const targetElement = document.getElementById('scroll'); // ID de la section cible

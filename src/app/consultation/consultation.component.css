@@ -8,7 +8,7 @@
 /* Titre */
 h3, h2 {
   font-weight: bold;
-  color: #2c3e50;
+  color: #b69e7c;
 }
 
 /* Table des rendez-vous */
@@ -19,7 +19,7 @@ h3, h2 {
 }
 
 .table th {
-  background-color: #2c3e50;
+  background-color: #b69e7c;
   color: #fff;
   padding: 10px;
 }
@@ -32,7 +32,9 @@ h3, h2 {
 }
 
 .table .bg-primary {
-  background-color: #b69e7c !important;
+  background-color: #d2b48c !important;
+  color: #fff;
+  /* background-image: url("src/assets/avis.jpeg");  */
 }
 
 .text-muted {
@@ -52,7 +54,7 @@ h3, h2 {
 
 .form-label {
   font-weight: bold;
-  color: #2c3e50;
+  color: #b69e7c;
 }
 
 .form-control {
@@ -69,7 +71,7 @@ h3, h2 {
 
 /* Bouton d'envoi */
 button[type="submit"] {
-  background-color: #007bff;
+  background-color: #b69e7c;
   border: none;
   color: white;
   padding: 10px 20px;
@@ -78,7 +80,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-  background-color: #0056b3;
+  background-color: #d2b48c;
 }
 
 button[type="submit"]:disabled {

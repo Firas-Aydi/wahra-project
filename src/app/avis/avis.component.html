@@ -1,0 +1,26 @@
+<div class="Avis mt-5">
+    <div class="content-container p-4">
+        <h1 class=" d-flex align-items-center justify-content-center text-center mb-4"
+            style="font-family: 'Poppins'; font-size: 2.5rem; color: #bb8249;">
+            Avis Client </h1>
+        <div class="row">
+            <!-- Parcourt et affiche chaque avis -->
+            <div class="col-md-4 mb-3" *ngFor="let avisItem of avis">
+                <div class="card text-dark bg-light shadow rounded">
+                    <div class="card-body">
+                        <!-- <h5 class="card-title fw-bold text-capitalize">{{ avisItem.nom }}</h5> -->
+                        <!-- <p class="text-muted">{{ avisItem.updatedAt | date: 'dd MMMM yyyy' }}</p> -->
+                        <!-- <h6 class="card-subtitle mb-2 text-danger">{{ avisItem.produit }}</h6> -->
+                        <p class="card-text mt-2">{{ avisItem.avis }}</p>
+
+                        <!-- Si une vidéo est disponible, l'afficher -->
+                        <video *ngIf="avisItem.videos?.length" controls class="w-100 mt-3">
+                            <source [src]="avisItem.videos[0]" type="video/mp4" />
+                            Votre navigateur ne supporte pas la lecture des vidéos.
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

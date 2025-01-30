@@ -34,6 +34,8 @@ export class AvisManagementComponent implements OnInit {
     this.form = this.fb.group({
       avis: [''],
       videos: [[]],
+      images: [[]],
+      etoiles: [5, [Validators.min(1), Validators.max(5)]],
     });
   }
 
@@ -102,6 +104,46 @@ export class AvisManagementComponent implements OnInit {
     this.avisService.deleteAvis(id).then(() => {
       this.fetchAvis();
     });
+  }
+
+  removeImage(imageUrl: string): void {
+    const imagesArray = this.form.get('images')?.value || [];
+    const index = imagesArray.indexOf(imageUrl);
+    if (index > -1) {
+      imagesArray.splice(index, 1); // Supprime l'URL de l'image du tableau
+      this.form.patchValue({ images: imagesArray });
+
+      // Supprime l'image de Firebase Storage
+      this.avisService.deleteFile(imageUrl).catch((error) => {
+        console.error('Erreur lors de la suppression de l\'image :', error);
+      });
+    }
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+
+    if (input.files && input.files.length > 0) {
+      const files = Array.from(input.files); // Récupérer tous les fichiers sélectionnés
+      this.isUploading = true;
+
+      const uploadObservables = files.map((file) =>
+        this.avisService.uploadFile(file)
+      );
+
+      // Traiter tous les fichiers en parallèle
+      forkJoin(uploadObservables).subscribe(
+        (urls) => {
+          const imagesArray = this.form.get('images')?.value || [];
+          this.form.patchValue({ images: [...imagesArray, ...urls] });
+          this.isUploading = false;
+        },
+        (error) => {
+          console.error('Erreur lors de l\'upload :', error);
+          this.isUploading = false;
+        }
+      );
+    }
   }
 
     onVideoFileChange(event: any): void {

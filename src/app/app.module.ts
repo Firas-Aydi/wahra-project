@@ -30,6 +30,7 @@ import { NewsComponent } from './news/news.component';
 import { PieceUniqueComponent } from './piece-unique/piece-unique.component';
 import { PieceUniqueDetailComponent } from './piece-unique-detail/piece-unique-detail.component';
 import { ProposComponent } from './propos/propos.component';
+import { AvisComponent } from './avis/avis.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { ProposComponent } from './propos/propos.component';
     NewsComponent,
     PieceUniqueComponent,
     PieceUniqueDetailComponent,
-    ProposComponent
+    ProposComponent,
+    AvisComponent
   ],
   imports: [
     BrowserModule,
