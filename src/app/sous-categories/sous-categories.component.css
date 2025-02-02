@@ -1,3 +1,6 @@
+.sous-categorie-title{
+  font-weight: 700;
+}
 .card {
   flex: 1 0 18.5%;
   max-width: 18.9%;
@@ -55,13 +58,15 @@
   padding: 15px;
 }
 .card-title {
-  font-size: 1rem;
-  line-height: 1.5rem;
+  font-size: 18px;
+  line-height: 1.2rem;
+  font-family: 'Poppins',sans-serif;
 }
 .card-price {
-  color: #bd4800;
+  color: #bb8249;
   font-size: 20px;
   font-family: "Fira Sans";
+  font-weight: bold;
 }
 
 .carousel-container {
@@ -71,27 +76,7 @@
   position: relative;
 }
 
-/* .carousel-control-prev,
-.carousel-control-next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.5);
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  z-index: 2;
-  cursor: pointer;
-}
 
-.carousel-control-prev {
-  left: -20px;
-}
-
-.carousel-control-next {
-  right: -20px;
-} */
 
 /* 1 produit par ligne sur petits écrans (mobiles) */
 @media (max-width: 576px) {

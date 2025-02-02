@@ -16,14 +16,24 @@
 
 
     <!-- Barre de recherche -->
-    <div class="search-bar mx-auto" *ngIf="userType !== 'admin'" (click)="closeDropdown()">
+    <!-- <div class="search-bar mx-auto" *ngIf="userType !== 'admin'" (click)="closeDropdown()">
       <div class="input-group">
-        <input class="search-input" type="search" placeholder="Rechercher un produit..." #searchInput
+        <input class="search-input form-control" type="search" placeholder="Rechercher un produit..." #searchInput
           (keyup.enter)="search(searchInput.value)" />
-        <!-- <span class="input-group-text" (click)="search(searchInput.value)">
-          <i class="fa-solid fa-magnifying-glass"></i></span> -->
+        <span class="input-group-text" (click)="search(searchInput.value)">
+          <i class="fa-solid fa-magnifying-glass  search-icon"></i>
+        </span>
       </div>
-    </div>
+    </div> -->
+<!-- Barre de recherche -->
+<div class="search-bar mx-auto" *ngIf="userType !== 'admin'" (click)="closeDropdown()">
+  <input class="search-input form-control" type="search" placeholder="Rechercher un produit..." #searchInput
+    (keyup.enter)="search(searchInput.value)" />
+  <i class="fa-solid fa-magnifying-glass search-icon" (click)="search(searchInput.value)"></i>
+</div>
+
+
+
 
     <!-- Menu utilisateur -->
     <ul class="navbar-nav ms-auto">

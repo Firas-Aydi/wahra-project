@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators }
 import { HttpErrorResponse } from '@angular/common/http';
 import { Consultation } from '../model/consultation';
 import { ConsultationService } from '../services/consultation.service';
+
 import { startOfWeek, addDays, format, parseISO, isSameDay, isSameHour } from 'date-fns';
 
 @Component({
@@ -79,33 +80,43 @@ export class ConsultationComponent implements OnInit {
 
   addConsultation(): void {
     if (this.consultationForm.invalid) {
-      this.errorMessage = 'Veuillez corriger les erreurs avant de soumettre le formulaire.';
+      this.errorMessage = 'Veuillez remplir tous les champs correctement';
+      setTimeout(() => (this.errorMessage = ''), 5000);
       return;
     }
 
     const newConsultation: Consultation = this.consultationForm.value;
     this.loading = true;
 
+    // Vérification des valeurs avant utilisation
+  if (!newConsultation.appointmentTime || !newConsultation.duration) {
+    this.errorMessage = 'Veuillez sélectionner une heure et une durée valides.';
+    setTimeout(() => (this.errorMessage = ''), 5000);
+    this.loading = false;
+    return;
+  }
+
     if (!this.isSlotAvailable(newConsultation.appointmentDate, newConsultation.appointmentTime, newConsultation.duration)) {
       this.errorMessage = 'Le créneau est déjà réservé. Veuillez choisir une autre heure.';
-      setTimeout(() => this.errorMessage = '', 5000);
+      setTimeout(() => (this.errorMessage = ''), 5000);
       this.loading = false;
       return;
     }
 
     if (!this.validateSlotAvailability(newConsultation.appointmentDate, newConsultation.appointmentTime, newConsultation.duration)) {
       this.errorMessage = 'La durée dépasse les heures d\'ouverture.';
-      setTimeout(() => this.errorMessage = '', 5000);
+      setTimeout(() => (this.errorMessage = ''), 5000);
       this.loading = false;
       return;
     }
 
     this.consultationService.addConsultation(newConsultation).subscribe({
       next: () => {
-        this.successMessage = 'Rendez-vous ajouté avec succès !';
+        this.successMessage = 'Consultation ajoutée avec succès';
         setTimeout(() => (this.successMessage = ''), 5000);
         this.loadConsultations();
         this.consultationForm.reset();
+        this.consultationForm.markAsPristine();
       },
       error: (err: HttpErrorResponse) => {
         if (err.status === 409) {

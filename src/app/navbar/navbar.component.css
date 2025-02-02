@@ -55,36 +55,67 @@
 }
 
 .search-bar {
-  position: absolute; /* Permet de positionner au centre */
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
+  /* top: 50%; */
+  /* left: 50%; */
+  /* transform: translate(-50%, -50%); */
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   width: 400px;
+  /* margin: auto; */
 }
 
-.search-input {
+/* .search-input {
   width: 90%;
   border: none;
   border-radius: 6px;
   background-color: #fff;
   border: #b69e7c 1px solid;
   color: #b69e7c;
-  padding: 5px;
+  padding: 5px 35px;
   font-size: 14px;
+} */
+ /* Style de l'input */
+ .search-input {
+  width: 100%;
+  border: 1px solid #b69e7c;
+  border-radius: 6px;
+  padding: 8px 35px 8px 12px; /* Ajout de padding pour éviter le chevauchement de l'icône */
+  font-size: 14px;
+  color: #b69e7c;
+  background-color: #fff;
 }
+
+/* .search-bar {
+  max-width: 400px;
+} */
+
+/* .search-input {
+  padding-right: 35px;
+} */
+
+.search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #b69e7c;
+  cursor: pointer;
+  font-size: 16px;
+  z-index: 10;
+}
+
 
 .search-input::placeholder {
   color: #b69e7c;
 }
-.input-group-text {
+/* .input-group-text {
   color: #b69e7c;
   border: none;
   background-color: #b69e7c;
   cursor: pointer;
-}
+} */
 .search-input::-webkit-input-placeholder {
   color: #b69e7c;
 } /* Chrome/Safari */
@@ -223,16 +254,9 @@
     align-items: center;
     background-color: #fff;
     padding:20px 10px;
-    padding-bottom: 45px;
+    padding-bottom: 55px;
   }
 
-  /* .navbar .container-fluid {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap; 
-  } */
-  /* Logo centré */
   .logo-container {
     display: flex;
     justify-content: left;
@@ -240,37 +264,24 @@
     margin-left: auto;
     margin-top: -10px;
   }
-  /* .brand-logo {
-    margin: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 90px;
-    transition: transform 0.3s ease-in-out;
-  }
-  
-  .brand-logo:hover {
-    transform: scale(1.1);
-  } */
-  /* Barre de recherche */
   .search-bar {
     width: 100%;
-    margin-top: 35px;
+    top: 89px;
     /* display: flex;
     justify-content: center; */
   }
 
   .search-input {
-    border-radius: 0%;
+    /* border-radius: 0%; */
     width: 100%;
     font-size: 14px; /* Réduit légèrement la taille de la police */
   }
 
-  .input-group-text {
+  /* .input-group-text {
     background-color: #b69e7c;
     border: none;
     color: #fff;
-  }
+  } */
 
   /* Icônes utilisateur et panier */
   .navbar-nav {

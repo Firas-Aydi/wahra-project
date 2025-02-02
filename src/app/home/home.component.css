@@ -1,5 +1,5 @@
 /* Conteneur principal */
-h1{
+.sous-categorie-title{
   font-weight: 700;
 }
 .Description {
@@ -27,9 +27,42 @@ h1{
   position: relative;
   z-index: 2; /* Assure que le contenu est au-dessus de l'overlay */
 }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 1.2s ease-out forwards;
+}
+
 /* .content-container {
-  max-width: 900px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
 } */
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animated {
+  animation: fadeInScale 1.2s ease-in-out;
+}
+
 .Avis {
   background-image: url("src/assets/avis.jpeg");
   /* background-color: #deb887; */
@@ -99,14 +132,78 @@ h1{
   outline: none; 
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2); 
 }
-
-
-
-.cards-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px; 
+/* Animation pour la section d'avis */
+@keyframes fadeInAvis {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
+
+@keyframes scaleInAvis {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideUpAvis {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.Avis-card {
+  animation: fadeInAvis 1.6s ease-out forwards;
+}
+
+.Avis-card-text {
+  animation: scaleInAvis 1.6s ease-out forwards;
+}
+
+.Avis-card-body {
+  animation: slideUpAvis 2.1s ease-out forwards;
+}
+
+/* Animation pour le bouton */
+.Avis-custom-btn {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInAvis 1.6s ease-out forwards 1.6s;
+}
+
+
+
+/*******************************************************/
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-down {
+  animation: slideDown 1.2s ease-out forwards;
+}
+
 /* Carte */
 .card {
   flex: 1 0 calc(20% - 0px); /* 20% de la largeur moins les marges */
@@ -129,8 +226,34 @@ h1{
   border-radius: 0px;
   object-fit: cover;
 }
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.unique-piece-card {
+  animation: fadeInScale 1.2s ease-in-out;
+  /* transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; */
+}
+
+/* .unique-piece-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+} */
 /* Badge de la carte */
-.card-badge {
+/* .card-badge {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -141,7 +264,7 @@ h1{
   padding: 15px 10px;
   border-radius: 5px;
   z-index: 1;
-}
+} */
 
 .banner {
   position: relative;
@@ -220,13 +343,7 @@ h1{
 }
 
 
-/* .carousel-control-prev {
-  left: -20px;
-}
 
-.carousel-control-next {
-  right: -20px;
-} */
 .card-body {
   padding: 15px;
 }
@@ -241,9 +358,6 @@ h1{
   font-family: "Fira Sans";
   font-weight: bold;
 }
-.card-body {
-  padding: 15px;
-}
 
 .carousel-container {
   width: 100%;
@@ -251,6 +365,7 @@ h1{
   align-items: center;
   position: relative;
 }
+
 
 .scroll-down {
   display: block;

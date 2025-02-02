@@ -4,11 +4,40 @@
   margin: auto;
   padding: 20px;
 }
+/* Animation du spinner */
+.spinner-border {
+  animation: rotateSpinner 1s linear infinite;
+}
+
+@keyframes rotateSpinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
 /* Titre */
 h3, h2 {
   font-weight: bold;
   color: #b69e7c;
+}
+/* Animation de haut en bas pour les titres */
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Appliquer l'animation sur les titres */
+h2, h3 {
+  animation: slideDown 0.7s ease-out forwards;
 }
 
 /* Table des rendez-vous */
@@ -41,11 +70,62 @@ h3, h2 {
   color: #6c757d !important;
 }
 
+/* Animation d'apparition de la table */
+.table {
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Animation d'apparition des lignes de la table */
+.table tbody tr {
+  opacity: 0;
+  animation: fadeInRows 1.2s ease-in-out forwards;
+  /* animation-delay: calc(0.2s * var(--delay)); */
+}
+
+/* Animation d'apparition de la table */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Animation pour les lignes de la table */
+@keyframes fadeInRows {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/************************************/
 /* Formulaire */
 .card {
   border: 1px solid #ddd;
   border-radius: 5px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+/* Animation d'apparition du formulaire */
+.card {
+  animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .card-body {

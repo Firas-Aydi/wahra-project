@@ -53,13 +53,15 @@
     padding: 15px;
   }
   .card-title {
-    font-size: 1rem;
-    line-height: 1.5rem;
+    font-size: 18px;
+    line-height: 1.2rem;
+    font-family: 'Poppins',sans-serif;
   }
   .card-price {
-    color: #bd4800;
+    color: #bb8249;
     font-size: 20px;
     font-family: "Fira Sans";
+    font-weight: bold;
   }
   
   /* Message "Pas de produit" */

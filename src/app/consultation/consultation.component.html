@@ -1,6 +1,6 @@
 <div class="container mt-5">
     <!-- Liste des consultations -->
-    <h3 class="text-center mb-4">Liste des Rendez-vous</h3>
+    <h2 class="text-center mb-4">Liste des Rendez-vous</h2>
 
     <div *ngIf="loading" class="text-center">
         <div class="spinner-border text-primary" role="status">
@@ -20,10 +20,11 @@
                 <tr *ngFor="let hour of hours">
                     <td>{{ hour }}</td>
                     <td *ngFor="let day of days">
-                        <div *ngIf="getConsultation(day, hour); else emptySlot">
+                        <div *ngIf="getConsultation(day, hour) as consultation; else emptySlot">
                             <div class="bg-primary rounded">
-                                <strong>{{ getConsultation(day, hour)?.clientName }}</strong><br />
-                                <small>{{ getConsultation(day, hour)?.duration }} min</small>
+                                <!-- <strong>{{ getConsultation(day, hour)?.clientName }}</strong><br /> -->
+                                <strong>Réservé</strong><br />
+                                <small>{{ consultation.duration }} min</small>
                             </div>
                         </div>
                         <ng-template #emptySlot>

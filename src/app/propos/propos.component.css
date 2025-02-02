@@ -1,25 +1,51 @@
-.container {
-  /* background-color: #fdfdfd; 
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;  */
-  padding: 30px; /* Espacement intérieur */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Légère ombre */
+/* Animation de haut en bas pour les titres */
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
+/* Appliquer l'animation sur les titres h3 */
 h3 {
   font-weight: bolder;
   font-size: 33px;
   color: #b69e7c; /* Couleur dorée pour les titres */
+  animation: slideDown 0.6s ease-out forwards;
 }
 
+
+/* Animation pour faire apparaître les paragraphes avec un effet de zoom */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Animation de zoom pour les paragraphes */
+@keyframes scaleUp {
+  from {
+    transform: scale(0.9);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+/* Animation de l'apparition progressive des paragraphes */
 p {
-  color: #333; /* Couleur du texte pour une meilleure lisibilité */
+  color: #333;
+  animation: fadeIn 1.5s ease-out forwards, scaleUp 1s ease-out forwards;
 }
 
-.text-justify {
-  text-align: justify; /* Justifie le texte */
-}
-
-b {
-  color: #a08662; /* Accent doré pour les mots importants */
+/* Animation des éléments au défilement */
+.container {
+  padding: 30px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }

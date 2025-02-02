@@ -9,18 +9,28 @@ import { UniquePiece } from '../model/unique-piece';
 import { AvisService } from '../services/avis.service';
 import { Avis } from '../model/avis';
 
+import { ElementRef, AfterViewInit, ViewChild } from '@angular/core';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent implements OnInit {
+
+export class HomeComponent implements AfterViewInit, OnInit {
   sousCategories: SousCategorie[] = [];
   uniquePieces: UniquePiece[] = [];
   groupedProducts: { [key: string]: Produit[] } = {};
   avis: Avis[] = [];
   currentIndex: { [key: string]: number } = {};
   visibleProducts = 5;
+
+  @ViewChild('uniquePiecesSection', { static: false }) uniquePiecesSection!: ElementRef;
+  isVisible = false;
+  @ViewChild('DescriptionSection', { static: false }) DescriptionSection!: ElementRef;
+  showDescription = false;
+  @ViewChild('avisSection', { static: false }) avisSection!: ElementRef;
+  avisVisible = false;
 
   constructor(
     private sousCategorieService: SousCategorieService,
@@ -36,6 +46,52 @@ export class HomeComponent implements OnInit {
     this.updateVisibleProducts();
     this.loadAvis();
   }
+  
+  ngAfterViewInit(): void {
+    // Observer pour la section uniquePieces
+    const observerUniquePieces = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.intersectionRatio >= 0.8) {
+          this.isVisible = true;
+          console.log('La section uniquePieces est visible à 80%.');
+          observerUniquePieces.unobserve(this.uniquePiecesSection.nativeElement); // Désactive l'observation après déclenchement
+        }
+      });
+    }, { threshold: 0.8 });
+
+    // Observer pour la section Description
+    const observerDescription = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.intersectionRatio >= 0.8) {
+          this.showDescription = true;
+          console.log('La section Description est visible à 80%.');
+          observerDescription.unobserve(this.DescriptionSection.nativeElement); // Désactive l'observation après déclenchement
+        }
+      });
+    }, { threshold: 0.8 });
+    
+    const observerAvis = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.intersectionRatio >= 0.8) {
+          this.avisVisible = true;
+          console.log('La section Description est visible à 80%.');
+          observerAvis.unobserve(this.avisSection.nativeElement); // Désactive l'observation après déclenchement
+        }
+      });
+    }, { threshold: 0.8 });
+
+    if (this.uniquePiecesSection) {
+      observerUniquePieces.observe(this.uniquePiecesSection.nativeElement);
+    }
+
+    if (this.DescriptionSection) {
+      observerDescription.observe(this.DescriptionSection.nativeElement);
+    }
+    if (this.avisSection) {
+      observerAvis.observe(this.avisSection.nativeElement);
+    }
+  }
+  
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event): void {
@@ -100,25 +156,25 @@ export class HomeComponent implements OnInit {
         .slice(0, 3);
     });
   }
-  
+
   private parseDate(date: any): Date {
     if (date instanceof Date && !isNaN(date.getTime())) {
       return date; // Déjà une date valide
     }
-  
+
     if (date && typeof date.toDate === 'function') {
       return date.toDate(); // Convertir Firestore Timestamp en Date
     }
-  
+
     const parsedDate = new Date(date);
     if (!isNaN(parsedDate.getTime())) {
       return parsedDate; // Convertir string ou autre en Date
     }
-  
+
     console.warn('Date invalide détectée :', date);
     return new Date(0); // Retourner une date par défaut (1er janvier 1970)
   }
-  
+
   getVisibleProducts(sousCategoryId: string): Produit[] {
     const currentIndex = this.currentIndex[sousCategoryId] || 0;
     const products = this.groupedProducts[sousCategoryId] || [];

@@ -4,7 +4,8 @@
     <!-- Carrousels pour sousCategories -->
     <div *ngIf="sousCategories.length > 0; else produitParPierre">
       <div *ngFor="let sousCategory of sousCategories" class="mb-5">
-        <h3 class="text-center">{{ sousCategory.name }}</h3>
+        <h1 class="sous-categorie-title text-center mb-4" style="font-family: 'Poppins'; color: #b69e7c;">
+          {{ sousCategory.name }}</h1>
         <div class="carousel-container position-relative">
           <div class="d-flex justify-content-center">
             <!-- Produits visibles -->
@@ -18,7 +19,7 @@
               </span>
               <img [src]="produit.images[0]" class="card-img-top" [alt]="produit.name" />
               <div class="card-body">
-                <p class="card-price" style="color: #bd4800;">
+                <p class="card-price">
                   {{ produit.price }} DT
                 </p>
                 <h5 class="card-title">{{ produit.name }}</h5>
@@ -47,7 +48,8 @@
     <ng-template #produitParPierre>
       <div *ngIf="groupedProducts | keyvalue">
         <div *ngFor="let group of groupedProducts | keyvalue" class="mb-5">
-          <h3 class="text-center">Pierre : {{ group.key }}</h3>
+          <h1 class="sous-categorie-title text-center mb-4" style="font-family: 'Poppins'; color: #b69e7c;">
+            Pierre : {{ group.key }}</h1>
           <div *ngIf="group.value?.length! > 0" class="carousel-container position-relative">
             <div class="d-flex justify-content-center">
               <!-- Produits visibles -->
@@ -64,7 +66,7 @@
                 <img [src]="produit.images[0]" class="card-img-top" [alt]="produit.name" />
                 <!-- Details -->
                 <div class="card-body">
-                  <p class="card-price" style="color: #bd4800;">
+                  <p class="card-price">
                     {{ produit.price }} DT
                   </p>
                   <h5 class="card-title">{{ produit.name }}</h5>
