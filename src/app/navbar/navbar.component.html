@@ -25,12 +25,12 @@
         </span>
       </div>
     </div> -->
-<!-- Barre de recherche -->
-<div class="search-bar mx-auto" *ngIf="userType !== 'admin'" (click)="closeDropdown()">
-  <input class="search-input form-control" type="search" placeholder="Rechercher un produit..." #searchInput
-    (keyup.enter)="search(searchInput.value)" />
-  <i class="fa-solid fa-magnifying-glass search-icon" (click)="search(searchInput.value)"></i>
-</div>
+    <!-- Barre de recherche -->
+    <div class="search-bar mx-auto" *ngIf="userType !== 'admin'" (click)="closeDropdown()">
+      <input class="search-input form-control" type="search" placeholder="Rechercher un produit..." #searchInput
+        (keyup.enter)="search(searchInput.value)" />
+      <i class="fa-solid fa-magnifying-glass search-icon" (click)="search(searchInput.value)"></i>
+    </div>
 
 
 

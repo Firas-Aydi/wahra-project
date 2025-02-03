@@ -160,9 +160,9 @@
   transition: color 0.3s, background-color 0.3s;
 }
 
-.nav-link:hover {
+/* .nav-link:hover {
   color: #b69e7c;
-}
+} */
 
 /* Icônes */
 .nav-item i {
@@ -171,7 +171,7 @@
 }
 .nav-item i:hover {
   font-size: 18px;
-  color: #b69e7c;
+  color: #bb8249;
 }
 
 /* Sous-navbar */
@@ -200,9 +200,9 @@
   font-weight: 600;
 }
 
-/* .sub-nav-link:hover {
-  color: #b69e7c;
-} */
+.sub-nav-link:hover {
+  color: #bb8249;
+}
 
 .dropdown-menu {
   position: absolute;

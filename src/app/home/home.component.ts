@@ -46,7 +46,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
     this.updateVisibleProducts();
     this.loadAvis();
   }
-  
+
   ngAfterViewInit(): void {
     // Observer pour la section uniquePieces
     const observerUniquePieces = new IntersectionObserver(entries => {
@@ -69,7 +69,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
         }
       });
     }, { threshold: 0.8 });
-    
+
     const observerAvis = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.intersectionRatio >= 0.8) {
@@ -91,11 +91,17 @@ export class HomeComponent implements AfterViewInit, OnInit {
       observerAvis.observe(this.avisSection.nativeElement);
     }
   }
-  
+
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event): void {
     this.updateVisibleProducts();
+  }
+  // Fonction qui choisit aléatoirement l'effet entre 'fadeIn' et 'rotateIn'
+  getRandomEffect(): string {
+    const effects = ['fadeIn', 'rotateIn'];
+    const randomEffect = effects[Math.floor(Math.random() * effects.length)];
+    return randomEffect;
   }
 
   updateVisibleProducts(): void {

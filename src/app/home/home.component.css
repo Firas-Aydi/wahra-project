@@ -1,3 +1,70 @@
+/* Animation pour la transition d'apparition des images et vidéos */
+.fadeIn {
+  animation: fadeIn 2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Container 3D pour chaque élément du carrousel */
+.carousel-inner {
+  position: relative;
+  perspective: 1200px; /* Perspective 3D */
+}
+
+.carousel-item-content {
+  position: relative;
+  transform-style: preserve-3d;
+  animation: rotateIn 2s ease-in-out;
+}
+
+/* Animation pour l'effet 3D de rotation */
+@keyframes rotateIn {
+  0% {
+    transform: rotateY(90deg);
+    opacity: 0;
+  }
+  100% {
+    transform: rotateY(0deg);
+    opacity: 1;
+  }
+}
+
+/* Pour les images dans le carrousel */
+.carousel-item img, .carousel-item video {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+/* Animation de rebond pour l'icône de défilement */
+.bounce {
+  animation: bounce 1s infinite alternate;
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+
+
 /* Conteneur principal */
 .sous-categorie-title{
   font-weight: 700;
@@ -297,6 +364,7 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   cursor: pointer;
   border-radius: 0px;
+  border: none;
 }
 
 .card:hover {
