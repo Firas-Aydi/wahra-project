@@ -5,6 +5,7 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -17,7 +18,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-stone-management',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule,FormsModule],
   templateUrl: './stone-management.component.html',
   styleUrls: ['./stone-management.component.css'],
 })
@@ -33,6 +34,8 @@ export class StoneManagementComponent implements OnInit {
 
   productToDeleteId: string | null = null; // ID du produit à supprimer
   productToDeleteImageUrl: string | null = null;
+
+  searchTerm: string = '';
 
   constructor(
     private pierreService: PierreService,
@@ -68,6 +71,15 @@ export class StoneManagementComponent implements OnInit {
   get categoryIdArray() {
     return this.form.get('categoryId') as FormArray;
   }
+
+    filteredProduits(): Pierre[] {
+      if (!this.searchTerm) {
+        return this.pierres;
+      }
+      return this.pierres.filter(produit =>
+        produit.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    }
 
   onCategoryChange(categoryId: string, event: Event): void {
     const input = event.target as HTMLInputElement; // Cast de l'event.target vers un input HTML

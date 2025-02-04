@@ -77,6 +77,14 @@
 </div>
 
 <!-- Tableau des pierres -->
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <input type="text" [(ngModel)]="searchTerm" placeholder="Rechercher un produit..." class="form-control mt-5 mb-3">
+    </div>
+  </div>
+</div>
+
 <table>
   <thead>
     <tr>
@@ -89,7 +97,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let pierre of pierres; let i = index">
+    <tr *ngFor="let pierre of filteredProduits(); let i = index">
       <td>{{ pierre.name }}</td>
       <td>{{ pierre.description }}</td>
       <td>
@@ -107,8 +115,9 @@
       </td>
       <td>{{ getCategoryNames(pierre.categoryId) }}</td>
       <td>
-        <button (click)="editPierre(i)">Modifier</button>
-        <button (click)="openConfirmationModal(pierre.id, pierre.images[0] || '')">Supprimer</button>
+        <button (click)="editPierre(i)"><i class="fa-solid fa-pen" style="font-size: 12px;"></i></button>
+        <button (click)="openConfirmationModal(pierre.id, pierre.images[0] || '')"><i class="fa-regular fa-trash-can"
+            style="font-size: 12px;"></i></button>
       </td>
     </tr>
   </tbody>

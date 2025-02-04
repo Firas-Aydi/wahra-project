@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -15,7 +16,7 @@ import { forkJoin } from 'rxjs';
 @Component({
   selector: 'app-product-management',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './product-management.component.html',
   styleUrls: ['./product-management.component.css'],
 })
@@ -35,6 +36,8 @@ export class ProductManagementComponent implements OnInit {
 
   selectedVideoPreviews: string[] = [];
   selectedVideoFiles: File[] = [];
+
+  searchTerm: string = '';
 
   constructor(
     private productService: ProductService,
@@ -99,20 +102,15 @@ export class ProductManagementComponent implements OnInit {
     }
     return pierreIds.map(id => this.pierres.find(p => p.id === id)?.name || 'Aucune pierre').join(', ');
   }
-  // onFileChange(event: any) {
-  //   const files: FileList = event.target.files;
-  //   this.selectedFiles = Array.from(files);
 
-  //   // Générez les URLs de prévisualisation
-  //   this.selectedImagePreviews = [];
-  //   for (const file of this.selectedFiles) {
-  //     const reader = new FileReader();
-  //     reader.onload = (e: any) => {
-  //       this.selectedImagePreviews.push(e.target.result);
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // }
+  filteredProduits(): Produit[] {
+    if (!this.searchTerm) {
+      return this.produits;
+    }
+    return this.produits.filter(produit =>
+      produit.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
+  }
 
   // Ajoutez une méthode pour supprimer une image sélectionnée
   removeImage(imageUrl: string): void {

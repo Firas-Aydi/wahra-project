@@ -27,6 +27,8 @@ export class UniquePiecesManagementComponent implements OnInit {
   selectedVideoPreviews: string[] = [];
   selectedVideoFiles: File[] = [];
 
+  searchTerm: string = '';
+
   constructor(
     private uniquePieceService: UniquePieceService,
     private pierreService: PierreService,
@@ -73,6 +75,15 @@ export class UniquePiecesManagementComponent implements OnInit {
     }
     return pierreIds.map(id => this.pierres.find(p => p.id === id)?.name || 'Aucune pierre').join(', ');
   }
+
+    filteredProduits(): UniquePiece[] {
+      if (!this.searchTerm) {
+        return this.uniquePieces;
+      }
+      return this.uniquePieces.filter(produit =>
+        produit.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    }
 
   selectPiece(piece: UniquePiece): void {
     this.selectedPiece = piece;

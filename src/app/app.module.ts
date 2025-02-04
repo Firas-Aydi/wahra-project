@@ -11,10 +11,10 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { manageAmbreComponent } from './manageAmbre/manageAmbre.component';
-import { AmbreComponent } from './ambre/ambre.component';
+// import { manageAmbreComponent } from './manageAmbre/manageAmbre.component';
+// import { AmbreComponent } from './ambre/ambre.component';
 import { CartComponent } from './cart/cart.component';
-import { AmbrdetailComponent } from './ambrdetail/ambrdetail.component';
+// import { AmbrdetailComponent } from './ambrdetail/ambrdetail.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { SousCategoriesComponent } from './sous-categories/sous-categories.component';
 import { ProduitsComponent } from './produits/produits.component';
@@ -24,7 +24,7 @@ import { CommandeComponent } from './commande/commande.component';
 import { FooterComponent } from './footer/footer.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { ConsultationComponent } from './consultation/consultation.component';
-import { NewsManagementComponent } from './admin/news-management/news-management.component';
+// import { NewsManagementComponent } from './admin/news-management/news-management.component';
 import { UniquePiecesManagementComponent } from './admin/unique-pieces-management/unique-pieces-management.component';
 import { NewsComponent } from './news/news.component';
 import { PieceUniqueComponent } from './piece-unique/piece-unique.component';
@@ -38,10 +38,10 @@ import { AvisComponent } from './avis/avis.component';
     LoginComponent,
     HomeComponent,
     NavbarComponent,
-    manageAmbreComponent,
-    AmbreComponent,
+    // manageAmbreComponent,
+    // AmbreComponent,
     CartComponent,
-    AmbrdetailComponent,
+    // AmbrdetailComponent,
     CategoriesComponent,
     SousCategoriesComponent,
     ProduitsComponent,
@@ -51,7 +51,7 @@ import { AvisComponent } from './avis/avis.component';
     FooterComponent,
     SearchResultComponent,
     ConsultationComponent,
-    NewsManagementComponent,
+    // NewsManagementComponent,
     UniquePiecesManagementComponent,
     NewsComponent,
     PieceUniqueComponent,

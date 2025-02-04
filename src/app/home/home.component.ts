@@ -1,15 +1,13 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
 import { SousCategorieService } from '../services/sous-categorie.service';
 import { ProductService } from '../services/produit.service';
+import { UniquePieceService } from '../services/unique-piece.service';
+import { AvisService } from '../services/avis.service';
 import { SousCategorie } from '../model/sous-categorie';
 import { Produit } from '../model/produit';
-import { Router } from '@angular/router';
-import { UniquePieceService } from '../services/unique-piece.service';
 import { UniquePiece } from '../model/unique-piece';
-import { AvisService } from '../services/avis.service';
 import { Avis } from '../model/avis';
-
-import { ElementRef, AfterViewInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -24,6 +22,8 @@ export class HomeComponent implements AfterViewInit, OnInit {
   avis: Avis[] = [];
   currentIndex: { [key: string]: number } = {};
   visibleProducts = 5;
+
+  effects: string[] = [];
 
   @ViewChild('uniquePiecesSection', { static: false }) uniquePiecesSection!: ElementRef;
   isVisible = false;
@@ -41,6 +41,8 @@ export class HomeComponent implements AfterViewInit, OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.initializeEffects();
+
     this.loadSousCategoriesWithProducts();
     this.loadUniquePieces();
     this.updateVisibleProducts();
@@ -48,61 +50,46 @@ export class HomeComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
-    // Observer pour la section uniquePieces
-    const observerUniquePieces = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.intersectionRatio >= 0.8) {
-          this.isVisible = true;
-          console.log('La section uniquePieces est visible à 80%.');
-          observerUniquePieces.unobserve(this.uniquePiecesSection.nativeElement); // Désactive l'observation après déclenchement
-        }
-      });
-    }, { threshold: 0.8 });
-
-    // Observer pour la section Description
-    const observerDescription = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.intersectionRatio >= 0.8) {
-          this.showDescription = true;
-          console.log('La section Description est visible à 80%.');
-          observerDescription.unobserve(this.DescriptionSection.nativeElement); // Désactive l'observation après déclenchement
-        }
-      });
-    }, { threshold: 0.8 });
-
-    const observerAvis = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.intersectionRatio >= 0.8) {
-          this.avisVisible = true;
-          console.log('La section Description est visible à 80%.');
-          observerAvis.unobserve(this.avisSection.nativeElement); // Désactive l'observation après déclenchement
-        }
-      });
-    }, { threshold: 0.8 });
-
-    if (this.uniquePiecesSection) {
-      observerUniquePieces.observe(this.uniquePiecesSection.nativeElement);
-    }
-
-    if (this.DescriptionSection) {
-      observerDescription.observe(this.DescriptionSection.nativeElement);
-    }
-    if (this.avisSection) {
-      observerAvis.observe(this.avisSection.nativeElement);
-    }
+    this.setupIntersectionObservers();
   }
-
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event): void {
     this.updateVisibleProducts();
   }
-  // Fonction qui choisit aléatoirement l'effet entre 'fadeIn' et 'rotateIn'
-  getRandomEffect(): string {
-    const effects = ['fadeIn', 'rotateIn'];
-    const randomEffect = effects[Math.floor(Math.random() * effects.length)];
-    return randomEffect;
+
+  // Fonction qui alterne entre 'fadeIn' et 'rotateIn'
+  initializeEffects(): void {
+    this.effects = ['fadeIn', 'rotateIn', 'fadeIn'];
   }
+
+  setupIntersectionObservers(): void {
+    const options = { threshold: 0.8 };
+
+    const observerCallback = (entry: IntersectionObserverEntry, flag: 'isVisible' | 'showDescription' | 'avisVisible', observer: IntersectionObserver) => {
+      if (entry.intersectionRatio >= 0.8) {
+        this[flag] = true;
+        observer.unobserve(entry.target);
+      }
+    };
+
+    const observerUniquePieces = new IntersectionObserver(entries => {
+      entries.forEach(entry => observerCallback(entry, 'isVisible', observerUniquePieces));
+    }, options);
+
+    const observerDescription = new IntersectionObserver(entries => {
+      entries.forEach(entry => observerCallback(entry, 'showDescription', observerDescription));
+    }, options);
+
+    const observerAvis = new IntersectionObserver(entries => {
+      entries.forEach(entry => observerCallback(entry, 'avisVisible', observerAvis));
+    }, options);
+
+    if (this.uniquePiecesSection) observerUniquePieces.observe(this.uniquePiecesSection.nativeElement);
+    if (this.DescriptionSection) observerDescription.observe(this.DescriptionSection.nativeElement);
+    if (this.avisSection) observerAvis.observe(this.avisSection.nativeElement);
+  }
+
 
   updateVisibleProducts(): void {
     const width = window.innerWidth;

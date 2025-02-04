@@ -98,6 +98,14 @@
 </div>
 
 <!-- Tableau des produits -->
+<div class="container">
+    <div class="row">
+      <div class="col-12">
+        <input type="text" [(ngModel)]="searchTerm" placeholder="Rechercher un produit..." class="form-control mt-5 mb-3">
+      </div>
+    </div>
+  </div>
+  
 <table>
     <thead>
         <tr>
@@ -111,7 +119,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let produit of uniquePieces; let i = index">
+        <tr *ngFor="let produit of filteredProduits(); let i = index">
             <td>{{ produit.name }}</td>
             <td>{{ produit.description }}</td>
             <td>{{ produit.price | currency:'DT'}}</td>

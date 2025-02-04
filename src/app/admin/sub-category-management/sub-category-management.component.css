@@ -111,6 +111,7 @@ form .btn-secondary:hover {
   
   table button {
     padding: 5px 10px;
+    margin: 1px;
     background-color: #007bff;
     color: white;
     border: none;

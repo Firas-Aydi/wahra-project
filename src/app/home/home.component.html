@@ -1,20 +1,20 @@
-<section class="banner">
+<section class="banner"> 
   <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
       <!-- Image 1 -->
-      <div class="carousel-item active" [ngClass]="getRandomEffect()">
+      <div class="carousel-item active" [ngClass]="effects[0]">
         <div class="carousel-item-content">
           <img src="assets/carrousel.jpeg" class="d-block w-100" alt="carrousel">
         </div>
       </div>
       <!-- Image 2 -->
-      <div class="carousel-item" [ngClass]="getRandomEffect()">
+      <div class="carousel-item" [ngClass]="effects[1]">
         <div class="carousel-item-content">
           <img src="assets/carrousel2.jpeg" class="d-block w-100" alt="carrousel">
         </div>
       </div>
       <!-- Vidéo -->
-      <div class="carousel-item" [ngClass]="getRandomEffect()">
+      <div class="carousel-item" [ngClass]="effects[2]">
         <div class="carousel-item-content">
           <video class="d-block w-100 h-100" autoplay loop muted>
             <source src="assets/wahra2.mp4" type="video/mp4">
@@ -40,6 +40,7 @@
     </a>
   </div>
 </section>
+
 
 
 

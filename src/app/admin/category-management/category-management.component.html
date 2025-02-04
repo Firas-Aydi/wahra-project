@@ -1,16 +1,16 @@
 <div>
-    <h2>Gestion des Catégories</h2>
-  
-    <!-- Formulaire d'ajout/modification -->
-    <form [formGroup]="categoryForm" (ngSubmit)="submitCategoryForm()">
-      <div>
-        <label>Nom :</label>
-        <input formControlName="name" placeholder="Nom de la catégorie" />
-        <div *ngIf="categoryForm.get('name')?.invalid && categoryForm.get('name')?.touched">
-          Le nom est obligatoire.
-        </div>
+  <h2>Gestion des Catégories</h2>
+
+  <!-- Formulaire d'ajout/modification -->
+  <form [formGroup]="categoryForm" (ngSubmit)="submitCategoryForm()">
+    <div>
+      <label>Nom :</label>
+      <input formControlName="name" placeholder="Nom de la catégorie" />
+      <div *ngIf="categoryForm.get('name')?.invalid && categoryForm.get('name')?.touched">
+        Le nom est obligatoire.
       </div>
-      <!-- <div>
+    </div>
+    <!-- <div>
         <label>Description :</label>
         <textarea formControlName="description" placeholder="Description"></textarea>
       </div>
@@ -21,35 +21,35 @@
           L'image est obligatoire.
         </div>
       </div> -->
-      <button type="submit" [disabled]="categoryForm.invalid">
-        {{ isEditMode ? 'Mettre à jour' : 'Ajouter' }}
-      </button>
-      <!-- <button type="button" (click)="cancel()">Réinitialiser</button> -->
-    </form>
-  
-    <!-- Tableau des catégories -->
-    <table>
-      <thead>
-        <tr>
-          <th>Nom</th>
-          <!-- <th>Description</th>
+    <button type="submit" [disabled]="categoryForm.invalid">
+      {{ isEditMode ? 'Mettre à jour' : 'Ajouter' }}
+    </button>
+    <!-- <button type="button" (click)="cancel()">Réinitialiser</button> -->
+  </form>
+
+  <!-- Tableau des catégories -->
+  <table>
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <!-- <th>Description</th>
           <th>Image</th> -->
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let category of categories">
-          <td>{{ category.name }}</td>
-          <!-- <td>{{ category.description }}</td>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let category of categories">
+        <td>{{ category.name }}</td>
+        <!-- <td>{{ category.description }}</td>
           <td>
             <img [src]="category.image" alt="Image de catégorie" width="50" />
           </td> -->
-          <td>
-            <button (click)="editCategory(category)">Modifier</button>
-            <button (click)="deleteCategory(category.id)">Supprimer</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
+        <td>
+          <button (click)="editCategory(category)"><i class="fa-solid fa-pen" style="font-size: 12px;"></i></button>
+          <button (click)="deleteCategory(category.id)"><i class="fa-regular fa-trash-can"
+              style="font-size: 12px;"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

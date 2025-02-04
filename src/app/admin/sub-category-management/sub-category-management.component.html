@@ -56,8 +56,9 @@
         <td>{{ subCategory.name }}</td>
         <td>{{ getCategoryNames(subCategory.categoryId) }}</td>
         <td>
-          <button (click)="editSubCategory(i)">Modifier</button>
-          <button (click)="deleteSubCategory(subCategory.id)">Supprimer</button>
+          <button (click)="editSubCategory(i)"><i class="fa-solid fa-pen" style="font-size: 12px;"></i></button>
+          <button (click)="deleteSubCategory(subCategory.id)"><i class="fa-regular fa-trash-can"
+              style="font-size: 12px;"></i></button>
         </td>
       </tr>
     </tbody>
