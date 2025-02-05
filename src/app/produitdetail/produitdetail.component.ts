@@ -18,7 +18,7 @@ export class ProduitdetailComponent {
 
   selectedImage: string = '';
   selectedVideo: string = '';
-  selectedMediaType: 'image' | 'video' = 'image'; // Pour gérer le type de média actuellement affiché
+  selectedMediaType: 'image' | 'video' = 'image';
 
   quantity: number = 1;
   quantityError: string | null = null;

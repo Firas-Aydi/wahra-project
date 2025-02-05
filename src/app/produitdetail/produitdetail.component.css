@@ -95,32 +95,66 @@ h4 {
   font-size: 16px;
 }
 
-/* .description {
-  margin-bottom: 20px; 
-  padding: 10px;
-  background-color: #f9f9f9; 
-  border: 1px solid #ddd; 
+.bienfait-container {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #f9f9f9;
+  padding: 20px;
   border-radius: 8px;
-} */
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
+.bienfait-text {
+  padding: 10px;
+}
 
 .bienfait-title {
-  margin-bottom: 10px;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
-  color: #333; /* Titre en couleur sombre */
+  color: #333;
+  margin-bottom: 10px;
 }
 
 .bienfait-list {
-  list-style-type: disc; /* Puces standards */
-  padding-left: 30px; /* Indentation des listes */
-  margin-bottom: 30px;
+  list-style-type: disc;
+  padding-left: 20px;
 }
 
 .bienfait-item {
   font-size: 16px;
-  line-height: 1.5; /* Espacement entre les lignes */
-  margin-bottom: 5px; /* Espacement entre les items */
+  line-height: 1.5;
+  margin-bottom: 15px;
 }
+
+.bienfait-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px; /* S'assure que l'image s'aligne bien */
+}
+
+.bienfait-image img {
+  max-width: 200px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive : Alignement vertical en mobile */
+@media (max-width: 768px) {
+  .bienfait-container {
+    flex-direction: column;
+  }
+
+  .bienfait-text, 
+  .bienfait-image {
+    text-align: center;
+    width: 100%;
+  }
+}
+
 
 
 /* Prix */

@@ -1,3 +1,9 @@
+.carousel-item img{
+  object-fit: cover;
+  height: 70vh;
+}
+
+
 
 .cards-container {
   display: flex;
