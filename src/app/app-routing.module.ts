@@ -39,11 +39,7 @@ const routes: Routes = [
   { path: 'consultation', component: ConsultationComponent },
   { path: 'avis', component: AvisComponent },
   
-  // { path: 'manageAmbre', component: manageAmbreComponent },
-  // { path: 'ambre', component: AmbreComponent },
-  // { path: 'ambres/:id', component: AmbrdetailComponent },
-  
-  // { path: 'categories', component: CategoriesComponent },
+
   { path: 'categorie/:categorieId', component: SousCategoriesComponent },
   { path: 'sous-categorie/:sousCategorieId', component: ProduitsComponent },
   { path: 'pierres/:pierreId', component: ProduitsComponent },

@@ -16,16 +16,6 @@
 
 
     <!-- Barre de recherche -->
-    <!-- <div class="search-bar mx-auto" *ngIf="userType !== 'admin'" (click)="closeDropdown()">
-      <div class="input-group">
-        <input class="search-input form-control" type="search" placeholder="Rechercher un produit..." #searchInput
-          (keyup.enter)="search(searchInput.value)" />
-        <span class="input-group-text" (click)="search(searchInput.value)">
-          <i class="fa-solid fa-magnifying-glass  search-icon"></i>
-        </span>
-      </div>
-    </div> -->
-    <!-- Barre de recherche -->
     <div class="search-bar mx-auto" *ngIf="userType !== 'admin'" (click)="closeDropdown()">
       <input class="search-input form-control" type="search" placeholder="Rechercher un produit..." #searchInput
         (keyup.enter)="search(searchInput.value)" />
@@ -70,14 +60,13 @@
 
       <ul class="navbar-nav mx-auto">
         <li class="nav-item dropdown position-relative">
-          <a (click)="closeDropdown()" class="sub-nav-link d-flex align-items-center me-3 ms-3"
-            routerLink="/">Accueil</a>
+          <a (click)="closeDropdown()" class="sub-nav-link d-flex align-items-center " routerLink="/">Accueil</a>
         </li>
 
         <!-- Boucle sur les catégories -->
         <ng-container *ngIf="userType !== 'admin'">
           <li class="nav-item dropdown position-relative" *ngFor="let category of categories">
-            <a class="sub-nav-link d-flex align-items-center me-3 ms-3 dropdown-toggle"
+            <a class="sub-nav-link d-flex align-items-center me-1 ms-1 dropdown-toggle"
               id="categoryDropdown{{ category.id }}" role="button" aria-expanded="false"
               [routerLink]="['/categorie', category.id]">
               {{ category.name }}
@@ -101,60 +90,48 @@
             </ul>
           </li>
           <li class="nav-item dropdown position-relative" *ngIf="userType !== 'admin'">
-            <a (click)="closeDropdown()" class="sub-nav-link d-flex align-items-center me-3 ms-3"
+            <a (click)="closeDropdown()" class="sub-nav-link d-flex align-items-center me-1 ms-1"
               routerLink="/news">Nouveautés</a>
           </li>
           <li class="nav-item dropdown position-relative" *ngIf="userType !== 'admin'">
-            <a (click)="closeDropdown()" class="sub-nav-link d-flex align-items-center me-3 ms-3"
+            <a (click)="closeDropdown()" class="sub-nav-link d-flex align-items-center "
               routerLink="/unique-pieces">Pièces Uniques</a>
           </li>
           <li class="nav-item dropdown position-relative" *ngIf="userType !== 'admin'">
-            <a (click)="closeDropdown()" class="sub-nav-link d-flex align-items-center me-3 ms-3"
+            <a (click)="closeDropdown()" class="sub-nav-link d-flex align-items-center me-1 ms-1"
               routerLink="/consultation">Consultation</a>
           </li>
           <li class="nav-item dropdown position-relative" *ngIf="userType !== 'admin'">
-            <a (click)="closeDropdown()" class="sub-nav-link d-flex align-items-center me-3 ms-3" routerLink="/propos">À
-              propos de nous</a>
+            <a (click)="closeDropdown()" class="sub-nav-link d-flex align-items-center" routerLink="/propos">À propos de
+              nous</a>
           </li>
         </ng-container>
 
         <!-- Lien pour les administrateurs -->
         <li class="nav-item" *ngIf="isUser && userType === 'admin'">
-          <a class="sub-nav-link d-flex align-items-center me-3 ms-3" routerLink="/categories-management">Catégories</a>
+          <a class="sub-nav-link d-flex align-items-center me-1 ms-1" routerLink="/categories-management">Catégories</a>
         </li>
         <li class="nav-item" *ngIf="isUser && userType === 'admin'">
-          <a class="sub-nav-link d-flex align-items-center me-3 ms-3"
+          <a class="sub-nav-link d-flex align-items-center me-1 ms-1"
             routerLink="/sub-categories-management">Sous-Catégories</a>
         </li>
         <li class="nav-item" *ngIf="isUser && userType === 'admin'">
-          <a class="sub-nav-link d-flex align-items-center me-3 ms-3" routerLink="/products-management">Produits</a>
+          <a class="sub-nav-link d-flex align-items-center me-1 ms-1" routerLink="/products-management">Produits</a>
         </li>
         <li class="nav-item" *ngIf="isUser && userType === 'admin'">
-          <a class="sub-nav-link d-flex align-items-center me-3 ms-3" routerLink="/stones-management">Pierres</a>
+          <a class="sub-nav-link d-flex align-items-center me-1 ms-1" routerLink="/stones-management">Pierres</a>
         </li>
         <li class="nav-item" *ngIf="isUser && userType === 'admin'">
-          <a class="sub-nav-link d-flex align-items-center me-3 ms-3" routerLink="/unique-pieces-management">Pièces
+          <a class="sub-nav-link d-flex align-items-center me-1 ms-1" routerLink="/unique-pieces-management">Pièces
             Uniques</a>
         </li>
         <li class="nav-item" *ngIf="isUser && userType === 'admin'">
-          <a class="sub-nav-link d-flex align-items-center me-3 ms-3"
+          <a class="sub-nav-link d-flex align-items-center me-1 ms-1"
             routerLink="/consultations-management">Consultations</a>
         </li>
         <li class="nav-item" *ngIf="isUser && userType === 'admin'">
-          <a class="sub-nav-link d-flex align-items-center me-3 ms-3" routerLink="/avis-management">Avis</a>
+          <a class="sub-nav-link d-flex align-items-center me-1 ms-1" routerLink="/avis-management">Avis</a>
         </li>
-        <!-- <li class="nav-item" *ngIf="isUser && userType === 'admin'">
-          <a class="sub-nav-link" routerLink="/users-management">Utilisateurs</a>
-        </li> -->
-        <!-- <li class="nav-item" *ngIf="isUser && userType === 'admin'">
-          <a class="sub-nav-link" routerLink="/carts-management">Paniers</a>
-        </li> -->
-        <!-- <li class="nav-item">
-          <a class="sub-nav-link" routerLink="ambre" (click)="toggleNavbar()">Ambre</a>
-        </li>
-        <li class="nav-item">
-          <a class="sub-nav-link" routerLink="pierre" (click)="toggleNavbar()">Pierre</a>
-        </li> -->
       </ul>
     </div>
   </div>
@@ -173,11 +150,12 @@
     <li class="nav-item me-auto" style="margin-left: -15px;">
       <a (click)="closeDropdown()" class="nav-link chic-link" routerLink="/">Accueil</a>
     </li>
-    <hr class="category-separator">
+    <hr class="category-separator mt-1">
     <ng-container *ngIf="userType !== 'admin'">
       <li class="nav-item dropdown" *ngFor="let category of categories">
         <div class="d-flex align-items-center justify-content-between category-item">
-          <a (click)="closeDropdown()" class="nav-link chic-link me-3 ms-3" [routerLink]="['/categorie', category.id]">
+          <a (click)="closeDropdown()" class="nav-link chic-link me-auto" style="margin-left: 15px;"
+            [routerLink]="['/categorie', category.id]">
             {{ category.name }}
           </a>
           <i class="fas fa-chevron-down dropdown-arrow" [class.rotate]="isDropdownOpen === category.id"
@@ -202,29 +180,41 @@
         </ul>
       </li>
       <li class="nav-item me-auto" style="margin-left: -15px;" *ngIf="userType !== 'admin'">
+        <a (click)="closeDropdown()" class="nav-link" routerLink="/news">Nouveautés</a>
+      </li>
+      <hr class="category-separator">
+      <li class="nav-item me-auto" style="margin-left: -15px;" *ngIf="userType !== 'admin'">
+        <a (click)="closeDropdown()" class="nav-link" routerLink="/unique-pieces">Pièces Uniques</a>
+      </li>
+      <hr class="category-separator">
+      <li class="nav-item me-auto" style="margin-left: -15px;" *ngIf="userType !== 'admin'">
         <a (click)="closeDropdown()" class="nav-link" routerLink="/consultation">Consultation</a>
+      </li>
+      <hr class="category-separator">
+      <li class="nav-item me-auto" style="margin-left: -15px;" *ngIf="userType !== 'admin'">
+        <a (click)="closeDropdown()" class="nav-link" routerLink="/propos">À propos de nous</a>
       </li>
     </ng-container>
     <!-- Lien pour les administrateurs -->
-    <li class="nav-item" *ngIf="isUser && userType === 'admin'">
+    <li class="nav-item me-auto" style="margin-left: -15px;" *ngIf="isUser && userType === 'admin'">
       <a (click)="closeDropdown()" class="nav-link" routerLink="/categories-management">Catégories</a>
     </li>
-    <li class="nav-item" *ngIf="isUser && userType === 'admin'">
+    <li class="nav-item me-auto" style="margin-left: -15px;" *ngIf="isUser && userType === 'admin'">
       <a (click)="closeDropdown()" class="nav-link" routerLink="/sub-categories-management">Sous-Catégories</a>
     </li>
-    <li class="nav-item" *ngIf="isUser && userType === 'admin'">
+    <li class="nav-item me-auto" style="margin-left: -15px;" *ngIf="isUser && userType === 'admin'">
       <a (click)="closeDropdown()" class="nav-link" routerLink="/products-management">Produits</a>
     </li>
-    <li class="nav-item" *ngIf="isUser && userType === 'admin'">
+    <li class="nav-item me-auto" style="margin-left: -15px;" *ngIf="isUser && userType === 'admin'">
       <a (click)="closeDropdown()" class="nav-link" routerLink="/stones-management">Pierres</a>
     </li>
-    <li class="nav-item" *ngIf="isUser && userType === 'admin'">
+    <li class="nav-item me-auto" style="margin-left: -15px;" *ngIf="isUser && userType === 'admin'">
       <a (click)="closeDropdown()" class="nav-link" routerLink="/unique-pieces-management">Pièces Uniques</a>
     </li>
-    <li class="nav-item" *ngIf="isUser && userType === 'admin'">
+    <li class="nav-item me-auto" style="margin-left: -15px;" *ngIf="isUser && userType === 'admin'">
       <a (click)="closeDropdown()" class="nav-link" routerLink="/consultations-management">Consultations</a>
     </li>
-    <li class="nav-item" *ngIf="isUser && userType === 'admin'">
+    <li class="nav-item me-auto" style="margin-left: -15px;" *ngIf="isUser && userType === 'admin'">
       <a (click)="closeDropdown()" class="nav-link" routerLink="/avis-management">Avis</a>
     </li>
   </ul>

@@ -12,7 +12,7 @@ export class SousCategoriesComponent implements OnInit {
   produitParPierre: Produit[] = [];
   categorieId: string = '';
   pierreCurrentIndex: number = 0;
-  visibleProducts: number = 5;
+  visibleProducts: number = 4;
 
   groupedProducts: { [key: string]: Produit[] } = {};
   sousCategories: { id: string; name: string }[] = [];
@@ -52,7 +52,7 @@ export class SousCategoriesComponent implements OnInit {
     } else if (width <= 1200) {
       this.visibleProducts = 4; // 4 produits par ligne sur grand écran
     } else {
-      this.visibleProducts = 5; // 5 produits par ligne sur bureau
+      this.visibleProducts = 4; // 5 produits par ligne sur bureau
     }
   }
 

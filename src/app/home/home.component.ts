@@ -21,7 +21,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
   groupedProducts: { [key: string]: Produit[] } = {};
   avis: Avis[] = [];
   currentIndex: { [key: string]: number } = {};
-  visibleProducts = 5;
+  visibleProducts = 4;
 
   effects: string[] = [];
 
@@ -102,7 +102,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
     } else if (width <= 1200) {
       this.visibleProducts = 4; // 4 produits par ligne sur grand écran
     } else {
-      this.visibleProducts = 5; // 5 produits par ligne sur bureau
+      this.visibleProducts = 4; // 5 produits par ligne sur bureau
     }
   }
 

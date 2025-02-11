@@ -1,57 +1,58 @@
-/* Conteneur pour les cartes */
 .cards-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px; /* Espacement entre les cartes */
-    /* justify-content: space-between;  */
-  }
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
   
-  /* Carte */
-  .card {
-    flex: 1 0 calc(20% - 0px); /* 20% de la largeur moins les marges */
-    max-width: calc(20% - 20px); /* Assure la même largeur maximale */
-    display: flex;
-    flex-direction: column;
-    border-radius: 0px;
-    cursor: pointer;
-    transition: transform 0.2s;
-  }
+/* Carte */
+.card {
+  flex: 1 0 calc(25% - 20px); /* Ajustement de la largeur en tenant compte des marges */
+  max-width: calc(25% - 20px); /* Assure une largeur maximale cohérente */
+  display: flex;
+  flex-direction: column;
+  border-radius: 0px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin: 10px;
+  border: none;
+}
+
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+.card-img-top {
+  width: 100%; /* Assurez-vous qu'elle prend toute la largeur de la carte */
+  /* height: 100%; */
+  aspect-ratio: 1 / 1; /* Force un ratio 1:1 (carré) */
+  object-fit: cover; /* Garantit que l'image remplit bien le cadre sans déformation */
+  border-radius: 0px;
+}
   
-  .card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-  }
-  
-  .card-img-top {
-    height: 230px;
-    border-radius: 0px;
-    object-fit: cover;
-  }
-  
-  .stock-badge {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    border-radius: 10px;
-    padding: 6px 12px;
-    z-index: 2;
-  }
+.stock-badge {
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+  font-size: 0.8rem;
+  font-weight: bold;
+  border-radius: 10px;
+  padding: 5px 10px;
+}
   
   .card-body {
-    padding: 15px;
+    padding: 10px;
   }
-  
   .card-title {
-    font-size: 1rem;
-    line-height: 1.5rem;
+    font-size: 16px;
+    line-height: 1rem;
+    font-family: 'Fira Sans';
   }
-  
   .card-price {
-    color: #bd4800;
+    color: #bb8249;
     font-size: 20px;
     font-family: "Fira Sans";
+    font-weight: bold;
   }
   /* Message "Pas de produit" */
 .no-products-message {

@@ -409,6 +409,7 @@
 .category-separator {
   /* border: none; */
   /* border-top: 1px solid #ddd; */
+  /* margin-top: 4px; */
   margin: 0;
   width: 320px;
 }
