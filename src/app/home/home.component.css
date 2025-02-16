@@ -1,3 +1,11 @@
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+
+
 /* Animation pour la transition d'apparition des images et vidéos */
 .fadeIn {
   animation: fadeIn 2s ease-in-out;

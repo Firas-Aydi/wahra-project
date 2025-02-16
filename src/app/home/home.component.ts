@@ -24,6 +24,7 @@ export class HomeComponent implements AfterViewInit, OnInit {
   visibleProducts = 4;
 
   effects: string[] = [];
+  isLoading: boolean = true;
 
   @ViewChild('uniquePiecesSection', { static: false }) uniquePiecesSection!: ElementRef;
   isVisible = false;
@@ -41,12 +42,23 @@ export class HomeComponent implements AfterViewInit, OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.initializeEffects();
+    this.isLoading = true;
 
-    this.loadSousCategoriesWithProducts();
-    this.loadUniquePieces();
-    this.updateVisibleProducts();
-    this.loadAvis();
+    Promise.all([
+      this.loadSousCategoriesWithProducts(),
+      this.loadUniquePieces(),
+      this.loadAvis(),
+      this.initializeEffects(),
+      this.updateVisibleProducts()
+    ]).then(() => {
+      this.isLoading = false; // Terminer le chargement lorsque toutes les requêtes sont complètes
+    });
+    // this.initializeEffects();
+
+    // this.loadSousCategoriesWithProducts();
+    // this.loadUniquePieces();
+    // this.updateVisibleProducts();
+    // this.loadAvis();
   }
 
   ngAfterViewInit(): void {
@@ -106,47 +118,106 @@ export class HomeComponent implements AfterViewInit, OnInit {
     }
   }
 
-  loadUniquePieces(): void {
-    this.uniquePieceService.getAllUniquePieces().subscribe(
-      (pieces) => {
-        this.uniquePieces = pieces;
-      },
-      (error) => {
-        console.error('Error loading unique pieces:', error);
-      }
-    );
+  // loadUniquePieces(): void {
+  //   this.uniquePieceService.getAllUniquePieces().subscribe(
+  //     (pieces) => {
+  //       this.uniquePieces = pieces;
+  //     },
+  //     (error) => {
+  //       console.error('Error loading unique pieces:', error);
+  //     }
+  //   );
+  // }
+
+  // loadSousCategoriesWithProducts(): void {
+  //   this.sousCategorieService.getSousCategories().subscribe((sousCategories) => {
+  //     this.sousCategories = sousCategories;
+
+  //     sousCategories.forEach((sousCategorie) => {
+  //       this.productService
+  //         .getProductsBySousCategorie(sousCategorie.id)
+  //         .subscribe((produits) => {
+  //           if (!this.groupedProducts[sousCategorie.id]) {
+  //             this.groupedProducts[sousCategorie.id] = [];
+  //             this.currentIndex[sousCategorie.id] = 0;
+  //           }
+
+  //           this.groupedProducts[sousCategorie.id] = produits;
+  //         });
+  //     });
+  //   });
+  // }
+
+  // loadAvis(): void {
+  //   this.avisService.getAvis().subscribe((avis) => {
+  //     this.avis = avis
+  //       .map((avisItem) => ({
+  //         ...avisItem,
+  //         updatedAt: this.parseDate(avisItem.updatedAt),
+  //         createdAt: this.parseDate(avisItem.createdAt),
+  //       }))
+  //       .sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime())
+  //       .slice(0, 3);
+  //   });
+  // }
+
+
+  loadUniquePieces(): Promise<void> {
+    return new Promise((resolve) => {
+      this.uniquePieceService.getAllUniquePieces().subscribe(
+        (pieces) => {
+          this.uniquePieces = pieces;
+          resolve();
+        },
+        (error) => {
+          console.error('Error loading unique pieces:', error);
+          resolve();
+        }
+      );
+    });
   }
 
-  loadSousCategoriesWithProducts(): void {
-    this.sousCategorieService.getSousCategories().subscribe((sousCategories) => {
-      this.sousCategories = sousCategories;
+  loadSousCategoriesWithProducts(): Promise<void> {
+    return new Promise((resolve) => {
+      this.sousCategorieService.getSousCategories().subscribe((sousCategories) => {
+        this.sousCategories = sousCategories;
+        let requests: Promise<void>[] = [];
 
-      sousCategories.forEach((sousCategorie) => {
-        this.productService
-          .getProductsBySousCategorie(sousCategorie.id)
-          .subscribe((produits) => {
-            if (!this.groupedProducts[sousCategorie.id]) {
-              this.groupedProducts[sousCategorie.id] = [];
-              this.currentIndex[sousCategorie.id] = 0;
-            }
-
-            this.groupedProducts[sousCategorie.id] = produits;
-            // this.produitsParSousCategorie.push(sousCategorie);
+        sousCategories.forEach((sousCategorie) => {
+          let request = new Promise<void>((subResolve) => {
+            this.productService.getProductsBySousCategorie(sousCategorie.id).subscribe(
+              (produits) => {
+                if (!this.groupedProducts[sousCategorie.id]) {
+                  this.groupedProducts[sousCategorie.id] = [];
+                  this.currentIndex[sousCategorie.id] = 0;
+                }
+                this.groupedProducts[sousCategorie.id] = produits;
+                subResolve();
+              },
+              () => subResolve()
+            );
           });
+          requests.push(request);
+        });
+
+        Promise.all(requests).then(() => resolve());
       });
     });
   }
-  // Récupérer tous les avis
-  loadAvis(): void {
-    this.avisService.getAvis().subscribe((avis) => {
-      this.avis = avis
-        .map((avisItem) => ({
-          ...avisItem,
-          updatedAt: this.parseDate(avisItem.updatedAt),
-          createdAt: this.parseDate(avisItem.createdAt),
-        }))
-        .sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime())
-        .slice(0, 3);
+
+  loadAvis(): Promise<void> {
+    return new Promise((resolve) => {
+      this.avisService.getAvis().subscribe((avis) => {
+        this.avis = avis
+          .map((avisItem) => ({
+            ...avisItem,
+            updatedAt: this.parseDate(avisItem.updatedAt),
+            createdAt: this.parseDate(avisItem.createdAt),
+          }))
+          .sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime())
+          .slice(0, 3);
+        resolve();
+      });
     });
   }
 

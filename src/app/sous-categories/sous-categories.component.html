@@ -11,8 +11,14 @@
   </div>
 </section>
 
-<!-- <p>SousCat</p> -->
-<div class="container mt-5">
+
+<div class="loading-container" *ngIf="isLoading">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Chargement...</span>
+  </div>
+</div>
+
+<div class="container mt-4" *ngIf="!isLoading">
   <div *ngIf="produitParPierre.length > 0 || sousCategories.length > 0; else noCategories">
     <!-- Carrousels pour sousCategories -->
     <div *ngIf="sousCategories.length > 0; else produitParPierre">

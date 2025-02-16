@@ -18,6 +18,7 @@ export class SousCategoriesComponent implements OnInit {
   sousCategories: { id: string; name: string }[] = [];
   currentIndex: { [key: string]: number } = {};
   carouselIndexes: { [key: string]: number } = {};
+  isLoading: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -57,31 +58,60 @@ export class SousCategoriesComponent implements OnInit {
   }
 
 
+  // loadProductsByCategorySousCategorie(categoryId: string): void {
+  //   this.sousCategorieService
+  //     .getProductsByCategorySousCategorie(categoryId)
+  //     .subscribe(
+  //       (products) => {
+  //         this.groupProductsBySousCategorie(products);
+  //       },
+  //       (error) => {
+  //         console.error('Erreur lors du chargement des produits :', error);
+  //       }
+  //     );
+  // }
+  // loadProductsByCategoryPierre(categoryId: string): void {
+  //   this.sousCategorieService.getProductsByCategoryPierre(categoryId).subscribe(
+  //     (products) => {
+  //       this.produitParPierre = products;
+  //       this.groupProductsByPierre(products);
+  //     },
+  //     (error) => {
+  //       console.error('Erreur lors du chargement des produits :', error);
+  //     }
+  //   );
+  // }
+
+  
   loadProductsByCategorySousCategorie(categoryId: string): void {
-    this.sousCategorieService
-      .getProductsByCategorySousCategorie(categoryId)
-      .subscribe(
-        (products) => {
-          this.groupProductsBySousCategorie(products);
-        },
-        (error) => {
-          console.error('Erreur lors du chargement des produits :', error);
-        }
-      );
+    this.isLoading = true; // Début du chargement
+    this.sousCategorieService.getProductsByCategorySousCategorie(categoryId).subscribe(
+      (products) => {
+        this.groupProductsBySousCategorie(products);
+        this.isLoading = false; // Fin du chargement
+      },
+      (error) => {
+        console.error('Erreur lors du chargement des produits :', error);
+        this.isLoading = false; // En cas d'erreur, arrêter le chargement
+      }
+    );
   }
+  
   loadProductsByCategoryPierre(categoryId: string): void {
+    this.isLoading = true;
     this.sousCategorieService.getProductsByCategoryPierre(categoryId).subscribe(
       (products) => {
         this.produitParPierre = products;
         this.groupProductsByPierre(products);
-        // console.log('Produits chargés pour produitParPierre :',this.produitParPierre);
+        this.isLoading = false;
       },
       (error) => {
         console.error('Erreur lors du chargement des produits :', error);
+        this.isLoading = false;
       }
     );
   }
-
+  
   groupProductsBySousCategorie(products: Produit[]): void {
     const sousCategoryIds = Array.from(
       new Set(products.map((produit) => produit.sousCategoryId))

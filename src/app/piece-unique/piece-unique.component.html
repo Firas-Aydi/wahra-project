@@ -1,4 +1,4 @@
-<section class="banner"> 
+<section class="banner">
   <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
       <!-- Image 1 -->
@@ -12,35 +12,41 @@
 </section>
 
 
-<div class="container mt-4">
-    <div *ngIf="uniquePieces.length > 0; else noProducts">
-      <!-- <div class="row">
+<div class="loading-container" *ngIf="isLoading">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Chargement...</span>
+  </div>
+</div>
+
+<div class="container mt-4" *ngIf="!isLoading">
+  <div *ngIf="uniquePieces.length > 0; else noProducts">
+    <!-- <div class="row">
           <div class="col-lg-3 col-md-6 mb-4"> -->
-            <div class="cards-container">
-              <div class="card"  *ngFor="let produit of uniquePieces" (click)="viewUniquePieceDetails(produit.id)">
-            <!-- Badge Stock -->
-            <span class="badge position-absolute p-2 text-light stock-badge" [ngClass]="{
+    <div class="cards-container">
+      <div class="card" *ngFor="let produit of uniquePieces" (click)="viewUniquePieceDetails(produit.id)">
+        <!-- Badge Stock -->
+        <span class="badge position-absolute p-2 text-light stock-badge" [ngClass]="{
                 'bg-success': produit?.stock! > 0,
                 'bg-danger': produit?.stock! === 0
               }">
-              {{ produit?.stock! > 0 ? 'En stock' : 'En rupture' }}
-            </span>
-            <!-- Image -->
-            <img [src]="produit.images[0]" class="card-img-top" [alt]="produit.name" />
-            <!-- Card Body -->
-            <div class="card-body">
-              <p class="card-price">{{ produit.price }} DT</p>
-              <h5 class="card-title">{{ produit.name }}</h5>
-            </div>
-          </div>
+          {{ produit?.stock! > 0 ? 'En stock' : 'En rupture' }}
+        </span>
+        <!-- Image -->
+        <img [src]="produit.images[0]" class="card-img-top" [alt]="produit.name" />
+        <!-- Card Body -->
+        <div class="card-body">
+          <p class="card-price">{{ produit.price }} DT</p>
+          <h5 class="card-title">{{ produit.name }}</h5>
         </div>
       </div>
-  
-    <!-- Message No Products -->
-    <ng-template #noProducts>
-      <p class="text-center no-products-message">
-        Nous n'avons actuellement aucun produit disponible dans cette catégorie.
-        N'hésitez pas à explorer nos autres collections pour découvrir nos articles uniques.
-      </p>
-    </ng-template>
+    </div>
   </div>
+
+  <!-- Message No Products -->
+  <ng-template #noProducts>
+    <p class="text-center no-products-message">
+      Nous n'avons actuellement aucun produit disponible dans cette catégorie.
+      N'hésitez pas à explorer nos autres collections pour découvrir nos articles uniques.
+    </p>
+  </ng-template>
+</div>

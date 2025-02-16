@@ -1,4 +1,10 @@
-<div class="container mt-5">
+<div class="loading-container" *ngIf="isLoading">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Chargement...</span>
+    </div>
+</div>
+
+<div class="container mt-4" *ngIf="!isLoading">
     <div class="row">
         <div class="col-md-6">
             <h2 class="">Passer la Commande</h2>
@@ -38,8 +44,8 @@
 
                 <div class="mb-3">
                     <label for="city" class="form-label">Ville *</label>
-                    <input type="text" id="city" class="form-control" required [(ngModel)]="commande.city"
-                        name="city" #city="ngModel" placeholder="Entrez votre ville">
+                    <input type="text" id="city" class="form-control" required [(ngModel)]="commande.city" name="city"
+                        #city="ngModel" placeholder="Entrez votre ville">
                     <!-- <select id="city" class="form-control" required [(ngModel)]="commande.city" name="city"
                         #city="ngModel" (change)="updateDeliveryPrice(commande.city)">
                         <option value="">Sélectionnez votre ville</option>
@@ -123,7 +129,8 @@
                                     style="width: 60px; height: auto; margin-right: 10px;">
                                 {{ cartItem.product.name }} x {{ cartItem.quantity }}
                             </td>
-                            <td class="text-primary">{{ (cartItem.product.price * cartItem.quantity) | currency:'DT':'symbol' }}</td>
+                            <td class="text-primary">{{ (cartItem.product.price * cartItem.quantity) |
+                                currency:'DT':'symbol' }}</td>
                         </tr>
                     </tbody>
                 </table>

@@ -1,3 +1,10 @@
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+
 .cards-container {
   display: flex;
   flex-wrap: wrap;

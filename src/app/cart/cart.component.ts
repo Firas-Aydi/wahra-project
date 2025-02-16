@@ -12,6 +12,7 @@ export class CartComponent implements OnInit {
   allCartItems: any[] = [];
   totalPrice: number = 0;
   quantityErrors: { [itemId: string]: string } = {};
+  isLoading: boolean = false;
 
   constructor(private cartService: CartService, private router: Router) { }
 
@@ -21,7 +22,9 @@ export class CartComponent implements OnInit {
 
   // Load the cart items from the CartService
   loadCartItems() {
+    this.isLoading = true;
     this.allCartItems = this.cartService.getCartItems();
+    this.isLoading = false;
     console.log('allCartItems:', this.allCartItems);
     this.calculateTotalPrice();
   }

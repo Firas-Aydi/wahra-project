@@ -1,3 +1,11 @@
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+
+
 .card {
     border: none;
     transition: transform 0.2s ease, box-shadow 0.2s ease;

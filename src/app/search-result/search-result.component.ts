@@ -11,25 +11,26 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class SearchResultComponent {
   produits: Produit[] = [];
   isLoading: boolean = false;
-term=''
+  term = ''
+
   constructor(
     private searchService: SearchService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const term = params['term'];
       if (term) {
-        this.term=term
+        this.term = term
         this.search(term);
       }
     });
   }
 
   search(term: string): void {
-    console.log('term: ',term)
+    console.log('term: ', term)
     if (!term.trim()) return;
 
     this.isLoading = true;

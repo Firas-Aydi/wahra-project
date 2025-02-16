@@ -1,4 +1,10 @@
-<div class="Avis mt-5">
+<div class="loading-container" *ngIf="isLoading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Chargement...</span>
+    </div>
+  </div>
+  
+  <div class="Avis mt-5" *ngIf="!isLoading">
     <div class="content-container p-4">
         <h1 class=" d-flex align-items-center justify-content-center text-center mb-4"
             style="font-family: 'Poppins'; font-size: 2.5rem; color: #bb8249;">

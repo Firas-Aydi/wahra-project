@@ -9,6 +9,7 @@ import { Avis } from '../model/avis';
 })
 export class AvisComponent implements OnInit {
   avis: Avis[] = []; // Liste des avis
+  isLoading: boolean = false;
 
   constructor(private avisService: AvisService) {}
 
@@ -19,8 +20,10 @@ export class AvisComponent implements OnInit {
 
   // Méthode pour récupérer les avis depuis le service
   fetchAvis(): void {
+    this.isLoading = true;
     this.avisService.getAvis().subscribe((avis) => {
       this.avis = avis;
+      this.isLoading = false;
     });
   }
 }

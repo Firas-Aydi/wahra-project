@@ -25,6 +25,7 @@ export class CommandeComponent implements OnInit {
   cartItems: any[] = []; // Pour stocker les articles du panier
   totalPrice: number = 0; // Pour calculer le total
   deliveryPrice: number = 0;
+  isLoading: boolean = false;
 
   constructor(
     private cartService: CartService,
@@ -37,7 +38,9 @@ export class CommandeComponent implements OnInit {
   }
 
   loadCartItems() {
+    this.isLoading = true;
     this.cartItems = this.cartService.getCartItems();
+    this.isLoading = false;
     this.calculateTotalPrice();
   }
 

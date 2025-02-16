@@ -12,6 +12,7 @@ export class PieceUniqueComponent {
 
   uniquePieces: UniquePiece[] = [];
   pierreId: string = '';
+  isLoading: boolean = false;
 
   constructor(
     // private route: ActivatedRoute,
@@ -26,12 +27,15 @@ export class PieceUniqueComponent {
   }
 
   loadUniquePieces(): void {
+    this.isLoading = true;
     this.uniquePieceService.getAllUniquePieces().subscribe(
       (pieces) => {
         this.uniquePieces = pieces;
+        this.isLoading = false;
       },
       (error) => {
         console.error('Error loading unique pieces:', error);
+        this.isLoading = false;
       }
     );
   }

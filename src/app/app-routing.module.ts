@@ -6,7 +6,7 @@ import { LoginComponent } from './login/login.component';
 // import { AmbreComponent } from './ambre/ambre.component';
 import { CartComponent } from './cart/cart.component';
 // import { AmbrdetailComponent } from './ambrdetail/ambrdetail.component';
-import { CategoriesComponent } from './categories/categories.component';
+// import { CategoriesComponent } from './categories/categories.component';
 import { SousCategoriesComponent } from './sous-categories/sous-categories.component';
 import { ProduitsComponent } from './produits/produits.component';
 import { PierredetailComponent } from './pierredetail/pierredetail.component';

@@ -13,6 +13,7 @@ export class ProduitsComponent implements OnInit {
   pierreId: string = '';
   sousCategorieId: string = '';
   categorieId: string = '';
+  isLoading: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -39,24 +40,28 @@ export class ProduitsComponent implements OnInit {
   }
 
   loadProductsBySousCategorie(sousCategorieId: string): void {
+    this.isLoading = true;
     this.productService.getProductsBySousCategorie(sousCategorieId).subscribe(
       (products) => {
         this.products = products;
-        console.log('Produits chargés pour la sousCategorie :', this.products);
+        this.isLoading = false;
       },
       (error) => {
         console.error('Erreur lors du chargement des produits :', error);
+        this.isLoading = false;
       }
     );
   }
   loadProductsByPierre(pierreId: string): void {
+    this.isLoading = true;
     this.productService.getProductsByPierre(pierreId).subscribe(
       (products) => {
         this.products = products;
-        console.log('Produits chargés pour la pierre :', this.products);
+        this.isLoading = false;
       },
       (error) => {
         console.error('Erreur lors du chargement des produits :', error);
+        this.isLoading = false;
       }
     );
   }
