@@ -83,44 +83,78 @@ h4 {
 
 /* Produit Title */
 .produit-title {
-  font-weight: 500;
+  font-weight: 700;
   font-size: 28px;
   color: #444;
 }
 
 /* Description */
 .description {
-  font-family: "Poppins";
+  font-family: "arial";
   line-height: 1.4;
   font-size: 16px;
 }
 
-/* .description {
-  margin-bottom: 20px; 
-  padding: 10px;
-  background-color: #f9f9f9; 
-  border: 1px solid #ddd; 
+.bienfait-container {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #f9f9f9;
+  padding: 20px;
   border-radius: 8px;
-} */
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
+.bienfait-text {
+  padding: 10px;
+}
 
 .bienfait-title {
-  margin-bottom: 10px;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
-  color: #333; /* Titre en couleur sombre */
+  color: #333;
+  margin-bottom: 10px;
 }
 
 .bienfait-list {
-  list-style-type: disc; /* Puces standards */
-  padding-left: 30px; /* Indentation des listes */
-  margin-bottom: 30px;
+  list-style-type: disc;
+  padding-left: 20px;
 }
 
 .bienfait-item {
   font-size: 16px;
-  line-height: 1.5; /* Espacement entre les lignes */
-  margin-bottom: 5px; /* Espacement entre les items */
+  line-height: 1.5;
+  margin-bottom: 15px;
 }
+
+.bienfait-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px; /* S'assure que l'image s'aligne bien */
+}
+
+.bienfait-image img {
+  max-width: 200px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive : Alignement vertical en mobile */
+@media (max-width: 768px) {
+  .bienfait-container {
+    flex-direction: column;
+  }
+
+  .bienfait-text,
+  .bienfait-image {
+    text-align: center;
+    width: 100%;
+  }
+}
+
 
 
 /* Prix */
@@ -129,8 +163,8 @@ h4 {
   line-height: 1.6;
   font-size: 28px;
   /* color: #b69e7c; */
-  color: #bd4800;
-  
+  color: #bb8249;
+
 }
 .stock-badge {
   font-size: 14px;
@@ -143,9 +177,9 @@ h4 {
   color: black; /* Text color */
   border: 1px solid #ccc;;
   padding: 10px 10px; /* Adjust padding */
-  font-family: "Harmonia Sans", sans-serif; 
+  font-family: "Harmonia Sans", sans-serif;
   font-size: 16px; /* Font size */
-  border-radius: 0px; 
+  border-radius: 0px;
   transition: background-color 0.3s, transform 0.2s; /* Transition for hover effects */
   /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  */
 }
